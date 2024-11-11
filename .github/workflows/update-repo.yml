@@ -48,7 +48,7 @@ jobs:
         ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
           cd ~/sources/catering
           STAGE=${{ github.event.inputs.stage }}
-          TARGET_DIR="catering_$STAGE"
+          TARGET_DIR="$STAGE"
           ENV_FILE=".env.${STAGE}"
 
           if [ ! -d "$TARGET_DIR" ]; then
@@ -78,7 +78,7 @@ jobs:
       run: |
         ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
           STAGE=${{ github.event.inputs.stage }}
-          cd ~/sources/catering/catering_$STAGE
+          cd ~/sources/catering/$STAGE
           git config --global user.email "dziewanowski@gmail.com"
           git config --global user.name "Jacaplaca"
           git remote set-url origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/catering
@@ -95,7 +95,7 @@ jobs:
     #   run: |
     #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
     #       STAGE=${{ github.event.inputs.stage }}
-    #       cd ~/sources/catering/catering_$STAGE
+    #       cd ~/sources/catering/$STAGE
           
     #       DATABASE_URL=$(grep "^DATABASE_URL=" .env | cut -d "=" -f2- | tr -d "\"")
     #       echo "Extracted DATABASE_URL (masked):"
@@ -132,7 +132,7 @@ jobs:
     #   run: |
     #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
     #       STAGE=${{ github.event.inputs.stage }}
-    #       cd ~/sources/catering/catering_$STAGE
+    #       cd ~/sources/catering/$STAGE
     #       sudo docker compose --env-file .env -f ./deployment/docker-compose.yml build
     #     '
 
@@ -141,7 +141,7 @@ jobs:
     #   run: |
     #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
     #       STAGE=${{ github.event.inputs.stage }}
-    #       cd ~/sources/catering/catering_$STAGE
+    #       cd ~/sources/catering/$STAGE
     #       sudo docker compose --env-file .env -f ./deployment/docker-compose.yml -p catering_$STAGE up -d
     #     '
 
