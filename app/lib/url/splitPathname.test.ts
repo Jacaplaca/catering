@@ -1,5 +1,11 @@
 import splitPathname from '@root/app/lib/url/splitPathname';
 
+jest.mock('@root/app/env', () => ({
+    env: {
+        NEXT_PUBLIC_DEFAULT_LOCALE: 'en'
+    }
+}));
+
 jest.mock('@root/i18n-config', () => {
     const mockLocales = ['en', 'fr', 'es'];
     return {

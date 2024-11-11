@@ -1,10 +1,10 @@
-import { publicProcedure } from "server/api/trpc";
+import { createTRPCRouter, publicProcedure } from "server/api/trpc";
 import { contactFormValidator } from '@root/app/validators/contact';
 import sendContactRequest from '@root/app/server/email/contactRequest';
 import { getTranslation } from '@root/app/server/cache/translations';
 import { getSetting } from '@root/app/server/cache/settings';
 
-export const contactRouter = {
+export const contactRouter = createTRPCRouter({
     sendMessage: publicProcedure
         .input(contactFormValidator)
         .mutation(async ({ input }) => {
@@ -27,4 +27,4 @@ export const contactRouter = {
                 message: input.message
             }
         })
-};
+});

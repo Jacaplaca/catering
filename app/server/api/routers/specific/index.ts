@@ -1,4 +1,4 @@
-import test from "server/api/routers/specific/test";
+import { createTRPCRouter } from "server/api/trpc";
 import media from '@root/app/server/api/routers/specific/media';
 import settings from '@root/app/server/api/routers/specific/settings';
 import tag from '@root/app/server/api/routers/specific/tag';
@@ -9,17 +9,21 @@ import client from '@root/app/server/api/routers/specific/client';
 import order from '@root/app/server/api/routers/specific/order';
 import clientFiles from '@root/app/server/api/routers/specific/clientFiles';
 
-const specificRouter = {
-    test,
+// Ensure that each of these routers is created by createTRPCRouter
+const specificRouter = createTRPCRouter({
     client,
     media,
-    settings,
+    settings: createTRPCRouter({
+        ...settings,
+        hasFinished: settings.hasFinished,
+        get: settings.get
+    }),
     tag,
     dietician,
     kitchen,
     consumer,
     order,
     clientFiles,
-};
+});
 
 export default specificRouter;

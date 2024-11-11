@@ -37,6 +37,6 @@
     "app/modules/SerpSim/components/Form/LanguagePicker.tsx",
     "app/modules/SerpSim/useAi.ts",
     "middleware.ts"
-, "deployment/health-check.js"      ],
+, "deployment/health-check.js", "app/server/api/routers/role.test.ts.disable", "app/lib/url/translatePath.test.ts.disable", "app/lib/url/makeHref.test.ts.disable", "app/server/lib/roles/assignRoleToUser.test.ts.disable", "app/server/api/routers/health.test.ts.disabled", "app/server/api/routers/contact.test.ts.disabled"      ],
   "exclude": ["node_modules"]
 }

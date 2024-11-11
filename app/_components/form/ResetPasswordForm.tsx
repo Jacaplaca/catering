@@ -55,21 +55,21 @@ const ResetPasswordForm: FunctionComponent<{
   if (done) {
     return (
       <FormSuccess
-        title={translate(dictionary, 'reset_password_success')}
+        title={translate(dictionary, 'reset-password:reset_password_success')}
         icon={`fas fa-envelope`}
       />
     )
   }
 
   return (
-    <FormWrapper label={translate(dictionary, "form-label")}>
+    <FormWrapper label={translate(dictionary, "reset-password:form-label")}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <InputsWrapper className='mb-8'>
             <InputStandard
               name='email'
               id='email'
-              placeholder={translate(dictionary, "email_input_placeholder")}
+              placeholder={translate(dictionary, "reset-password:email_input_placeholder")}
               value={form.watch('email')}
               onChange={(e) => form.setValue('email', e.target.value)}
               type='email'
@@ -91,14 +91,14 @@ const ResetPasswordForm: FunctionComponent<{
             id='sign-in-button'
             ariaLabel={'sign_in_button'}
           >
-            {translate(dictionary, 'reset_password_button')}
+            {translate(dictionary, 'reset-password:reset_password_button')}
           </MyButton>
           <InfoWithLink
-            info={translate(dictionary, 'reset_password_info')}
+            info={translate(dictionary, 'reset-password:reset_password_info')}
             links={[
               {
                 href: makeHref({ lang, page: 'sign-in' }),
-                label: translate(dictionary, 'reset_password_link')
+                label: translate(dictionary, 'reset-password:reset_password_link')
               }
             ]}
           />

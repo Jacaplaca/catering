@@ -1,7 +1,7 @@
 // src/tests/contactRouter.test.ts
 import { type Session } from '@prisma/client';
 import { type inferProcedureInput } from '@trpc/server';
-import { appRouter } from '@root/app/server/api/root';
+import { type appRouter, createCaller } from '@root/app/server/api/root';
 import { db } from '@root/app/server/db';
 import sendContactRequest from '@root/app/server/email/contactRequest';
 import { getTranslation } from '@root/app/server/cache/translations';
@@ -18,7 +18,7 @@ describe("contactRouter - sendMessage", () => {
     it("should send a contact message", async () => {
         const mockSession: Session | null = null;
 
-        const caller = appRouter.createCaller({
+        const caller = createCaller({
             session: mockSession,
             db,
             headers: new Headers(),
@@ -49,7 +49,7 @@ describe("contactRouter - sendMessage", () => {
     it("should throw an error if message is too long", async () => {
         const mockSession: Session | null = null;
 
-        const caller = appRouter.createCaller({
+        const caller = createCaller({
             session: mockSession,
             db,
             headers: new Headers(),
