@@ -33,7 +33,7 @@ jobs:
       id: check
       run: |
         COMMIT_MSG=$(git log -1 --pretty=%B)
-        if [[ $COMMIT_MSG == *"[skip ci]"* ]] || [[ $COMMIT_MSG == "v"* ]]; then
+        if [[ $COMMIT_MSG == *"[skip ci]"* ]] || [[ $COMMIT_MSG =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || [[ $COMMIT_MSG == "Bump version"* ]]; then
           echo "skip=true" >> $GITHUB_OUTPUT
         else
           echo "skip=false" >> $GITHUB_OUTPUT
