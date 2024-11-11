@@ -94,10 +94,24 @@ jobs:
         echo "Creating new version tag: v${NEW_VERSION}"
         git tag "v${NEW_VERSION}"
         echo "Pushing changes and tags to remote..."
-        git push origin main --follow-tags || {
-          echo "Push failed. Retrying with rebase..."
-          git pull --rebase
-          git push origin main --follow-tags
-        }
+
+        # Ensure both commits and tags are pushed
+        MAX_ATTEMPTS=3
+        attempt=1
+
+        while [ $attempt -le $MAX_ATTEMPTS ]; do
+        git push origin main && git push origin --tags && break
+
+        echo "Push attempt $attempt failed. Retrying with rebase..."
+        git pull --rebase --tags || echo "Rebase failed. Retrying..."
+        
+        attempt=$((attempt + 1))
+        done
+
+        if [ $attempt -gt $MAX_ATTEMPTS ]; then
+        echo "Push failed after $MAX_ATTEMPTS attempts."
+        exit 1
+        fi
+
         echo "Verifying tags..."
         git tag -l "v${NEW_VERSION}"
