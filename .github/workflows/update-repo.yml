@@ -3,10 +3,6 @@ name: Update Repository
 on:
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch to deploy'
-        required: true
-        default: 'main'
       stage:
         description: 'Environment stage'
         required: true
@@ -32,32 +28,28 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.event.inputs.branch }}
+        ref: main
 
     - name: Setup SSH
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/serp_sim_key
-        chmod 600 ~/.ssh/serp_sim_key
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/catering_key
+        chmod 600 ~/.ssh/catering_key
         ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
 
     - name: Configure Git
       run: |
         git config --global user.email "dziewanowski@gmail.com"
         git config --global user.name "Jacaplaca"
-        git remote set-url origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/serp-sim
-        git remote -v
+        git remote set-url origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/catering
 
     - name: Prepare environment
       run: |
-        echo "Selected stage: ${{ github.event.inputs.stage }}"
-        ssh -i ~/.ssh/serp_sim_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-          cd ~/sources/serp-sim
-          BRANCH=${{ github.event.inputs.branch }}
+        ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+          cd ~/sources/catering
           STAGE=${{ github.event.inputs.stage }}
-          BASE_NAME=$BRANCH-$STAGE
-          ENV_FILE=".env.${BASE_NAME}"
-          TARGET_DIR="t3_$BASE_NAME"
+          TARGET_DIR="catering_$STAGE"
+          ENV_FILE=".env.${STAGE}"
 
           if [ ! -d "$TARGET_DIR" ]; then
             mkdir "$TARGET_DIR"
@@ -79,91 +71,79 @@ jobs:
             tar -xf fontawesome.tar -C "$TARGET_DIR/public"
           fi
 
-          # Diagnostic step: List contents of target directory
           ls -la "$TARGET_DIR"
         '
 
     - name: Pull latest changes
       run: |
-        ssh -i ~/.ssh/serp_sim_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-        BRANCH=${{ github.event.inputs.branch }}
-        STAGE=${{ github.event.inputs.stage }}
-        BASE_NAME=$BRANCH-$STAGE
-        echo "Deploying branch: $BRANCH"
-        cd ~/sources/serp-sim/t3_$BASE_NAME
-        git config --global user.email "dziewanowski@gmail.com"
-        git config --global user.name "Jacaplaca"
-        git remote set-url origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/serp-sim
-        git remote -v
-        if [ ! -d ".git" ]; then
-          git init
-          git remote add origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/serp-sim
-        fi
-        sudo git fetch origin
-        sudo git reset --hard origin/$BRANCH
-        '
-
-    - name: Check Database Status
-      run: |
-        ssh -i ~/.ssh/serp_sim_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-          BRANCH=${{ github.event.inputs.branch }}
+        ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
           STAGE=${{ github.event.inputs.stage }}
-          BASE_NAME=$BRANCH-$STAGE
-          cd ~/sources/serp-sim/t3_$BASE_NAME
+          cd ~/sources/catering/catering_$STAGE
+          git config --global user.email "dziewanowski@gmail.com"
+          git config --global user.name "Jacaplaca"
+          git remote set-url origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/catering
           
-          # Extract DATABASE_URL and remove quotes
-          DATABASE_URL=$(grep "^DATABASE_URL=" .env | cut -d "=" -f2- | tr -d "\"")
-          echo "Extracted DATABASE_URL (masked):"
-          echo "$DATABASE_URL" | sed "s/:[^@]*@/:*****@/"
-          
-          echo "Attempting database connection..."
-          
-          RESULT=$(docker exec mongodb mongosh "$DATABASE_URL" --eval "
-            const settingsCount = db.Setting.countDocuments();
-            if (settingsCount > 0) {
-              print(\"DATABASE_STATUS=initialized\");
-              // Dodanie aktualizacji rekordu
-              db.Setting.updateOne(
-                { group: \"app\", name: \"active\" },
-                { \$set: { value: \"false\" } }
-              );
-              print(\"Setting updated successfully\");
-            } else {
-              print(\"DATABASE_STATUS=empty\");
-            }
-          ")
-          
-          echo "MongoDB command result:"
-          echo "$RESULT"
-          
-          if echo "$RESULT" | grep -q "DATABASE_STATUS=initialized"; then
-            echo "✅ Database is initialized (records found in Settings collection)"
-          else
-            echo "❌ Database is empty or not initialized (no records in Settings collection)"
+          if [ ! -d ".git" ]; then
+            git init
+            git remote add origin https://Jacaplaca:${{ secrets.GIT_REPO_TOKEN }}@github.com/Jacaplaca/catering
           fi
+          sudo git fetch origin
+          sudo git reset --hard origin/main
         '
 
-    - name: Build Docker images
-      if: ${{ github.event.inputs.should_rebuild == 'yes' }}
-      run: |
-        ssh -i ~/.ssh/serp_sim_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-          BRANCH=${{ github.event.inputs.branch }}
-          STAGE=${{ github.event.inputs.stage }}
-          BASE_NAME=$BRANCH-$STAGE
-          cd ~/sources/serp-sim/t3_$BASE_NAME
-          sudo docker compose --env-file .env -f ./deployment/docker-compose.yml build
-        '
+    # - name: Check Database Status
+    #   run: |
+    #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+    #       STAGE=${{ github.event.inputs.stage }}
+    #       cd ~/sources/catering/catering_$STAGE
+          
+    #       DATABASE_URL=$(grep "^DATABASE_URL=" .env | cut -d "=" -f2- | tr -d "\"")
+    #       echo "Extracted DATABASE_URL (masked):"
+    #       echo "$DATABASE_URL" | sed "s/:[^@]*@/:*****@/"
+          
+    #       echo "Attempting database connection..."
+          
+    #       RESULT=$(docker exec mongodb mongosh "$DATABASE_URL" --eval "
+    #         const settingsCount = db.Setting.countDocuments();
+    #         if (settingsCount > 0) {
+    #           print(\"DATABASE_STATUS=initialized\");
+    #           db.Setting.updateOne(
+    #             { group: \"app\", name: \"active\" },
+    #             { \$set: { value: \"false\" } }
+    #           );
+    #           print(\"Setting updated successfully\");
+    #         } else {
+    #           print(\"DATABASE_STATUS=empty\");
+    #         }
+    #       ")
+          
+    #       echo "MongoDB command result:"
+    #       echo "$RESULT"
+          
+    #       if echo "$RESULT" | grep -q "DATABASE_STATUS=initialized"; then
+    #         echo "✅ Database is initialized"
+    #       else
+    #         echo "❌ Database is empty or not initialized"
+    #       fi
+    #     '
 
-    - name: Restart Docker containers
-      if: ${{ github.event.inputs.should_rebuild == 'yes' }}
-      run: |
-        ssh -i ~/.ssh/serp_sim_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-          BRANCH=${{ github.event.inputs.branch }}
-          STAGE=${{ github.event.inputs.stage }}
-          BASE_NAME=$BRANCH-$STAGE
-          cd ~/sources/serp-sim/t3_$BASE_NAME
-          sudo docker compose --env-file .env -f ./deployment/docker-compose.yml -p t3_$BASE_NAME up -d
-        '
+    # - name: Build Docker images
+    #   if: ${{ github.event.inputs.should_rebuild == 'yes' }}
+    #   run: |
+    #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+    #       STAGE=${{ github.event.inputs.stage }}
+    #       cd ~/sources/catering/catering_$STAGE
+    #       sudo docker compose --env-file .env -f ./deployment/docker-compose.yml build
+    #     '
+
+    # - name: Restart Docker containers
+    #   if: ${{ github.event.inputs.should_rebuild == 'yes' }}
+    #   run: |
+    #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+    #       STAGE=${{ github.event.inputs.stage }}
+    #       cd ~/sources/catering/catering_$STAGE
+    #       sudo docker compose --env-file .env -f ./deployment/docker-compose.yml -p catering_$STAGE up -d
+    #     '
 
 
 
