@@ -1,0 +1,143 @@
+html {
+  @apply text-base;
+}
+
+body {
+  @apply bg-body dark:bg-darkmode-body flex flex-col min-h-screen font-primary font-normal leading-relaxed text-text dark:text-darkmode-text ;
+  overflow-y: scroll;
+}
+
+.button {
+  @apply flex bg-secondary dark:bg-darkmode-secondary   items-center justify-center  outline-none;
+  @apply hover:bg-secondary-accent dark:hover:bg-darkmode-secondary-accent;
+  @apply dark:text-white text-text text-base font-semibold;
+  @apply px-4 py-2;
+  @apply disabled:opacity-60 disabled:cursor-not-allowed;
+  @apply rounded-lg;
+}
+
+.button-reset {
+  @apply button;
+  @apply bg-transparent dark:bg-transparent;
+  @apply dark:text-darkmode-text text-text;
+  @apply hover:bg-transparent dark:hover:bg-transparent;
+}
+
+
+.form {
+  @apply bg-form dark:bg-darkmode-form  rounded-xl shadow-big dark:shadow-darkmode-big;
+  @apply border-[1px] border-border dark:border-darkmode-border;
+}
+
+.input-standard {
+  @apply p-2 w-full bg-input dark:bg-darkmode-input focus:outline-none; 
+  @apply text-text dark:text-darkmode-text;
+  @apply border-input-border dark:border-darkmode-input-border;
+  @apply dark:focus:border-darkmode-secondary/50 focus:border-secondary-accent;
+  @apply placeholder:text-sm placeholder:text-light placeholder:dark:text-darkmode-dark;
+}
+
+.label {
+  @apply dark:text-darkmode-text text-text text-sm font-semibold;
+}
+
+// input {
+//   @apply absolute opacity-0;
+// }
+
+// input {
+//   @apply input;
+// }
+
+// textarea {
+//   @apply input;
+// }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-secondary font-bold leading-normal text-text dark:text-darkmode-text;
+}
+
+h1,
+.h1 {
+  @apply text-h1-sm md:text-h1 ;
+}
+
+h2,
+.h2 {
+  @apply text-h2-sm md:text-h2;
+}
+
+h3,
+.h3 {
+  @apply text-h3-sm md:text-h3;
+}
+
+h4,
+.h4 {
+  @apply text-h4 font-medium;
+}
+
+h5,
+.h5 {
+  @apply text-h5 font-medium;
+}
+
+h6,
+.h6 {
+  @apply text-h6 font-medium;
+}
+
+b,
+strong {
+  @apply font-semibold;
+}
+
+code {
+  @apply after:border-none
+}
+
+code {
+  @apply whitespace-break-spaces;
+}
+
+// .content > h2 {
+//   @apply mb-6 mt-16;
+// }
+
+// .content > h1, h2, h3 {
+//   @apply text-center
+// }
+
+// .content > p > img  {
+//   @apply block mx-auto;
+// }
+
+.scrollbar::-webkit-scrollbar {
+  @apply w-2 h-3
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  @apply w-1 h-1
+}
+
+.scrollbar::-webkit-scrollbar-track {
+  @apply dark:bg-zinc-700 bg-white;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply dark:bg-zinc-500 bg-zinc-400;
+  border-radius: 100vh;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply dark:bg-zinc-500 bg-zinc-400;
+}
+
+body {
+  @apply scrollbar
+}

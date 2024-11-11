@@ -1,0 +1,159 @@
+@use 'md' as md;
+
+// section style
+
+
+.menu-bg {
+  @apply dark:bg-darkmode-navigation-bg bg-navigation-bg;
+}
+
+.context-menu-big {
+  @apply menu-bg shadow-big dark:shadow-darkmode-big;
+}
+
+.profile-button {
+  @apply rounded-full text-sm;
+}
+
+.context-menu {
+  @apply absolute right-0 mt-2 origin-top-right context-menu-big pt-4 px-4 w-[290px] pb-4;
+  @apply rounded-2xl;
+  @apply border-[1px] border-border dark:border-darkmode-border;
+}
+
+.section {
+  @apply py-24 xl:py-28;
+  &-sm {
+    @apply py-16 xl:py-20;
+  }
+}
+
+// container
+.container {
+  @apply mx-auto max-w-[1320px] px-4;
+}
+
+// form style
+.form-input {
+  @apply w-full rounded border-transparent bg-theme-light px-6 py-4 text-dark placeholder:text-light focus:border-primary focus:ring-transparent dark:border-darkmode-border dark:bg-darkmode-theme-light dark:text-darkmode-light;
+}
+
+.form-label {
+  @apply mb-4 block font-secondary text-xl font-normal text-dark dark:text-darkmode-light;
+}
+
+// social icons
+.social-icons {
+  @apply space-x-4;
+  li {
+    @apply inline-block;
+    a {
+      @apply flex h-9 w-9 items-center justify-center rounded bg-primary text-center leading-9 text-white dark:bg-darkmode-primary dark:text-dark;
+      svg {
+        @apply h-5 w-5;
+      }
+    }
+  }
+}
+
+.error-bg {
+  @apply dark:bg-red-700 bg-red-500;
+}
+
+
+.upload-file-button {
+  @apply text-sm flex items-center gap-3;
+  .upload-file-button-file-name-icon {
+    @apply flex gap-2 items-center;
+  }
+  .upload-file-button-file-name {
+    @apply text-text dark:text-darkmode-text font-semibold;
+  }
+  .upload-file-button-remove-file-button {
+    @apply text-lg text-secondary-accent dark:text-darkmode-secondary-accent;
+    @apply hover:text-secondary dark:hover:text-darkmode-secondary;
+  }
+}
+
+.auth-form {
+  @apply max-w-[360px] w-full
+}
+
+
+.result-mobile {
+  @apply px-8;
+}
+
+.sign-in-form {
+  .first-time-login {
+    @apply mb-5 p-2 text-lg font-semibold text-center text-alarm dark:text-darkmode-alarm;
+    @apply rounded-md border-[1px] border-alarm dark:border-darkmode-alarm;
+  }
+}
+
+#error-invalid-token {
+  @apply flex gap-6 items-center justify-center py-10;
+  i {
+    @apply text-4xl text-alarm dark:text-darkmode-alarm;
+  }
+  h2 {
+    @apply text-3xl;
+  }
+}
+
+.form-wrapper {
+  @apply flex flex-col w-full form rounded-b-xl p-10 rounded-md max-w-[420px];
+
+  .form-error {
+    @apply flex mb-12 text-center items-center justify-center gap-4;
+    i {
+      @apply text-2xl text-alarm dark:text-darkmode-alarm;
+    }
+    div {
+      @apply text-2xl text-alarm dark:text-darkmode-alarm;
+    }
+  }
+
+  .form-info {
+    @apply flex mb-12 text-center items-center justify-center gap-4;
+    i {
+      @apply text-2xl text-success dark:text-darkmode-success;
+    }
+    div {
+      @apply text-2xl  text-success dark:text-darkmode-success;
+    }
+  }
+
+  h2 {
+    @apply text-2xl font-bold mb-8;
+  }
+
+  .form-children {
+    @apply flex-1;
+  }
+}
+
+#invite-component {
+  .invite-component-info {
+    @apply flex flex-col gap-4;
+    h3 {
+      @apply text-xl font-semibold;
+    }
+  }
+  
+  
+}
+
+.long-text {
+  p {
+    @apply mb-2;
+  }
+
+  .copy-button {
+    @apply  p-2 cursor-pointer rounded-md dark:bg-darkmode-secondary dark:hover:bg-darkmode-secondary-accent bg-secondary hover:bg-secondary-accent;
+  }
+  .copied-to-clipboard {
+    @apply  p-2 cursor-pointer rounded-md dark:bg-darkmode-success dark:text-text bg-success text-white;
+  }
+
+}

@@ -1,0 +1,26 @@
+{
+    "company": {
+        "label": "company_label",
+        "links": [
+            {
+                "url": "/about",
+                "id": "about"
+            },
+            {
+                "url": "/privacy-policy",
+                "id": "privacy-policy"
+            },
+            {
+                "url": "/terms-of-service",
+                "id": "terms-of-service"
+            },
+            {
+                "url": "sitemap.xml",
+                "noTranslate": true,
+                "id": "sitemap"
+            }
+        ]
+    },
+    "content": {
+    }
+}

@@ -1,0 +1,226 @@
+{
+  "shared": {
+    "or": "lub",
+    "generic_error": "Coś poszło nie tak.",
+    "yes": "Tak",
+    "no": "Nie",
+    "per_page": "Na stronę",
+    "page": "Strona {} z {}",
+    "showing": "{} do {} z {}",
+    "of": "z",
+    "show_only": "Pokaż tylko:",
+    "search": "Szukaj",
+    "actions": "Akcje",
+    "delete_selected": "Usuń zaznaczone",
+    "delete_confirmation": "Czy na pewno chcesz usunąć te elementy?",
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "min_characters": "Minimum {} znaków",
+    "columns_filter": "Ukryj/Pokaż kolumny",
+    "email_invalid": "Email nieprawidłowy",
+    "field_required": "Pole wymagane",
+    "add": "Dodaj",
+    "tags": "Tagi",
+    "add_tag": "Dodaj tag...",
+    "search_with_tag": "Szukaj z tagiem...",
+    "no_results": "Brak wyników",
+    "choose_file": "Wybierz plik",
+    "upload_file": "Prześlij plik",
+    "choose_files": "Wybierz pliki",
+    "upload_files": "Prześlij pliki",
+    "learn_more": "Więcej...",
+    "select_all": "Zaznacz wszystkie",
+    "deselect_all": "Odznacz wszystkie",
+    "reset": "Resetuj",
+    "cant_find_user": "Nie znaleziono użytkownika",
+    "saved_successfully": "Zapisano pomyślnie!",
+    "saving": "Zapisujemy...",
+    "show_details": "Pokaż szczegóły",
+    "removed": "Usunięto pomyślnie!",
+    "removing": "Usuwamy...",
+    "error": "Wystąpił błąd",
+    "upload_file_dropzone_single": "Przeciągnij i upuść plik tutaj lub kliknij, aby wybrać plik",
+    "upload_file_dropzone_multiple": "Przeciągnij i upuść pliki tutaj lub kliknij, aby wybrać pliki",
+    "remove_all": "Usuń wszystkie",
+    "max_file_size": "Maksymalny rozmiar pliku to {}"
+  },
+  "error": {
+    "DEFAULT": "Coś poszło nie tak!. Powrót do Strony Głównej"
+  },
+  "404": {
+    "error-code": "404",
+    "title": "Strona Nie Znaleziona",
+    "description": "Przepraszamy, strona, której szukasz, nie mogła zostać znaleziona.",
+    "back": "Powrót do Strony Głównej"
+  },
+  "banner":{
+    "conservation_work": "Trwają prace na stronie. Zapraszamy wkrótce!"
+  },
+  "server-component": {
+    "welcome": "Vítejte"
+  },
+  "counter": {
+    "increment": "Přidat",
+    "decrement": "Ubrat"
+  },
+  "articles-list": {
+    "read_more": "Czytaj więcej",
+    "share": "Udostępnij"
+  },
+  "Footer": {
+    "company_label": "Firma",
+    "knowledge_label": "Pomoc i wiedza",
+    "copyright_text": "Projekt i realizacja:"
+  },
+  "article": {
+    "no-article": "Nie znaleziono artykułu"
+  },
+  "sign-in": {
+    "sign_in_with_google": "Zaloguj się przez Google",
+    "sign_in_with_facebook": "Zaloguj się przez Facebook",
+    "terms_info": "Korzystając z aplikacji, akceptujesz nasze Warunki korzystania z usługi i Politykę prywatności.",
+    "terms_link_1": "Warunki korzystania z usługi",
+    "terms_link_2": "Politykę prywatności",
+    "reset_info": "Jeśli nie pamiętasz hasła, proszę zresetuj je.",
+    "reset_link": "zresetuj je",
+    "create_account_button": "Utwórz Nowe Konto",
+    "email_input_label": "Email",
+    "email_input_placeholder": "Wpisz swój email",
+    "password_input_label": "Hasło",
+    "password_input_placeholder": "Wpisz swoje hasło",
+    "error_credentials": "Login lub hasło nie pasują!",
+    "error_email_not_verified": "To konto nie zostało zweryfikowane. Proszę sprawdź swój email w celu znalezienia linku weryfikacyjnego.",
+    "sign_in_button": "Zaloguj się",
+    "verified_message": "Konto zostało zweryfikowane! Możesz się teraz zalogować.",
+    "token_not_valid": "Link jest nieprawidłowy lub wygasł!"
+  },
+  "sign-up": {
+    "sign_up_with_google": "Zarejestruj się przez Google",
+    "sign_up_with_facebook": "Zarejestruj się przez Facebook",
+    "already_have_account": "Masz już konto?",
+    "user_created": "Użytkownik utworzony!",
+    "check_email": "Proszę sprawdzić swój email w celu znalezienia linku weryfikacyjnego.",
+    "email_input_label": "Email",
+    "email_input_placeholder": "Wpisz swój email",
+    "password_input_label": "Hasło",
+    "password_input_placeholder": "Wpisz swoje hasło",
+    "password_input_label_re": "Potwierdź Hasło",
+    "password_input_placeholder_re": "Wpisz ponownie swoje hasło",
+    "sign_up_button": "Utwórz Konto",
+    "already_have_account_info": "Jeśli masz już konto, proszę zaloguj się.",
+    "already_have_account_link": "zaloguj się",
+    "error_email_exists": "Ten email jest już zajęty!",
+    "welcome_super_admin": "Witaj Super Administratorze! Możesz się teraz zalogować i rozpocząć konfigurację aplikacji.",
+    "app_is_not_active": "Aplikacja jest obecnie nieaktywna. Proszę czekać, aż administrator ją aktywuje.",
+    "registration_closed": "Rejstracja jedynie na zaproszenie. Proszę skontaktować się z administratorem."
+  },
+  "reset-password": {
+    "form-label": "Zapomniałeś hasła?",
+    "email_input_placeholder": "Wpisz swój email",
+    "reset_password_button": "Wyślij link resetujący",
+    "reset_password_info": "Zaloguj się innym kontem tutaj.",
+    "reset_password_link": "tutaj",
+    "reset_password_success": "Link resetujący został wysłany!"
+  },
+  "change-password": {
+    "form-label": "Zmień hasło",
+    "password_input_label": "Hasło",
+    "password_input_placeholder": "Wpisz swoje hasło",
+    "password_input_label_re": "Potwierdź Hasło",
+    "password_input_placeholder_re": "Wpisz ponownie swoje hasło",
+    "change_password_button": "Zmień hasło",
+    "change_password_success": "Hasło zmienione!",
+    "invalid_token": "Token jest nieprawidłowy lub wygasł!",
+    "already_have_account_info": "Jeśli masz już konto, proszę zaloguj się.",
+    "already_have_account_link": "zaloguj się"
+  },
+  "change-email": {
+    "form-label": "Zmień adress email",
+    "email_input_label":  "Email",
+    "change_email_button": "Zmień email",
+    "change_email_success": "Email zmieniony! Proszę sprawdzić swoją skrzynkę w celu znalezienia linku weryfikacyjnego.",
+    "invalid_email": "Email jest nieprawidłowy lub zajęty!"
+  },
+  "profile-button": {
+    "sign_in": "Zaloguj się",
+    "sign_out": "Wyloguj się",
+    "profile": "Profil użytkownika",
+    "admin": "Panel administratora"
+  },
+  "auth-validators-errors": {
+    "email_invalid": "Email jest nieprawidłowy",
+    "email_required": "Email jest wymagany",
+    "password_required": "Hasło jest wymagane",
+    "password_confirmation": "Hasła nie pasują do siebie",
+    "password-min-length": "Hasło musi mieć przynajmniej {} znaków",
+    "password-max-length": "Hasło nie może być dłuższe niż {} znaków",
+    "password-require-number": "Hasło musi zawierać przynajmniej jedną cyfrę",
+    "password-require-special": "Hasło musi zawierać przynajmniej jeden znak specjalny",
+    "password-require-uppercase": "Hasło musi zawierać przynajmniej jedną wielką literę",
+    "password-require-lowercase": "Hasło musi zawierać przynajmniej jedną małą literę"
+  },
+  "contact": {
+    "form-email-label": "Email",
+    "form-email-placeholder": "Wpisz swój email",
+    "form-message-label": "Wiadomość",
+    "form-message-placeholder": "Wpisz swoją wiadomość",
+    "form-submit": "Wyślij",
+    "form-success": "Wiadomość wysłana!",
+    "form-error-to-long": "Wiadomość jest za długa!",
+    "form-error-email": "Email jest nieprawidłowy!",
+    "form-error-email-required": "Email jest wymagany!",
+    "form-error-message-required": "Wiadomość jest wymagana!"
+  },
+  "invite": {
+    "title": "Zaproś nowego użytkownika do {}",
+    "description" : "Wygeneruj link zaproszenia lub wprowadź adres email, na który chcesz wysłać zaproszenie.",
+    "disclaimer": "Zaproszenie będzie ważne przez {} godziny. Po tym czasie, użytkownik nie będzie mógł się zarejestrować z tego zaproszenia. Możesz wysłać kolejne zaproszenie po upływie tego czasu. Użytkownik może założyć konto na inny email niż ten, na który zostało wysłane zaproszenie.",
+    "form-role-label": "Jaka rola?",
+    "form-email-placeholder": "E-mail na który wysłać zaproszenie",
+    "form_email_invalid": "Email jest nieprawidłowy",
+    "form_email_required": "Email jest wymagany",
+    "form_role_required": "Rola jest wymagana",
+    "form-error-role-invalid": "Rola jest nieprawidłowa",
+    "sent-invitation-by-email": "Czy chcesz wysłać zaproszenie e-mailem?",
+    "form-submit-send-invitation": "Wyślij zaproszenie",
+    "form-submit-generate-invitation-link": "Wygeneruj link zaproszenia",
+    "form-success-send-invitation": "Zaproszenie wysłane!",
+    "link-generated": "Link do zaproszenia został wygenerowany! Wyślij go do użytkownika, którego chcesz zaprosić.",
+    "link-copied": "Link skopiowany do schowka!",
+    "you-can-copy-link": "Możesz skopiować link i samodzielnie wysłać go do użytkownika, którego chcesz zaprosić.",
+    "form-error-user-invited": "Użytkownik z adresem email {} został już zaproszony! Nie chcemy spamować skrzynek pocztowych. Poczekaj około {} godzin, zanim wyślesz kolejne zaproszenie na ten adres email, lub wygeneruj link do zaproszenia i wyślij go do użytkownika, którego chcesz zaprosić.",
+    "form-error-token-invalid": "Link zaproszenia jest nieprawidłowy lub wygasł!",
+    "form-token-info": "Realizujesz zaproszenie od {} do otrzymania roli {}."
+  },
+  "web3": {
+    "add_address_label": "Dodaj swój adres blockchain",
+    "description_add_address": "Aby aktywnie korzystać z tej aplikacji, należy dodać swój adres blockchain. Kliknij przycisk poniżej, aby to zrobić.",
+    "install_metamask": "Zainstaluj Metamask i zaloguj się do niego aby zakończyć",
+    "wrong_network": "Zmień sieć na {}",
+    "add_address_button": "Dodaj adres blockchain",
+    "address_added": "Adres blockchain został dodany!",
+    "signing_message": "Podpisz tę wiadomość, aby potwierdzić swoje prawo własności do adresu"
+  },
+  "role": {
+    "superAdmin": "Super Administrator",
+    "person": "Użytkownik",
+    "all": "Wszyscy"
+  },
+  "dashboard": {
+    "wrong_item_message": "Nie znaleziono takiego elementu",
+    "wrong_item_title": "Błąd",
+    "item-users-label": "Użytkownicy",
+    "item-users-title": "Zarządzaj użytkownikami"
+  },
+  "settings": {
+      "email_contact_admin": "Kontakt administratora",
+      "email_from": "Od",
+      "email_from_alias": "Od aliasu",
+      "email_from_activation": "Od aktywacji",
+      "email_host": "Host",
+      "email_password": "Hasło",
+      "email_port": "Port",
+      "email_template_html_wrapper": "Szablon HTML",
+      "email_username": "Nazwa użytkownika"
+  }
+}

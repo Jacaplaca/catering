@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap");
+@import "../../public/fontawesome/css/all.min.css";
+@config "../../tailwind.config.ts";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --background-light-gray: 245, 245, 245;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+@layer components {
+  /* @import "navigation.scss"; */
+  html,
+  body {
+    /* padding: 0; */
+    /* margin: 0; */
+    /* overflow: overlay; */
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+          Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif, Poppins;
+  }
+
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill::first-line,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+      transition: background-color 600000s 0s, color 600000s 0s;
+  }
+  /* input[data-autocompleted] {
+      background-color: transparent !important;
+  } */
+  input {
+      /* background: transparent!important; */
+      /* @apply !bg-gray-300 !text-gray-900 placeholder:text-gray-600 font-medium; */
+  }
+}
+
+/* body {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-light-gray));
+  overflow: overlay;
+} */
+
+.grid-custom {
+  grid-template-columns: auto 1fr;
+}
+
+input {
+  /* border: none!important; */
+  /* outline: none!important; */
+  box-shadow: none!important;
+  /* border-color: transparent!important; */
+}
+
+textarea {
+  /* border: none!important; */
+  /* outline: none!important; */
+  box-shadow: none!important;
+  /* border-color: transparent!important; */
+}
+
+/* input:focus {
+  border: none!important;
+  outline: none!important;
+  box-shadow: none;
+} */
+
+/* input:selected {
+  outline: none;
+  border-width: 0px;
+  height: 50px;
+} */
+
+/* input#file-upload-button {
+  display: none;
+  color: red;
+} */

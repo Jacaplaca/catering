@@ -1,0 +1,65 @@
+{
+  "site": {
+    "title": "application",
+    "base_path": "/",
+    "trailing_slash": false,
+    "faviconSVG": "/images/favicon.svg",
+    "favicon16": "/images/favicon-16.png",
+    "favicon32": "/images/favicon-32.png",
+    "favicon180": "/images/favicon-180.png",
+    "logo": "/images/logo.svg",
+    "logo_darkmode": "/images/logo-with-text-dark-mode.svg",
+    "logo_width": "200px",
+    "logo_height": "100px",
+    "logo_text": "Nextplate"
+  },
+
+  "social" : {
+    "facebook": "https://facebook.com/application",
+    "instagram": "https://instagram.com/application",
+    "twitter": "https://twitter.com/application"
+  },
+
+  "settings": {
+    "search": false,
+    "sticky_header": true,
+    "theme_switcher": true,
+    "default_theme": "system",
+    "pagination": 3,
+    "paginator": "page",
+    "summary_length": 200,
+    "homePageId": "home",
+    "postsIndexPage": "_index",
+    "regularFolder" : "pages",
+    "foldersToScan": [
+      "pages"
+          ]
+  },
+
+  "params": {
+    "contact_form_action": "#",
+    "copyright": {
+      "text" : "copyright_text",
+      "link" : "https://dziewanowski.pl",
+      "label" : "Dziewan Studio"
+    }
+  },
+
+  "navigation_button": {
+    "enable": false,
+    "label": "Get Started",
+    "link": "https://github.com/zeon-studio/nextplate"
+  },
+
+  "disqus": {
+    "enable": false,
+    "shortname": "themefisher-template",
+    "settings": {}
+  },
+
+  "metadata": {
+    "meta_author": "Themefisher",
+    "meta_image": "/images/og-image.jpg",
+    "meta_description": "Next Boilerplate"
+  }
+}

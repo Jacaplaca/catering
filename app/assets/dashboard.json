@@ -1,0 +1,94 @@
+[
+    {
+        "order": 2,
+        "items": [
+            {
+                "label": "Users",
+                "icon": "fa-solid fa-users",
+                "key": "accounts",
+                "order": 1
+            }
+        ]
+    },
+    {
+        "label": "Users",
+        "key": "users",
+        "opened": false,
+        "order": 2,
+        "items": [
+            {
+                "label": "Clients",
+                "icon": "fa-solid fa-building",
+                "key": "clients",
+                "order": 1
+            },
+            {
+                "label": "Dieticians",
+                "icon": "fa-solid fa-carrot",
+                "key": "dieticians",
+                "order": 2
+            },
+            {
+                "label": "Kitchens",
+                "icon": "fa-solid fa-user-chef",
+                "key": "kitchens",
+                "order": 3
+            }
+        ]
+    },
+    {
+        "order": 4,
+        "items": [
+            {
+                "label": "Consumers",
+                "icon": "fa-solid fa-plate-utensils",
+                "key": "consumers",
+                "order": 1
+            }
+        ]
+    },
+    {
+        "order":1,
+        "items": [
+            {
+                "label": "Orders",
+                "icon": "fa-solid fa-shopping-cart",
+                "key": "orders",
+                "order": 1
+            }
+        ]
+    },
+    {
+        "order": 5,
+        "items": [
+            {
+                "label": "Client files",
+                "icon": "fa-solid fa-files",
+                "key": "client-files",
+                "order": 1
+            }
+        ]
+    },
+    {
+        "order": 6,
+        "items": [
+            {
+                "label": "Documents",
+                "icon": "fa-solid fa-file-lines",
+                "key": "documents",
+                "order": 1
+            }
+        ]
+    },
+    {
+        "order": 7,
+        "items": [
+            {
+                "label": "Settings",
+                "icon": "fa-solid fa-cog",
+                "key": "settings",
+                "order": 1
+            }
+        ]
+    }
+]

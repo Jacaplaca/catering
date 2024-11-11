@@ -1,0 +1,31 @@
+[
+    {
+        "id": "manager",
+        "inviteBy": ["superAdmin"],
+        "order": 2,
+        "dashboardGroups": ["users"],
+        "dashboardItems": ["settings", "orders", "consumers"],
+        "closeRegistration": true
+    }
+    ,
+    {
+        "id": "client",
+        "inviteBy": ["manager"],
+        "dashboardGroups": [],
+        "dashboardItems": ["settings", "consumers", "orders", "documents"]
+    }
+    ,
+    {
+        "id" : "dietician",
+        "inviteBy": ["manager"],
+        "dashboardGroups": [],
+        "dashboardItems": ["settings", "consumers", "client-files"]
+    }
+    ,
+    {
+        "id" : "kitchen",
+        "inviteBy": ["manager"],
+        "dashboardGroups": [],
+        "dashboardItems": ["orders"]
+    }
+]

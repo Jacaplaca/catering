@@ -1,0 +1,40 @@
+[
+    {
+        "order": 1,
+        "items": [
+            {
+                "label": "Users",
+                "icon": "fa-solid fa-house",
+                "key": "panel",
+                "order": 1
+            },
+            {
+                "label": "Articles",
+                "icon": "fa-solid fa-newspaper",
+                "key": "example one",
+                "order": 2
+            }
+        ]
+    }
+    ,
+    {
+        "label": "Group 2",
+        "key": "group2",
+        "opened": true,
+        "order": 4,
+        "items": [
+            {
+                "label": "Panel",
+                "icon": "fa-solid fa-house",
+                "key": "example four",
+                "order": 1
+            },
+            {
+                "label": "Articles",
+                "icon": "fa-solid fa-newspaper",
+                "key": "example five",
+                "order": 2
+            }
+        ]
+    }
+]

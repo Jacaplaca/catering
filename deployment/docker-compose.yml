@@ -1,0 +1,26 @@
+services:
+  app:
+    container_name: "${APP_NAME}_${BRANCH_NAME}"
+    image: "${APP_NAME}_${BRANCH_NAME}_img"
+    build:
+      context: ../
+      dockerfile: deployment/Dockerfile
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      - PORT=${PORT}
+    # networks:
+    #   - default
+    volumes:
+      # "data_${APP_NAME}_${BRANCH_NAME}":
+      - "data_t3_main:/app/.next/cache"
+
+# networks:
+#   default:
+#     name: "${DOCKER_NETWORK_NAME}_${BRANCH_NAME}"
+#     external: true
+
+volumes:
+  # "data_${APP_NAME}_${BRANCH_NAME}":
+  "data_t3_main":

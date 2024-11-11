@@ -1,0 +1,9 @@
+[
+    {
+        "id": "superAdmin",
+        "inviteBy": [],
+        "order": 1,
+        "dashboardGroups": [],
+        "dashboardItems": ["accounts", "settings"]
+    }
+]

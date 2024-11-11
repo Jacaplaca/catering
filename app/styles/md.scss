@@ -1,0 +1,150 @@
+// content style
+
+.home {
+  @apply prose max-w-none;
+  @apply prose-h1:text-center prose-h1:text-h1-sm md:prose-h1:text-h1;
+  @apply prose-h2:text-center prose-h2:text-h2-sm md:prose-h2:text-h2;
+  h1 {
+    @apply my-14;
+  }
+  h2 {
+    @apply text-2xl md:text-4xl my-11
+  }
+  h3 {
+    @apply text-xl md:text-3xl mt-10
+  }
+}
+
+.article {
+  @apply prose max-w-none;
+  @apply prose-h1:text-h1-sm md:prose-h1:text-h1 prose-h1:text-center;
+  h1 {
+    @apply my-14;
+  }
+  h2 {
+    @apply text-2xl md:text-3xl mt-11
+  }
+
+}
+
+.info-form {
+  @apply prose;
+  @apply prose-h2:mt-4 prose-h2:text-center prose-h2:mb-8;
+  // @apply prose-h3:mb-0;
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  ul {
+    @apply list-none pl-0;
+
+    li {
+      @apply mt-6 pl-6 -indent-6;
+
+      &::before {
+        @apply text-success dark:text-darkmode-success font-bold mr-2 text-xl;
+        content: '✓';
+      }
+    }
+  }
+}
+
+.profile-button-content {
+  // @apply mt-6;
+  @apply prose;
+  @apply prose-h3:mt-4 prose-h3:mb-0;
+
+  h3 {
+    @apply text-xl;
+  }
+
+  ul {
+    @apply list-none pl-0;
+    li {
+      @apply my-0;
+      i {
+        @apply  text-green-600 dark:text-green-500 mr-3;
+      }
+    }
+  }
+}
+
+//orginal
+.content {
+  @apply prose max-w-4xl mx-auto;
+  @apply prose-headings:mb-[.3em] prose-headings:mt-[.6em] prose-headings:text-text prose-headings:dark:text-darkmode-text prose-headings:font-extrabold;
+  @apply prose-h1:text-h1-sm md:prose-h1:text-h1;
+  @apply prose-h2:text-h2-sm md:prose-h2:text-h2;
+  @apply prose-h3:text-h3-sm md:prose-h3:text-h3;
+  @apply prose-img:max-w-full prose-img:rounded;
+  @apply prose-hr:border-border prose-hr:dark:border-darkmode-border;
+  @apply prose-p:text-base prose-p:text-text prose-p:dark:text-darkmode-text;
+  @apply prose-p:leading-relaxed; 
+  @apply prose-blockquote:rounded-lg prose-blockquote:border  prose-blockquote:border-zinc-300 prose-blockquote:bg-theme-light prose-blockquote:px-6 prose-blockquote:py-6 prose-blockquote:font-secondary prose-blockquote:text-2xl prose-blockquote:not-italic prose-blockquote:text-dark prose-blockquote:dark:border-zinc-600 prose-blockquote:dark:bg-darkmode-theme-light prose-blockquote:dark:text-darkmode-light;
+  // @apply prose-blockquote:rounded-lg prose-blockquote:border prose-blockquote:border-l-[10px] prose-blockquote:border-primary prose-blockquote:bg-theme-light prose-blockquote:px-8 prose-blockquote:py-10 prose-blockquote:font-secondary prose-blockquote:text-2xl prose-blockquote:not-italic prose-blockquote:text-dark prose-blockquote:dark:border-darkmode-primary prose-blockquote:dark:bg-darkmode-theme-light prose-blockquote:dark:text-darkmode-light;
+  @apply prose-pre:rounded-lg prose-pre:bg-theme-light prose-pre:dark:bg-darkmode-theme-light;
+  @apply prose-code:text-text prose-code:dark:text-darkmode-text;
+  @apply prose-strong:text-dark prose-strong:dark:text-darkmode-text;
+  @apply prose-a:text-text prose-a:underline hover:prose-a:text-primary prose-a:dark:text-darkmode-text hover:prose-a:dark:text-darkmode-primary;
+  @apply prose-li:text-text prose-li:dark:text-darkmode-text;
+  @apply prose-table:relative prose-table:overflow-hidden prose-table:rounded-lg prose-table:before:absolute prose-table:before:left-0 prose-table:before:top-0 prose-table:before:h-full prose-table:before:w-full prose-table:before:rounded-[inherit] prose-table:before:border prose-table:before:content-[""] prose-table:before:dark:border-darkmode-border;
+  @apply prose-thead:border-border prose-thead:bg-theme-light prose-thead:dark:border-darkmode-border prose-thead:dark:bg-darkmode-theme-light;
+  @apply prose-th:relative prose-th:z-10 prose-th:px-4 prose-th:py-[18px] prose-th:text-dark prose-th:dark:text-darkmode-text;
+  @apply prose-tr:border-border prose-tr:dark:border-darkmode-border;
+  @apply prose-td:relative prose-td:z-10 prose-td:px-3 prose-td:py-[18px] prose-td:dark:text-darkmode-text;
+  blockquote {
+    @apply prose-h4:mt-4 prose-h4:mb-4;
+  }
+}
+// .content {
+//   @apply text-base text-gray-800;
+
+//   p {
+//     @apply mt-4 mb-4;
+//   }
+
+//   h1, h2, h3, h4, h5, h6 {
+//     @apply mt-8 mb-4 font-semibold;
+//   }
+
+//   h1 {
+//     @apply text-3xl;
+//   }
+
+//   h2 {
+//     @apply text-2xl;
+//   }
+
+//   h3 {
+//     @apply text-xl;
+//   }
+
+//   ul, ol {
+//     @apply list-inside mt-2 mb-4;
+//   }
+
+//   ul {
+//     @apply list-disc;
+//   }
+
+//   ol {
+//     @apply list-decimal;
+//   }
+
+//   li {
+//     @apply pl-4;
+//   }
+
+//   a {
+//     @apply text-blue-600 underline hover:text-blue-800;
+//   }
+
+//   blockquote {
+//     @apply p-4 italic border-l-4 bg-gray-100 border-gray-500;
+//   }
+// }
+
+
+
+

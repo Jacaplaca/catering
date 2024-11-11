@@ -1,0 +1,602 @@
+[
+    {
+        "country_code": "af",
+        "en": "Afghanistan",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "al",
+        "en": "Albania",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "dz",
+        "en": "Algeria",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "as",
+        "en": "American Samoa",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ad",
+        "en": "Andorra",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ao",
+        "en": "Angola",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ai",
+        "en": "Anguilla",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "aq",
+        "en": "Antarctica",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ag",
+        "en": "Antigua and Barbuda",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ar",
+        "en": "Argentina",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "am",
+        "en": "Armenia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "aw",
+        "en": "Aruba",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "au",
+        "en": "Australia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "at",
+        "en": "Austria",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "az",
+        "en": "Azerbaijan",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bs",
+        "en": "Bahamas",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bh",
+        "en": "Bahrain",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bd",
+        "en": "Bangladesh",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bb",
+        "en": "Barbados",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "by",
+        "en": "Belarus",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "be",
+        "en": "Belgium",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bz",
+        "en": "Belize",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bj",
+        "en": "Benin",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bm",
+        "en": "Bermuda",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bt",
+        "en": "Bhutan",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bo",
+        "en": "Bolivia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ba",
+        "en": "Bosnia and Herzegovina",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bw",
+        "en": "Botswana",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bv",
+        "en": "Bouvet Island",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "br",
+        "en": "Brazil",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "io",
+        "en": "British Indian Ocean Territory",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bn",
+        "en": "Brunei Darussalam",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bg",
+        "en": "Bulgaria",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bf",
+        "en": "Burkina Faso",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "bi",
+        "en": "Burundi",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "kh",
+        "en": "Cambodia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cm",
+        "en": "Cameroon",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ca",
+        "en": "Canada",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cv",
+        "en": "Cape Verde",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ky",
+        "en": "Cayman Islands",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cf",
+        "en": "Central African Republic",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "td",
+        "en": "Chad",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cl",
+        "en": "Chile",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cn",
+        "en": "China",
+        "de": "China",
+        "pl": "Chiny"
+    },
+    {
+        "country_code": "cx",
+        "en": "Christmas Island",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cc",
+        "en": "Cocos (Keeling) Islands",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "co",
+        "en": "Colombia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "km",
+        "en": "Comoros",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cg",
+        "en": "Congo",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cd",
+        "en": "Congo, the Democratic Republic of the",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ck",
+        "en": "Cook Islands",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cr",
+        "en": "Costa Rica",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ci",
+        "en": "Cote D'ivoire",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "hr",
+        "en": "Croatia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cu",
+        "en": "Cuba",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cy",
+        "en": "Cyprus",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "cz",
+        "en": "Czech Republic",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "dk",
+        "en": "Denmark",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "dj",
+        "en": "Djibouti",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "dm",
+        "en": "Dominica",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "do",
+        "en": "Dominican Republic",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ec",
+        "en": "Ecuador",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "eg",
+        "en": "Egypt",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "sv",
+        "en": "El Salvador",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gq",
+        "en": "Equatorial Guinea",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "er",
+        "en": "Eritrea",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ee",
+        "en": "Estonia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "et",
+        "en": "Ethiopia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "fk",
+        "en": "Falkland Islands (Malvinas)",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "fo",
+        "en": "Faroe Islands",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "fj",
+        "en": "Fiji",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "fi",
+        "en": "Finland",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "fr",
+        "en": "France",
+        "de": "Frankreich",
+        "pl": "Francja"
+    },
+    {
+        "country_code": "gf",
+        "en": "French Guiana",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "pf",
+        "en": "French Polynesia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "tf",
+        "en": "French Southern Territories",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ga",
+        "en": "Gabon",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gm",
+        "en": "Gambia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ge",
+        "en": "Georgia",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "de",
+        "en": "Germany",
+        "de": "Deutschland",
+        "pl": "Niemcy"
+    },
+    {
+        "country_code": "gh",
+        "en": "Ghana",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gi",
+        "en": "Gibraltar",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gr",
+        "en": "Greece",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gl",
+        "en": "Greenland",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gd",
+        "en": "Grenada",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gp",
+        "en": "Guadeloupe",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gu",
+        "en": "Guam",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gt",
+        "en": "Guatemala",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gn",
+        "en": "Guinea",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gw",
+        "en": "Guinea-Bissau",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "gy",
+        "en": "Guyana",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "ht",
+        "en": "Haiti",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "hm",
+        "en": "Heard Island and Mcdonald Islands",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "va",
+        "en": "Holy See (Vatican City State)",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "hn",
+        "en": "Honduras",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "hk",
+        "en": "Hong Kong",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "hu",
+        "en": "Hungary",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "is",
+        "en": "Iceland",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "in",
+        "en": "India",
+        "de": "N/A",
+        "pl": "N/A"
+    },
+    {
+        "country_code": "id",
+        "en": "Indonesia",
+        "de": "N/A",
+        "pl": "N/A"
+    }
+]

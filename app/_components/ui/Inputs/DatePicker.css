@@ -1,0 +1,74 @@
+/* custom-datepicker.css */
+.react-datepicker {
+  @apply p-3
+  bg-neutral-100 dark:bg-neutral-700 rounded-lg
+  font-primary
+  border-[1px] border-neutral-200 dark:border-neutral-600
+}
+
+.react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle,
+.react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle {
+  @apply fill-neutral-100 dark:fill-neutral-700 stroke-neutral-200 dark:stroke-neutral-600 text-transparent dark:text-transparent;
+}
+
+.react-datepicker__month-container {
+  @apply bg-transparent dark:bg-transparent border-none;
+}
+
+.react-datepicker__header {
+  @apply bg-transparent dark:bg-transparent border-none;
+}
+
+.react-datepicker__day-names {
+  @apply -mb-3 mt-2 text-sm 
+}
+
+.react-datepicker__day-name {
+  @apply text-neutral-500 dark:text-neutral-400 text-sm
+  font-semibold first-letter:uppercase;
+}
+
+.react-datepicker__month {
+  @apply bg-transparent dark:bg-transparent border-none
+  text-neutral-700 dark:text-neutral-200
+  font-semibold;
+}
+
+.react-datepicker__day {
+  @apply text-black dark:text-neutral-200;
+}
+
+.react-datepicker__day--ordered {
+  @apply relative;
+}
+
+.react-datepicker__day--ordered::before {
+  content: 'X';
+  @apply absolute inset-0 flex items-center justify-center
+    text-red-500 dark:text-red-500 font-bold text-2xl
+    opacity-80 pointer-events-none;
+}
+
+.react-datepicker__day:hover {
+  @apply bg-secondary dark:bg-darkmode-secondary
+  text-neutral-800 dark:text-white;
+}
+
+.react-datepicker__day--selected {
+  @apply bg-secondary dark:bg-darkmode-secondary-accent
+  text-neutral-800 dark:text-white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  @apply bg-neutral-200 dark:bg-neutral-600
+  text-neutral-800 dark:text-white;
+}
+
+.react-datepicker__day--disabled {
+  @apply text-neutral-500 dark:text-neutral-400 cursor-not-allowed;
+}
+
+.react-datepicker__day--disabled:hover {
+  @apply bg-transparent dark:bg-transparent
+  text-neutral-500 dark:text-neutral-400;
+}

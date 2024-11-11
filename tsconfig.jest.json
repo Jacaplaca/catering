@@ -1,0 +1,26 @@
+// tsconfig.jest.json
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noImplicitAny": false,
+        "skipLibCheck": true,
+        "baseUrl": ".",
+        "module": "ESNext",
+        "paths": {
+            "@root/*": ["./*"],
+            "app/*": ["./app/*"],
+            "server/*": ["./app/server/*"],
+        }
+    },
+    "include": [
+        "app/**/*.ts",
+        "app/**/*.tsx",
+        "app/**/*.mts",
+        "tests/**/*.ts",
+        "tests/**/*.tsx",
+        "tests/**/*.mts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

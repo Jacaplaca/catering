@@ -1,0 +1,18 @@
+FROM node:22-bullseye
+
+# Install dependencies
+RUN apt-get update && \
+    apt-get install -y wget gnupg curl tar
+
+# Download MongoDB tools
+RUN curl -OL https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2004-arm64-100.5.2.tgz
+
+# Extract and install MongoDB tools
+RUN tar -xzf mongodb-database-tools-ubuntu2004-arm64-100.5.2.tgz -C /tmp && \
+    mv /tmp/mongodb-database-tools-*-100.5.2/bin/* /usr/local/bin/
+
+# Cleanup
+RUN rm -rf /tmp/mongodb-database-tools-ubuntu2004-arm64-100.5.2.tgz /tmp/mongodb-database-tools-*-100.5.2
+
+# Add fontawsome.tar to the container
+COPY fontawesome.tar /usr/local/share/

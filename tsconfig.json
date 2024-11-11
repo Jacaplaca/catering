@@ -1,0 +1,42 @@
+//tsconfig.json
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "checkJs": true,
+    "lib": ["dom", "dom.iterable", "ES2022"],
+    "noEmit": true,
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "plugins": [{ "name": "next" }],
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@root/*": ["./*"],
+      "app/*": ["./app/*"],
+      "server/*": ["./app/server/*"],
+    }
+  },
+  "include": [
+    ".eslintrc.cjs",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.cjs",
+    "**/*.mjs",
+    ".next/types/**/*.ts",
+    "app/env.ts",
+    "app/modules/SerpSim/components/Form/LanguagePicker.tsx",
+    "app/modules/SerpSim/useAi.ts",
+    "middleware.ts"
+, "deployment/health-check.js"      ],
+  "exclude": ["node_modules"]
+}

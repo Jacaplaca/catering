@@ -1,0 +1,71 @@
+// src/tests/contactRouter.test.ts
+import { type Session } from '@prisma/client';
+import { type inferProcedureInput } from '@trpc/server';
+import { appRouter } from '@root/app/server/api/root';
+import { db } from '@root/app/server/db';
+import sendContactRequest from '@root/app/server/email/contactRequest';
+import { getTranslation } from '@root/app/server/cache/translations';
+import { getSetting } from '@root/app/server/cache/settings';
+
+// Mock the imported modules
+jest.mock('@root/app/lib/settings/getSetting');
+jest.mock('@root/app/server/email/contactRequest');
+jest.mock('@root/app/server/cache/translations', () => {
+    return { getTranslation: jest.fn() };
+});
+
+describe("contactRouter - sendMessage", () => {
+    it("should send a contact message", async () => {
+        const mockSession: Session | null = null;
+
+        const caller = appRouter.createCaller({
+            session: mockSession,
+            db,
+            headers: new Headers(),
+        });
+
+        type Input = inferProcedureInput<typeof appRouter['contact']['sendMessage']>;
+
+        const input: Input = {
+            email: 'test@example.com',
+            message: 'Hello, this is a test message',
+            lang: 'en',
+        };
+
+        (getSetting as jest.Mock).mockResolvedValue(1000);
+        (sendContactRequest as jest.Mock).mockResolvedValue(true);
+
+        const result = await caller.contact.sendMessage(input);
+
+        expect(result.email).toBe(input.email);
+        expect(result.message).toBe(input.message);
+        expect(sendContactRequest).toHaveBeenCalledWith({
+            message: input.message,
+            senderEmail: input.email,
+            lang: input.lang,
+        });
+    });
+
+    it("should throw an error if message is too long", async () => {
+        const mockSession: Session | null = null;
+
+        const caller = appRouter.createCaller({
+            session: mockSession,
+            db,
+            headers: new Headers(),
+        });
+
+        type Input = inferProcedureInput<typeof appRouter['contact']['sendMessage']>;
+
+        const input: Input = {
+            email: 'test@example.com',
+            message: 'A'.repeat(500), // assuming this is too long
+            lang: 'en',
+        };
+
+        (getSetting as jest.Mock).mockResolvedValue(100);
+        (getTranslation as jest.Mock).mockResolvedValue('Message is too long');
+
+        await expect(caller.contact.sendMessage(input)).rejects.toThrow('Message is too long');
+    });
+});
