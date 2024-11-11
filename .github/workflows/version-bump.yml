@@ -34,15 +34,19 @@ jobs:
         # Get current version from package.json
         CURRENT_VERSION=$(node -p "require('./package.json').version")
         
-        # Increment patch version
-        NEW_VERSION=$(node -p "
-          const [major, minor, patch] = '${CURRENT_VERSION}'.split('.');
-          `${major}.${minor}.${parseInt(patch) + 1}`
+        # Increment patch version using Node.js
+        NEW_VERSION=$(node -e "
+          const currentVersion = '${CURRENT_VERSION}';
+          const [major, minor, patch] = currentVersion.split('.');
+          const newVersion = \`\${major}.\${minor}.\${parseInt(patch) + 1}\`;
+          console.log(newVersion);
         ")
         
         # Update package.json with new version
-        npm version $NEW_VERSION -m "Bump version to %s [skip ci]"
+        npm version "${NEW_VERSION}" --no-git-tag-version
         
-        # Push changes back to repository
-        git push
-        git push --tags 
+        # Commit and push changes
+        git add package.json
+        git commit -m "Bump version to ${NEW_VERSION} [skip ci]"
+        git tag "v${NEW_VERSION}"
+        git push && git push --tags
