@@ -91,59 +91,59 @@ jobs:
           sudo git reset --hard origin/main
         '
 
-    # - name: Check Database Status
-    #   run: |
-    #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-    #       STAGE=${{ github.event.inputs.stage }}
-    #       cd ~/sources/catering/$STAGE
+    - name: Check Database Status
+      run: |
+        ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+          STAGE=${{ github.event.inputs.stage }}
+          cd ~/sources/catering/$STAGE
           
-    #       DATABASE_URL=$(grep "^DATABASE_URL=" .env | cut -d "=" -f2- | tr -d "\"")
-    #       echo "Extracted DATABASE_URL (masked):"
-    #       echo "$DATABASE_URL" | sed "s/:[^@]*@/:*****@/"
+          DATABASE_URL=$(grep "^DATABASE_URL=" .env | cut -d "=" -f2- | tr -d "\"")
+          echo "Extracted DATABASE_URL (masked):"
+          echo "$DATABASE_URL" | sed "s/:[^@]*@/:*****@/"
           
-    #       echo "Attempting database connection..."
+          echo "Attempting database connection..."
           
-    #       RESULT=$(docker exec mongodb mongosh "$DATABASE_URL" --eval "
-    #         const settingsCount = db.Setting.countDocuments();
-    #         if (settingsCount > 0) {
-    #           print(\"DATABASE_STATUS=initialized\");
-    #           db.Setting.updateOne(
-    #             { group: \"app\", name: \"active\" },
-    #             { \$set: { value: \"false\" } }
-    #           );
-    #           print(\"Setting updated successfully\");
-    #         } else {
-    #           print(\"DATABASE_STATUS=empty\");
-    #         }
-    #       ")
+          RESULT=$(docker exec mongodb mongosh "$DATABASE_URL" --eval "
+            const settingsCount = db.Setting.countDocuments();
+            if (settingsCount > 0) {
+              print(\"DATABASE_STATUS=initialized\");
+              db.Setting.updateOne(
+                { group: \"app\", name: \"active\" },
+                { \$set: { value: \"false\" } }
+              );
+              print(\"Setting updated successfully\");
+            } else {
+              print(\"DATABASE_STATUS=empty\");
+            }
+          ")
           
-    #       echo "MongoDB command result:"
-    #       echo "$RESULT"
+          echo "MongoDB command result:"
+          echo "$RESULT"
           
-    #       if echo "$RESULT" | grep -q "DATABASE_STATUS=initialized"; then
-    #         echo "✅ Database is initialized"
-    #       else
-    #         echo "❌ Database is empty or not initialized"
-    #       fi
-    #     '
+          if echo "$RESULT" | grep -q "DATABASE_STATUS=initialized"; then
+            echo "✅ Database is initialized"
+          else
+            echo "❌ Database is empty or not initialized"
+          fi
+        '
 
-    # - name: Build Docker images
-    #   if: ${{ github.event.inputs.should_rebuild == 'yes' }}
-    #   run: |
-    #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-    #       STAGE=${{ github.event.inputs.stage }}
-    #       cd ~/sources/catering/$STAGE
-    #       sudo docker compose --env-file .env -f ./deployment/docker-compose.yml build
-    #     '
+    - name: Build Docker images
+      if: ${{ github.event.inputs.should_rebuild == 'yes' }}
+      run: |
+        ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+          STAGE=${{ github.event.inputs.stage }}
+          cd ~/sources/catering/$STAGE
+          sudo docker compose --env-file .env -f ./deployment/docker-compose.yml build
+        '
 
-    # - name: Restart Docker containers
-    #   if: ${{ github.event.inputs.should_rebuild == 'yes' }}
-    #   run: |
-    #     ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
-    #       STAGE=${{ github.event.inputs.stage }}
-    #       cd ~/sources/catering/$STAGE
-    #       sudo docker compose --env-file .env -f ./deployment/docker-compose.yml -p catering_$STAGE up -d
-    #     '
+    - name: Restart Docker containers
+      if: ${{ github.event.inputs.should_rebuild == 'yes' }}
+      run: |
+        ssh -i ~/.ssh/catering_key ${{ secrets.USER }}@${{ secrets.HOST }} '
+          STAGE=${{ github.event.inputs.stage }}
+          cd ~/sources/catering/$STAGE
+          sudo docker compose --env-file .env -f ./deployment/docker-compose.yml -p catering_$STAGE up -d
+        '
 
 
 
