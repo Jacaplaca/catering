@@ -103,6 +103,7 @@ model User {
     kitchen     Kitchen?
     manager    Manager?
     Clipboard       Clipboard[]
+    editedFiles ClientFile[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -230,7 +231,6 @@ model Dietician {
     catering Catering @relation(fields: [cateringId], references: [id])
     name String?
     consumers Consumer[]
-    files ClientFile[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -614,8 +614,8 @@ model ClientFile {
     id String @id @default(cuid()) @map("_id")
     clientId String
     client Client @relation(fields: [clientId], references: [id])
-    dieticianId String
-    dietician Dietician @relation(fields: [dieticianId], references: [id])
+    // dieticianId String
+    // dietician Dietician @relation(fields: [dieticianId], references: [id])
     cateringId String
     catering Catering @relation(fields: [cateringId], references: [id])
     fileType ClientFileType
@@ -623,6 +623,9 @@ model ClientFile {
     week ClientFileWeek
     fileName String
     
+    editedById String?
+    editedBy User? @relation(fields: [editedById], references: [id])
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

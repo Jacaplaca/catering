@@ -4,7 +4,7 @@
         "inviteBy": ["superAdmin"],
         "order": 2,
         "dashboardGroups": ["users"],
-        "dashboardItems": ["settings", "orders", "consumers"],
+        "dashboardItems": ["settings", "orders", "consumers", "client-files"],
         "closeRegistration": true
     }
     ,

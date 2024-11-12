@@ -10,7 +10,6 @@ import useClientsFilesFilter from '@root/app/specific/components/ClientFiles/use
 import useGrouper from '@root/app/specific/components/ClientFiles/useGrouper';
 import useClientFilesAction from '@root/app/specific/components/ClientFiles/useRowAction';
 import useUploadFiles from '@root/app/specific/components/ClientFiles/useUploadFiles';
-import useFilter from '@root/app/specific/components/Clients/useFilter';
 import { type saveClientsFiles } from '@root/app/validators/specific/clientFiles';
 import { type SettingParsedType } from '@root/types';
 import { type ClientFilesSortName, type ClientFilesCustomTable } from '@root/types/specific';

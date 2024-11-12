@@ -6,8 +6,9 @@ import { getClientsFiles as clientsFilesValidator } from '@root/app/validators/s
 import { type ClientFilesCustomTable, clientSortNames } from '@root/types/specific';
 import { options } from '@root/app/server/api/specific/aggregate';
 import getClientsFilesListDbQuery from '@root/app/server/api/routers/specific/libs/getClientsFilesListDbQuery';
+import { RoleType } from '@prisma/client';
 
-const getMany = createCateringProcedure('dietician')
+const getMany = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(clientsFilesValidator)
     .query(({ input, ctx }) => {
         const { session: { catering } } = ctx;

@@ -6,7 +6,7 @@ import dateToWeek from '@root/app/specific/lib/dateToWeek';
 import { removeClientFilesByIds, removeClientFilesByTypeAndClientIdsValid } from '@root/app/validators/specific/clientFiles';
 import { sleep } from 'openai/core';
 
-export const byId = createCateringProcedure('dietician')
+export const byId = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(removeClientFilesByIds)
     .mutation(async ({ ctx, input }) => {
         const { db, session } = ctx

@@ -5,7 +5,7 @@ import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
 import { options } from '@root/app/server/api/specific/aggregate';
 
-const getAll = createCateringProcedure([RoleType.dietician])
+const getAll = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .query(({ ctx }) => {
         const { session: { catering } } = ctx;
 

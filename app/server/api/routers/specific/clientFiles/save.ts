@@ -1,88 +1,19 @@
 import { RoleType } from '@prisma/client';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { getSetting } from '@root/app/server/cache/settings';
 import { s3deleteKeys } from '@root/app/server/s3/delete';
 import dateToWeek from '@root/app/specific/lib/dateToWeek';
 import { saveClientsFiles } from '@root/app/validators/specific/clientFiles';
 
-// type ClientSettings {
-//     // lastOrderTime String?
-//     name String?
-// }
-
-// type ClientInfo {
-//     name String?
-//     email String?
-//     phone String?
-//     address String?
-//     city String?
-//     zip String?
-//     contactPerson String?
-//     notes String?
-//     country String?
-//     code String?
-// }
-
-// model Client {
-//     id String @id @default(cuid()) @map("_id")
-//     userId String @unique
-//     user User @relation(fields: [userId], references: [id])
-//     cateringId String
-//     catering Catering @relation(fields: [cateringId], references: [id])
-//     settings ClientSettings //editable by catering
-//     info ClientInfo //editable by catering
-//     name String? //editable by client
-//     consumers Consumer[]
-//     orders Order[]
-//     tags TagClient[]
-//     files ClientFile[]
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
-// }
-
-// enum ClientFileType {
-//     menu
-//     checklist
-//     diets
-// }
-
-// type ClientFileWeek {
-//     year Int
-//     week Int
-// }
-
-// model ClientFile {
-//     id String @id @default(cuid()) @map("_id")
-//     clientId String
-//     client Client @relation(fields: [clientId], references: [id])
-//     dieticianId String
-//     dietician Dietician @relation(fields: [dieticianId], references: [id])
-//     cateringId String
-//     catering Catering @relation(fields: [cateringId], references: [id])
-//     fileType ClientFileType
-//     s3Key String
-//     week ClientFileWeek
-
-//     createdAt DateTime @default(now())
-//     updatedAt DateTime @updatedAt
-// }
-
-const save = createCateringProcedure('dietician')
+const save = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(saveClientsFiles)
     .mutation(async ({ ctx, input }) => {
         const { db, session } = ctx
         const { day, s3ObjectKeys, fileType, clientIds, fileName } = input;
         const { cateringId } = session.user;
 
-        const dieticianId = await getJobId({ userId: session.user.id, cateringId, roleId: RoleType.dietician });
-
         if (!cateringId) {
             throw new Error("Brak ID cateringu");
-        }
-
-        if (!dieticianId) {
-            throw new Error("Brak ID dietetyka");
         }
 
         const { week, weekYear } = dateToWeek(day);
@@ -96,9 +27,9 @@ const save = createCateringProcedure('dietician')
                 const existingFile = await db.clientFile.findFirst({
                     where: {
                         clientId,
-                        dieticianId,
                         cateringId,
                         fileType,
+                        editedById: session.user.id,
                         week: {
                             is: {
                                 year: weekYear,
@@ -122,9 +53,9 @@ const save = createCateringProcedure('dietician')
                 } else {
                     clientFiles.push({
                         clientId,
-                        dieticianId,
                         cateringId,
                         fileType,
+                        editedById: session.user.id,
                         s3Key: key,
                         fileName,
                         week: {
