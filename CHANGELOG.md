@@ -1,3 +1,12 @@
+## [1.0.10](https://github.com/Jacaplaca/catering/compare/v1.0.9...v1.0.10) (2024-11-14)
+
+
+### Bug Fixes
+
+* dynamic import init setting, submit button in sign-in, version in footer, manager remove client file ([b72af56](https://github.com/Jacaplaca/catering/commit/b72af566c794369f396c1ba0440ed89aa278c57e))
+
+
+
 ## [1.0.9](https://github.com/Jacaplaca/catering/compare/v1.0.8...v1.0.9) (2024-11-12)
 
 
@@ -21,10 +30,6 @@
 
 
 ## [1.0.6](https://github.com/Jacaplaca/catering/compare/v1.0.2...v1.0.6) (2024-11-11)
-
-
-
-## [1.0.2](https://github.com/Jacaplaca/catering/compare/v1.0.1...v1.0.2) (2024-11-11)
 
 
 
