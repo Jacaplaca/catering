@@ -7,6 +7,7 @@ import Logo from '@root/app/_components/Logo';
 import getDictFromApi from '@root/app/lib/lang/getDictFromApi';
 import { copyright } from '@root/config/config';
 import translate from '@root/app/lib/lang/translate';
+import { env } from '@root/app/env';
 
 
 const Links: FunctionComponent<{
@@ -63,7 +64,7 @@ const Footer: FunctionComponent<{
           <p
             className="text-sm flex gap-1 justify-center items-center"
           >{translate(dictionary, "Footer:copyright_text")}<strong><Link href={copyright.link}>{copyright.label}</Link></strong>
-            {/* <i className='text-xs ml-2'>{env.APP_VERSION}</i> */}
+            <i className='text-xs ml-2'>v{env.APP_VERSION}</i>
           </p>
         </div>
       </div>

@@ -35,6 +35,7 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
+    APP_VERSION: z.string(),
     DATABASE_URL: z
       .string()
       .url()
@@ -119,6 +120,7 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    APP_VERSION: process.env.npm_package_version,
     DATABASE_URL: getDbUrl(),
     MONGO_INITDB_DATABASE_USERNAME: process.env.MONGO_INITDB_DATABASE_USERNAME,
     MONGO_INITDB_DATABASE_PASSWORD: process.env.MONGO_INITDB_DATABASE_PASSWORD,

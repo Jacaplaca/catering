@@ -1,5 +1,5 @@
 import { type ClientFileType } from '@prisma/client';
-import { UpdateMessageType } from '@root/app/hooks/useMessage';
+import { type UpdateMessageType } from '@root/app/hooks/useMessage';
 import { api } from '@root/app/trpc/react';
 import { useBoolean } from 'usehooks-ts'
 

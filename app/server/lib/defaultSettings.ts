@@ -12,35 +12,24 @@ type Setting = {
 }
 
 export async function getDefaultSettings() {
-    const folderPath = './app/assets/settings';
+    const mainSettings = await import('@root/app/assets/settings/main');
+    const specificSettings = await import('@root/app/assets/settings/specific');
+
+    const allSettingsModules = [
+        mainSettings.default,
+        specificSettings.default,
+    ];
+
     const settings: Setting[] = [];
+    let mergedSettings: Record<string, unknown> = {};
 
-    try {
-        const files = fs.readdirSync(folderPath, { withFileTypes: true });
-        const tsFiles = files
-            .filter(file => file.isFile() && extname(file.name) === '.ts')
-            .sort((a, b) => {
-                if (a.name === 'main.ts') return -1;
-                if (b.name === 'specific.ts') return 1;
-                return a.name.localeCompare(b.name);
-            });
+    for (const settingsModule of allSettingsModules) {
+        mergedSettings = { ...mergedSettings, ...settingsModule };
+    }
 
-        let mergedSettings: Record<string, string> = {};
-
-        for (const file of tsFiles) {
-            const filePath = join(folderPath, file.name);
-            const settingsModule = await import(filePath) as { default: Record<string, string> };
-            if (settingsModule.default) {
-                mergedSettings = { ...mergedSettings, ...settingsModule.default };
-            }
-        }
-
-        for (const [key, value] of Object.entries(mergedSettings)) {
-            const [access, group, name, type] = key.split(':') as [SettingAccessType, string, string, SettingType];
-            settings.push({ access, group, name, type, value: stringifySetting(value, type) });
-        }
-    } catch (error) {
-        console.error('Error processing files:', error);
+    for (const [key, value] of Object.entries(mergedSettings)) {
+        const [access, group, name, type] = key.split(':') as [SettingAccessType, string, string, SettingType];
+        settings.push({ access, group, name, type, value: stringifySetting(value, type) });
     }
 
     return settings;

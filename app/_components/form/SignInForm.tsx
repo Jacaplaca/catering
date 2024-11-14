@@ -164,6 +164,7 @@ const SignInForm: FunctionComponent<{
 
             <MyButton
               className='w-full'
+              type="button"
               onClick={() => window.location.href = makeHref({ lang, page: 'sign-up' })}
               id='sign-up-button'
               ariaLabel={translate(dictionary, 'sign-in:create_account_button')}

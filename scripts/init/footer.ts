@@ -13,7 +13,6 @@ async function initFooter() {
   const footerInDb = await db.setting.findUnique({
     where: { group_name: { group: 'navigation', name: 'footer' } }
   });
-  console.log("🚀 ~ initFooter ~ footerInDb:", footerInDb)
 
   if (!footerInDb) {
     await db.setting.create({

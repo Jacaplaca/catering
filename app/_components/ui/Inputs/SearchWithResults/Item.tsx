@@ -13,7 +13,7 @@ export type ItemProps = {
     isSelected?: boolean;
 }
 
-const Item: FunctionComponent<ItemProps> = ({ item, virtualRow, isLoaderRow, onClick, fragment, limitChars = 25, isSelected }) => {
+const Item: FunctionComponent<ItemProps> = ({ item, virtualRow, isLoaderRow, onClick, fragment, limitChars = 25 }) => {
     return (
         <ItemWrapper
             item={item}

@@ -1,4 +1,4 @@
-import { startOfWeek, addWeeks, isBefore, setDay, endOfWeek } from 'date-fns';
+import { startOfWeek, addWeeks, isBefore, setDay } from 'date-fns';
 
 const dayToNumber = {
     sunday: 0,

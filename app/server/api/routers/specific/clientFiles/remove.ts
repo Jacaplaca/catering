@@ -1,10 +1,8 @@
 import { RoleType, type ClientFileType } from '@prisma/client';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { s3deleteKeys } from '@root/app/server/s3/delete';
 import dateToWeek from '@root/app/specific/lib/dateToWeek';
 import { removeClientFilesByIds, removeClientFilesByTypeAndClientIdsValid } from '@root/app/validators/specific/clientFiles';
-import { sleep } from 'openai/core';
 
 export const byId = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(removeClientFilesByIds)
@@ -13,14 +11,8 @@ export const byId = createCateringProcedure([RoleType.dietician, RoleType.manage
         const { ids } = input;
         const { cateringId } = session.user;
 
-        const dieticianId = await getJobId({ userId: session.user.id, cateringId, roleId: RoleType.dietician });
-
         if (!cateringId) {
             throw new Error("Brak ID cateringu");
-        }
-
-        if (!dieticianId) {
-            throw new Error("Brak ID dietetyka");
         }
 
         const uniqueClientIds = new Set<string>();
@@ -59,21 +51,14 @@ export const byId = createCateringProcedure([RoleType.dietician, RoleType.manage
         };
     });
 
-export const byTypeAndClientIds = createCateringProcedure('dietician')
+export const byTypeAndClientIds = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(removeClientFilesByTypeAndClientIdsValid)
     .mutation(async ({ ctx, input }) => {
-        await sleep(1000);
         const { db, session } = ctx
         const { cateringId } = session.user;
 
         if (!cateringId) {
             throw new Error("Brak ID cateringu");
-        }
-
-        const dieticianId = await getJobId({ userId: session.user.id, cateringId, roleId: RoleType.dietician });
-
-        if (!dieticianId) {
-            throw new Error("Brak ID dietetyka");
         }
 
         const { fileType, clientIds, day } = input;
