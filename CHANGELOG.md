@@ -1,3 +1,12 @@
+## [1.0.11](https://github.com/Jacaplaca/catering/compare/v1.0.10...v1.0.11) (2024-11-16)
+
+
+### Bug Fixes
+
+* files upload more than 1, no refresh after upload, some lint, some libs ([2a204c4](https://github.com/Jacaplaca/catering/commit/2a204c40d5b01576f971d8fbf39d8f5259b9a205))
+
+
+
 ## [1.0.10](https://github.com/Jacaplaca/catering/compare/v1.0.9...v1.0.10) (2024-11-14)
 
 
@@ -26,10 +35,6 @@
 
 
 ## [1.0.7](https://github.com/Jacaplaca/catering/compare/v1.0.6...v1.0.7) (2024-11-11)
-
-
-
-## [1.0.6](https://github.com/Jacaplaca/catering/compare/v1.0.2...v1.0.6) (2024-11-11)
 
 
 
