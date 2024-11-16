@@ -7,7 +7,6 @@ import pageNameTrans from '@root/app/assets/pageNameTranslation'
 import { env } from '@root/app/env'
 import splitPathname from '@root/app/lib/url/splitPathname'
 import { s3getPresign } from '@root/app/server/s3/presign'
-import makeHref from '@root/app/lib/url/makeHref'
 
 // const appStructureLocale = 'en' as string
 function getLocale(request: NextRequest) {
@@ -20,7 +19,7 @@ function getLocale(request: NextRequest) {
   // Use negotiator and intl-localematcher to get best locale
   const languages = new Negotiator({ headers: negotiatorHeaders }).languages(
     locales
-  )
+  );
 
   const locale = matchLocale(languages, locales, env.DEFAULT_LOCALE) as Locale
 

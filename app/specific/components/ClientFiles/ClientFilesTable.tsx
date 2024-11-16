@@ -1,14 +1,13 @@
 'use client';
 
 import tableTheme from '@root/app/_components/Table/theme';
-import MainModal from '@root/app/_components/Modals/MainModal';
 import TableColumns from '@root/app/_components/Table/Columns';
 import TableContent from '@root/app/_components/Table/Content';
 import TableFooter from '@root/app/_components/Table/Footer';
 import TableHeader from '@root/app/_components/Table/Header.tsx';
 import QuickFilterRow from '@root/app/_components/Table/QuickFilterRow';
 import t from '@root/app/lib/lang/translate';
-import { useState, type FunctionComponent } from "react";
+import { type FunctionComponent } from "react";
 import RowActions from '@root/app/_components/Table/Actions';
 import TableWrapper from '@root/app/_components/Table/Wrapper';
 import TableActionConfirm from '@root/app/_components/Table/ActionConfirm';
@@ -19,15 +18,12 @@ import { useClientFilesTableContext } from '@root/app/specific/components/Client
 import Week from '@root/app/specific/components/ClientFiles/Week';
 import Grouper from '@root/app/specific/components/ClientFiles/Grouper';
 
-const clickable = false;
-
 const ClientFilesTable: FunctionComponent = () => {
 
     const {
         pageName,
         lang,
         dictionary,
-        settings,
         data: { table, skeleton },
         columns,
         isFetching,
@@ -42,13 +38,8 @@ const ClientFilesTable: FunctionComponent = () => {
             actions,
             showConfirmation
         },
-        // filter: { tags: { updateTagId } },
         message
     } = useClientFilesTableContext();
-
-    // const [isInviteOpen, setInviteOpen] = useState(false);
-
-    // const handleInviteOpen = () => { setInviteOpen(true); }
 
     return (
         <div className='relative'>
@@ -57,12 +48,6 @@ const ClientFilesTable: FunctionComponent = () => {
                 getData={getConfirmationData}
             />
             <Grouper />
-            {/* <MainModal
-                isOpen={isInviteOpen}
-                closeModal={() => setInviteOpen(false)}
-                header={t(dictionary, 'invite:title', [settings?.main?.siteName?.toString()])}
-            >
-            </MainModal> */}
             <TableWrapper>
                 <TableHeader
                     search={search}

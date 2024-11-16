@@ -6,7 +6,7 @@ import { type FunctionComponent } from 'react';
 const Documents: FunctionComponent<{
     lang: LocaleApp,
     pageName: string
-}> = async ({ lang, pageName }) => {
+}> = async ({ lang }) => {
     const clientFiles = await api.specific.clientFiles.asClient();
     const [
         dictionary,

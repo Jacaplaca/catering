@@ -1,21 +1,19 @@
-import { type Order } from '@prisma/client';
 import HighlightText from '@root/app/_components/Table/HighlightText';
 import SkeletonCell from '@root/app/_components/Table/SkeletonCell';
-import Checkbox from '@root/app/_components/ui/Inputs/Checkbox';
 import DayMealsCell from '@root/app/specific/components/Orders/ByDay/DayMealsCell';
 import { MealType, type OrderGroupedByDayCustomTable } from '@root/types/specific';
 import { format } from 'date-fns-tz';
-import { type FC } from 'react';
+// import { type FC } from 'react';
 
-const MealCount: FC<{ count: number }> = ({ count }) => {
-    return <div className={`
-    flex justify-center
-    text-gray-900 dark:text-gray-100 font-bold text-base
-    ${count ? "opacity-100" : "opacity-70"}
-    `}>
-        {count ? count : '-'}
-    </div>
-}
+// const MealCount: FC<{ count: number }> = ({ count }) => {
+//     return <div className={`
+//     flex justify-center
+//     text-gray-900 dark:text-gray-100 font-bold text-base
+//     ${count ? "opacity-100" : "opacity-70"}
+//     `}>
+//         {count ? count : '-'}
+//     </div>
+// }
 
 const useOrderGroupedByDayDataGrid = ({
     rows,

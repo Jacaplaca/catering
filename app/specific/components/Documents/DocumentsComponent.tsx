@@ -9,7 +9,7 @@ import { startOfWeek, endOfWeek } from 'date-fns';
 import { format } from 'date-fns-tz';
 import dateToWeek from '@root/app/specific/lib/dateToWeek';
 import { type FunctionComponent } from 'react';
-import { ClientFileType, type ClientFile } from '@prisma/client';
+import { type ClientFileType, type ClientFile } from '@prisma/client';
 import Link from 'next/link';
 import translate from '@root/app/lib/lang/translate';
 

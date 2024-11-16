@@ -1,5 +1,5 @@
 import useTableCheckbox from '@root/app/hooks/table/useTableCheckbox';
-import { UpdateMessageType } from '@root/app/hooks/useMessage';
+import { type UpdateMessageType } from '@root/app/hooks/useMessage';
 import useRemoveClientFiles from '@root/app/specific/components/ClientFiles/actions/useRemove';
 import { type TableActionType } from '@root/types';
 import { useState } from 'react';

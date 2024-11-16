@@ -17,8 +17,6 @@ import { Table } from 'flowbite-react';
 import { useKitchensTableContext } from '@root/app/specific/components/Kitchens/context';
 import Invite from '@root/app/_components/Dashboard/Settings/Invite';
 
-const clickable = false;
-
 const KitchenTable: FunctionComponent = () => {
     const {
         pageName,

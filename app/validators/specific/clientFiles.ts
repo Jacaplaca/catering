@@ -32,6 +32,7 @@ export const removeClientFilesByIds = z.object({
 export const oneClientWithFiles = z.object({
     clientId: z.string(),
     day: z.date(),
+    fileType: z.nativeEnum(ClientFileType).optional(),
 });
 
 export const removeClientFilesByTypeAndClientIdsValid = z.object({

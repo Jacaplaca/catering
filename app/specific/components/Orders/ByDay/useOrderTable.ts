@@ -52,7 +52,7 @@ const useOrderByDayTable = ({
         sortDirection,
     });
 
-    const [rows, setRows] = useRows<OrderGroupedByDayCustomTable>(fetchedRows);
+    const [rows] = useRows<OrderGroupedByDayCustomTable>(fetchedRows);
 
     const row = useDay();
 

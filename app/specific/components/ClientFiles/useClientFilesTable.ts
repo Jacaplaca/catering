@@ -30,7 +30,7 @@ const useClientFilesTable = ({
     const { messageObj, resetMessage, updateMessage } = useMessage(dictionary);
     const { sort, sortDirection, sortName } = useTableSort<ClientFilesSortName>("name")
     const { searchValue, search } = useSearch({ lang, pageName });
-    const filter = useClientsFilesFilter({ lang, pageName });
+    const filter = useClientsFilesFilter();
 
     const grouper = useGrouper({
         day: filter.week.dayOfWeek,

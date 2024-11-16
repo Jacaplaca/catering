@@ -20,8 +20,6 @@ import Invite from '@root/app/_components/Dashboard/Settings/Invite';
 import TagSearch from '@root/app/specific/components/ui/TagSearch';
 import TableToast from '@root/app/_components/Table/Toast';
 
-const clickable = true;
-
 const ClientsTable: FunctionComponent = () => {
 
     const {

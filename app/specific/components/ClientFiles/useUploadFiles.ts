@@ -24,10 +24,11 @@ function useUploadFiles({
     const utils = api.useUtils();
 
     const [clientId, setClientId] = useState<string | null>(null);
+    const [fileType, setFileType] = useState<ClientFileType | undefined>(undefined);
 
-    const { data: client } = api.specific.clientFiles.getOne.useQuery({ clientId: clientId ?? '', day },
+    const { data: client } = api.specific.clientFiles.getOne.useQuery({ clientId: clientId ?? '', day, fileType },
         {
-            enabled: !!clientId
+            enabled: !!clientId && !!fileType
         }
     );
 
@@ -42,12 +43,14 @@ function useUploadFiles({
         saveClientFiles.mutate(values);
     };
 
-    const onSuccess = async ({ affectedClientIds, messageType }: {
+    const onSuccess = async ({ affectedClientIds, messageType, fileType }: {
         affectedClientIds: string[],
-        messageType: PredefinedMessageType
+        messageType: PredefinedMessageType,
+        fileType?: ClientFileType
     }) => {
-        if (affectedClientIds.length === 1 && affectedClientIds[0]) {
+        if (affectedClientIds.length === 1 && affectedClientIds[0] && fileType) {
             setClientId(affectedClientIds[0]);
+            setFileType(fileType);
         } else {
             await utils.specific.clientFiles.count.invalidate();
             await utils.specific.clientFiles.getMany.invalidate();
@@ -56,7 +59,7 @@ function useUploadFiles({
     }
 
     const saveClientFiles = api.specific.clientFiles.save.useMutation({
-        onSuccess: async ({ affectedClientIds }) => await onSuccess({ affectedClientIds, messageType: 'saved' }),
+        onSuccess: async ({ affectedClientIds, fileType }) => await onSuccess({ affectedClientIds, messageType: 'saved', fileType }),
         onError: (error) => {
             updateMessage({ content: translate(dictionary, error.message), status: 'error' });
         },

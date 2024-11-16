@@ -1,7 +1,5 @@
 import { type SettingAccessType, type SettingType } from "@prisma/client";
 import stringifySetting from '@root/app/lib/settings/stringifySettings';
-import * as fs from 'fs';
-import { extname, join } from 'path';
 
 type Setting = {
     access: SettingAccessType;

@@ -79,6 +79,7 @@ const save = createCateringProcedure([RoleType.dietician, RoleType.manager])
             success: true,
             count: createdCount,
             affectedClientIds: clientIds,
+            fileType,
         };
     });
 

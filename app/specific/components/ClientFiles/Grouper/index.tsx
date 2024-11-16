@@ -10,6 +10,8 @@ import PickerFromAll from '@root/app/specific/components/ui/PickerFromAll';
 import formatFileSize from '@root/app/specific/lib/formatFileSize';
 import { useState } from 'react';
 
+const MAX_FILES = 1;
+
 const InstructionStep = ({ label, checked }: { label: string, checked: boolean }) => {
     return <div className='flex flex-row gap-2'>
         <div>{checked ? <i className="fa-solid fa-check text-green-500 dark:text-green-400" /> : <i className="fa-solid fa-check text-neutral-300 dark:text-neutral-700" />}</div>
@@ -28,12 +30,10 @@ const Grouper = () => {
             upload, dropzone, previewAttachments },
         uploadFiles: {
             uploadInProgress,
-            setUploadInProgressTrue,
-            setUploadInProgressFalse,
-            onSave,
-            onRemove
         }
     } = useClientFilesTableContext();
+
+    const isMaxFiles = Object.keys(previewAttachments).length >= MAX_FILES
 
     const [searchValue, setSearchValue] = useState('');
     const [filteredClients, setFilteredClients] = useState<{ id: string, name: string, code: string }[]>([]);
@@ -51,8 +51,6 @@ const Grouper = () => {
         isOpen={isOpened}
         closeModal={closeFileType}
         header={translate(dictionary, clientFileTypeDictionary[fileTypeOpened]?.tooltip)}
-        // message={error ? translate(dictionary, error) : undefined}
-        // isError={true}
         footer={
             <SaveGroupFilesButtons />
         }
@@ -62,7 +60,6 @@ const Grouper = () => {
         `}
     >
         <div className='flex flex-row gap-4 h-[500px] justify-between '>
-
             <div className='flex flex-col gap-2 w-3/5 px-2'>
                 <PickerFromAll
                     dictionary={dictionary}
@@ -89,9 +86,9 @@ const Grouper = () => {
                 </div>
                 <div className='flex flex-col items-center gap-4 w-full'>
                     <div
-                        {...dropzone.getRootProps({
-                            className: 'p-1'
-                        })}
+                        {...(!isMaxFiles && dropzone.getRootProps({}))
+                    }
+                    className={'p-1'}
                     >
                         <div className={`
                 flex flex-col gap-2 justify-center items-center cursor-pointer p-2 py-4
@@ -103,12 +100,11 @@ const Grouper = () => {
                 ${dropzone.isFocused ? 'border-blue-500' : 'border-neutral-200 dark:border-neutral-600'}
                 ${dropzone.isDragAccept ? 'border-green-500' : ''}
                 ${dropzone.isDragReject ? 'border-red-500' : ''}
-                ${uploadInProgress ? 'opacity-50 pointer-events-none' : ''}
+                ${(uploadInProgress ?? isMaxFiles) ? 'opacity-50 pointer-events-none' : ''}
             `}>
-                            {uploadInProgress ? null : <input {...dropzone.getInputProps()} />}
+                            {uploadInProgress ? null : <input {...dropzone.getInputProps()} disabled={isMaxFiles} />}
                             <i className="fa-solid fa-cloud-arrow-up text-2xl" />
                             <div className='flex flex-col gap-2 text-neutral-800 dark:text-neutral-50'>
-
                                 <div className='text-sm'>{translate(dictionary, 'shared:upload_file_dropzone_single')}</div>
                                 <div className='text-xs italic'>{translate(dictionary, 'shared:max_file_size', [formatFileSize(settings.clientFiles['max-file-size'] as number)])}</div>
                             </div>

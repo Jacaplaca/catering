@@ -42,14 +42,8 @@ const useGrouper = ({ clientFiles, updateMessage, dictionary, clientId, clientFi
     const upload = useUpload(prefix, onUploadComplete);
     const {
         previewAttachments,
-        totalSize,
-        progress,
         uploading,
-        uploadComplete,
         onFilesChange,
-        onSubmit,
-        onFileRemove,
-        totalLoaded,
         totalProgressPercent,
         setPreviewAttachments,
         presignedUrls,
@@ -60,6 +54,11 @@ const useGrouper = ({ clientFiles, updateMessage, dictionary, clientId, clientFi
         maxFiles: 1,
         multiple: false,
         maxSize: maxFileSize,
+        onDrop: (acceptedFiles) => {
+            if (acceptedFiles.length > 0) {
+                onFilesChange({ target: { files: acceptedFiles } } as unknown as ChangeEvent<HTMLInputElement>);
+            }
+        },
         onDropRejected: (fileRejections) => {
             fileRejections.forEach((fileRejection) => {
                 if (fileRejection.errors[0]?.code === 'file-too-large') {
@@ -72,10 +71,6 @@ const useGrouper = ({ clientFiles, updateMessage, dictionary, clientId, clientFi
             });
         },
     });
-
-    useEffect(() => {
-        onFilesChange({ target: { files: dropzone.acceptedFiles } } as unknown as ChangeEvent<HTMLInputElement>);
-    }, [dropzone.acceptedFiles]);
 
     const { data: allClients } = api.specific.client.getAll.useQuery();
 
@@ -122,7 +117,7 @@ const useGrouper = ({ clientFiles, updateMessage, dictionary, clientId, clientFi
         } else {
             setSavingDisabled(true);
         }
-    }, [previewAttachments, fileTypeOpened, clientsPicked, uploading, presignedUrls.data]);
+    }, [previewAttachments, fileTypeOpened, clientsPicked, uploading, presignedUrls.data, setSavingDisabled]);
 
     return {
         fileTypeOpened,

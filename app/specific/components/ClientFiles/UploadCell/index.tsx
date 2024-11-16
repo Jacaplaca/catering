@@ -5,7 +5,7 @@ import { useClientFilesTableContext } from '@root/app/specific/components/Client
 import useGrouper from '@root/app/specific/components/ClientFiles/useGrouper';
 import { type ClientFilesCustomTable } from '@root/types/specific';
 import Link from 'next/link';
-import { useEffect, useState, type FC } from 'react';
+import { useCallback, useEffect, useState, type FC } from 'react';
 
 const UploadCell: FC<{
     files: ClientFilesCustomTable['menu'] | ClientFilesCustomTable['checklist'] | ClientFilesCustomTable['diets']
@@ -43,7 +43,7 @@ const UploadCell: FC<{
         day: week.dayOfWeek
     });
 
-    const submit = async () => {
+    const submit = useCallback(async () => {
         if (dropzone.acceptedFiles.length > 0 && upload.presignedUrls.data?.length) {
             setUploadInProgressTrue(clientId, clientFileType);
             await upload.onSubmit();
@@ -51,13 +51,20 @@ const UploadCell: FC<{
             upload.setUploadComplete(false);
             setUploadInProgressFalse();
         }
-    };
+    }, [
+        dropzone.acceptedFiles,
+        clientId,
+        clientFileType,
+        setUploadInProgressTrue,
+        setUploadInProgressFalse,
+        upload
+    ]);
 
     useEffect(() => {
         if (dropzone.acceptedFiles.length > 0 && upload.presignedUrls.data?.length && !upload.uploading) {
             void submit();
         }
-    }, [upload.presignedUrls, dropzone.acceptedFiles, upload.uploading]);
+    }, [upload.presignedUrls, dropzone.acceptedFiles, upload.uploading, submit]);
 
     const [isConfirmationOpen, setIsConfirmationOpen] = useState(false);
 

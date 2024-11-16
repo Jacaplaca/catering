@@ -17,8 +17,6 @@ import { Table } from 'flowbite-react';
 import { useDieticianTableContext } from '@root/app/specific/components/Dieticians/context';
 import Invite from '@root/app/_components/Dashboard/Settings/Invite';
 
-const clickable = false;
-
 const DieticiansTable: FunctionComponent = () => {
     const {
         pageName,
