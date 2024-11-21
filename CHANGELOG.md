@@ -1,3 +1,12 @@
+## [1.0.12](https://github.com/Jacaplaca/catering/compare/v1.0.11...v1.0.12) (2024-11-21)
+
+
+### Bug Fixes
+
+* removing not confirmed accounts, reset email templates, expires to invite and confirmation ([e09a6f9](https://github.com/Jacaplaca/catering/commit/e09a6f9a11ff15e302f1b21bf168b7402d31de71))
+
+
+
 ## [1.0.11](https://github.com/Jacaplaca/catering/compare/v1.0.10...v1.0.11) (2024-11-16)
 
 
@@ -31,10 +40,6 @@
 ### Bug Fixes
 
 * remove unnecessary line in notes ([86e0a2f](https://github.com/Jacaplaca/catering/commit/86e0a2fb1ddbbda26227e30f7f6827fcaabab114))
-
-
-
-## [1.0.7](https://github.com/Jacaplaca/catering/compare/v1.0.6...v1.0.7) (2024-11-11)
 
 
 
