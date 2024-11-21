@@ -1,3 +1,12 @@
+## [1.0.13](https://github.com/Jacaplaca/catering/compare/v1.0.12...v1.0.13) (2024-11-21)
+
+
+### Bug Fixes
+
+* add tokens validity settings update ([52523a0](https://github.com/Jacaplaca/catering/commit/52523a00251a2277df01ba0f8bcdb6119a9fe1d8))
+
+
+
 ## [1.0.12](https://github.com/Jacaplaca/catering/compare/v1.0.11...v1.0.12) (2024-11-21)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * **manager:** add client-file handling ([4f1c132](https://github.com/Jacaplaca/catering/commit/4f1c1322c842c601fd0b5e145f1371727d0df6cc))
-
-
-
-## [1.0.8](https://github.com/Jacaplaca/catering/compare/v1.0.7...v1.0.8) (2024-11-11)
-
-
-### Bug Fixes
-
-* remove unnecessary line in notes ([86e0a2f](https://github.com/Jacaplaca/catering/commit/86e0a2fb1ddbbda26227e30f7f6827fcaabab114))
 
 
 
