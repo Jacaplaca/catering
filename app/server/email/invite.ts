@@ -5,18 +5,21 @@ const sendInviteRequest = async ({
     inviterEmail,
     lang,
     url,
+    expires,
     staticContext
 }: {
     invitedEmail: string,
     inviterEmail: string,
     lang: LocaleApp,
     url: string,
+    expires: Date,
     staticContext: Record<string, string>
 }) => {
 
     const dynamicContext = {
         url,
-        inviterEmail
+        inviterEmail,
+        expires: expires.toLocaleString(lang),
     }
 
     await sendMail({

@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { env } from '@root/app/env';
 import getContent from '@root/scripts/lib/getContent';
+import { addNewEmailTemplates } from '@root/scripts/lib/resetEmailTemplates';
 import { type EmailTemplatePropsType, type ArticlePropsType, type PagePropsType } from '@root/types';
 const db = new PrismaClient();
 
@@ -17,19 +18,7 @@ async function initContent<T extends "pages" | "articles" | 'mdContent' | 'email
         })
       });
     }
-    const emailTemplatesDB = await db.emailTemplate.findMany();
-    const freshArticles = emailTemplatesHDD.filter((item) => {
-      const found = emailTemplatesDB.find((t) => t.key === item.key && t.lang === item.lang);
-      return !found;
-    });
-    if (freshArticles.length > 0) {
-      await db.emailTemplate.createMany({
-        data: freshArticles.map((item) => {
-          const { group, ...rest } = item;
-          return rest;
-        })
-      });
-    }
+    await addNewEmailTemplates(emailTemplatesHDD);
   }
 
 

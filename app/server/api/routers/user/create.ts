@@ -93,6 +93,7 @@ const create = publicProcedure
             to: currentUser.email,
             token,
             lang,
+            expires,
         });
 
         inviteToken && await autoAssignRoleToUser({ userId: currentUser.id, inviteToken })

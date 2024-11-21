@@ -63,6 +63,7 @@ const sendInvite = protectedProcedure
             url,
             lang,
             inviterEmail: user.email,
+            expires,
             staticContext: await staticEmailContext(inviterId),
         }))
 

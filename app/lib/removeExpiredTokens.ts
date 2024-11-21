@@ -1,3 +1,4 @@
+import removeNotConfirmedUsers from '@root/app/server/api/routers/specific/libs/removeNotConfirmedUsers';
 import { db } from '@root/app/server/db'
 
 export const removeExpiredConfirmationSignupByEmailTokens = async () => {
@@ -7,10 +8,11 @@ export const removeExpiredConfirmationSignupByEmailTokens = async () => {
                 lt: new Date()
             }
         }
-    })
+    });
 
-    const emails = activationTokens.map(token => token.identifier)
-    await db.user.deleteMany({
+    const emails = activationTokens.map(token => token.identifier);
+
+    const users = await db.user.findMany({
         where: {
             email: {
                 in: emails
@@ -20,7 +22,10 @@ export const removeExpiredConfirmationSignupByEmailTokens = async () => {
                 not: null
             }
         }
-    })
+    });
+
+    await removeNotConfirmedUsers(users);
+
     await db.activationToken.deleteMany({
         where: {
             identifier: {
