@@ -31,4 +31,9 @@ export const updateEmailSettingsValid = z.object({
     templateHtmlWrapper: z.string(),
     username: z.string(),
     lang: z.enum(i18n.locales).default(env.NEXT_PUBLIC_DEFAULT_LOCALE),
+    invitationValiditySec: z.preprocess((val) => Number(val), z.number().int().positive()),
+    confirmSignupByEmailValiditySec: z.preprocess((val) => Number(val), z.number().int().positive()),
+    // resetPasswordValiditySec: z.number(),
+    // confirmNewEmailValiditySec: z.number(),
+
 })

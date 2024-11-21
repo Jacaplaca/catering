@@ -70,6 +70,21 @@ const superAdminEmailInputsDefs = <TFieldValues extends FieldValues>(form: UseFo
             isHorizontal: true,
             isTextArea: true
         },
+        {
+            label: 'settings:token_invite_expiration',
+            name: 'invitationValiditySec',
+            type: 'number',
+            message: form.formState.errors.invitationValiditySec?.message as string,
+            isHorizontal: true,
+        },
+        {
+            label: 'settings:token_confirmation_expiration',
+            name: 'confirmSignupByEmailValiditySec',
+            type: 'number',
+            message: form.formState.errors.confirmSignupByEmailValiditySec?.message as string,
+            isHorizontal: true,
+        },
+
     ];
 
     return inputs;

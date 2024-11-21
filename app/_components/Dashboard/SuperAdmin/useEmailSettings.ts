@@ -30,26 +30,35 @@ const useEmailSettings = ({ dictionary }: {
             port: 0,
             templateHtmlWrapper: '',
             username: '',
+            invitationValiditySec: 0,
+            confirmSignupByEmailValiditySec: 0,
+            // resetPasswordValiditySec: 0,
+            // confirmNewEmailValiditySec: 0,
         },
     });
 
     useEffect(() => {
         if (settings) {
+            const { email, token } = settings;
             form.reset({
-                contactAdmin: settings.contactAdmin ?? '',
-                from: settings.from ?? '',
-                fromAlias: settings.fromAlias ?? '',
-                fromActivation: settings.fromActivation ?? '',
-                host: settings.host ?? '',
-                password: settings.password ?? '',
-                port: settings.port ?? 0,
-                templateHtmlWrapper: settings.templateHtmlWrapper ?? '',
-                username: settings.username ?? '',
+                contactAdmin: email.contactAdmin ?? '',
+                from: email.from ?? '',
+                fromAlias: email.fromAlias ?? '',
+                fromActivation: email.fromActivation ?? '',
+                host: email.host ?? '',
+                password: email.password ?? '',
+                port: email.port ?? 0,
+                templateHtmlWrapper: email.templateHtmlWrapper ?? '',
+                username: email.username ?? '',
+                invitationValiditySec: token.invitationValiditySec ? token.invitationValiditySec / 3600 : 0,
+                confirmSignupByEmailValiditySec: token.confirmSignupByEmailValiditySec ? token.confirmSignupByEmailValiditySec / 3600 : 0,
+                // resetPasswordValiditySec: token.resetPasswordValiditySec ? token.resetPasswordValiditySec / 3600 : 0,
+                // confirmNewEmailValiditySec: token.confirmNewEmailValiditySec ? token.confirmNewEmailValiditySec / 3600 : 0,
             });
         }
     }, [settings, form]);
 
-    const submitFunction = api.settings.updateEmailSettings;
+    const submitFunction = api.settings.update;
 
     const updateSetting = submitFunction.useMutation({
         onSuccess: async () => {

@@ -221,6 +221,8 @@
       "email_password": "Hasło",
       "email_port": "Port",
       "email_template_html_wrapper": "Szablon HTML",
-      "email_username": "Nazwa użytkownika"
+      "email_username": "Nazwa użytkownika",
+      "token_invite_expiration": "Ważność zaproszenia (w godzinach)",
+      "token_confirmation_expiration": "Ważność potwierdzenia (w godzinach)"
   }
 }

@@ -45,7 +45,7 @@ export const settingsRouter = {
 
     getSuperAdminSettings: superAdminProcedure
         .query(async () => {
-            return getSettingsGroup('email', true) as Promise<{
+            const email = await getSettingsGroup('email', true) as unknown as {
                 contactAdmin: string;
                 from: string;
                 fromAlias: string;
@@ -55,7 +55,14 @@ export const settingsRouter = {
                 port: number;
                 templateHtmlWrapper: string;
                 username: string;
-            }>
+            }
+            const token = await getSettingsGroup('token', true) as unknown as {
+                invitationValiditySec: number;
+                resetPasswordValiditySec: number;
+                confirmSignupByEmailValiditySec: number;
+                confirmNewEmailValiditySec: number;
+            };
+            return { email, token };
         }),
 
     testEmail: superAdminProcedure
@@ -84,19 +91,34 @@ export const settingsRouter = {
             });
         }),
 
-    updateEmailSettings: superAdminProcedure
+    update: superAdminProcedure
         .input(updateEmailSettingsValid)
         .mutation(async ({ input }) => {
-            const { contactAdmin, from, fromAlias, host, password, port, templateHtmlWrapper, username, fromActivation } = input;
-            await updateSetting({ group: 'email', name: 'contactAdmin', value: contactAdmin, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'from', value: from, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'fromAlias', value: fromAlias, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'host', value: host, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'password', value: password, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'port', value: port, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'templateHtmlWrapper', value: templateHtmlWrapper, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'fromActivation', value: fromActivation, refreshCache: false });
-            await updateSetting({ group: 'email', name: 'username', value: username, refreshCache: true });
+            const { contactAdmin,
+                from,
+                fromAlias,
+                host,
+                password,
+                port,
+                templateHtmlWrapper,
+                username,
+                fromActivation,
+                invitationValiditySec,
+                confirmSignupByEmailValiditySec
+            } = input;
+            await Promise.all([
+                await updateSetting({ group: 'email', name: 'contactAdmin', value: contactAdmin, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'from', value: from, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'fromAlias', value: fromAlias, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'host', value: host, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'password', value: password, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'port', value: port, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'templateHtmlWrapper', value: templateHtmlWrapper, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'fromActivation', value: fromActivation, refreshCache: false }),
+                await updateSetting({ group: 'email', name: 'username', value: username, refreshCache: false }),
+                await updateSetting({ group: 'token', name: 'invitationValiditySec', value: invitationValiditySec * 3600, refreshCache: false }),
+                await updateSetting({ group: 'token', name: 'confirmSignupByEmailValiditySec', value: confirmSignupByEmailValiditySec * 3600, refreshCache: true }),
+            ]);
             return { success: true };
         }),
 
