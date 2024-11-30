@@ -1,3 +1,12 @@
+## [1.0.17](https://github.com/Jacaplaca/catering/compare/v1.0.16...v1.0.17) (2024-11-30)
+
+
+### Bug Fixes
+
+* add files to multiple clients modal ([6ecf886](https://github.com/Jacaplaca/catering/commit/6ecf886a5af13122467241ca29a4838576612dc8))
+
+
+
 ## [1.0.16](https://github.com/Jacaplaca/catering/compare/v1.0.15...v1.0.16) (2024-11-30)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * add tokens validity settings update ([52523a0](https://github.com/Jacaplaca/catering/commit/52523a00251a2277df01ba0f8bcdb6119a9fe1d8))
-
-
-
-## [1.0.12](https://github.com/Jacaplaca/catering/compare/v1.0.11...v1.0.12) (2024-11-21)
-
-
-### Bug Fixes
-
-* removing not confirmed accounts, reset email templates, expires to invite and confirmation ([e09a6f9](https://github.com/Jacaplaca/catering/commit/e09a6f9a11ff15e302f1b21bf168b7402d31de71))
 
 
 
