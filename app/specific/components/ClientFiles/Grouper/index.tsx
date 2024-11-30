@@ -40,7 +40,7 @@ const Grouper = () => {
 
     const updateSearchValue = (value: string) => {
         setSearchValue(value);
-        setFilteredClients(allClients?.filter(client => client.name.toLowerCase().includes(value.toLowerCase())) ?? []);
+        setFilteredClients(allClients?.filter(client => client?.name?.toLowerCase().includes(value.toLowerCase())) ?? []);
     }
 
     if (!isOpened || !fileTypeOpened) return null;
@@ -87,8 +87,8 @@ const Grouper = () => {
                 <div className='flex flex-col items-center gap-4 w-full'>
                     <div
                         {...(!isMaxFiles && dropzone.getRootProps({}))
-                    }
-                    className={'p-1'}
+                        }
+                        className={'p-1'}
                     >
                         <div className={`
                 flex flex-col gap-2 justify-center items-center cursor-pointer p-2 py-4

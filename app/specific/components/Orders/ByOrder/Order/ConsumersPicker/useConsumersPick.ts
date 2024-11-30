@@ -22,7 +22,7 @@ const useConsumersPick = ({
 
     const searchConsumers = (value: string) => {
         setInputValue(value);
-        setFilteredItems(allowedItems?.filter(item => item.name.toLowerCase().includes(value.toLowerCase())) ?? []);
+        setFilteredItems(allowedItems?.filter(item => item?.name?.toLowerCase().includes(value.toLowerCase())) ?? []);
     }
 
     const selectAll = () => {
