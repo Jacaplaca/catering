@@ -16,8 +16,6 @@ const SuperAdmin: React.FC<{ dictionary: Record<string, string>, children?: Reac
         onDeactivateApp,
     } = useEmailSettings({ dictionary });
 
-    console.log(form);
-
     return (
         <div>
             <SettingsFormRenderer

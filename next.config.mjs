@@ -9,7 +9,6 @@ const __dirname = path.resolve();
 const sassPaths = [
     path.join(__dirname, "./app/styles"),
 ]
-// console.log("🚀 ~ file: next.config.mjs:9 ~ __dirname:", sassPaths)
 
 export const images = {
     domains: ['t1.gstatic.com',

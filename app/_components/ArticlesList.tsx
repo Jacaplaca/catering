@@ -45,7 +45,6 @@ const ArticlesList: FunctionComponent<{
         const { lang } = params;
 
 
-        // console.log("🚀 ~ file: ArticlesList.tsx:47 ~ params:", params)
         // const langSlugMap = slugMap[lang]
         // const slugs = langSlugMap[contentFolder]
 

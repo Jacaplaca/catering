@@ -16,20 +16,18 @@ import FormWrapper from '@root/app/_components/ui/form/Wrapper';
 import InputStandard from '@root/app/_components/ui/Inputs/Standard';
 import MyButton from '@root/app/_components/ui/buttons/MyButton';
 import Or from '@root/app/_components/ui/form/Or';
-import { type Locale } from '@root/i18n-config';
 import { useSearchParams } from 'next/navigation'
 import WithInfoWrapper from '@root/app/_components/ui/form/WithInfoWrapper';
 import Message from '@root/app/_components/ui/form/Message';
 import { type Session } from 'next-auth';
 import translate from '@root/app/lib/lang/translate';
 import makeHref from '@root/app/lib/url/makeHref';
-// import AuthButton from '@root/app/_components/ui/buttons/Auth';
 
 const FormSchema = loginValidator
 
 const SignInForm: FunctionComponent<{
   dictionary: Record<string, string>;
-  lang: Locale;
+  lang: LocaleApp;
   redirectUrl: string;
   children: React.ReactNode
   session: Session | null
@@ -54,11 +52,10 @@ const SignInForm: FunctionComponent<{
   });
 
   useEffect(() => {
-    session && void signOut()
+    session && void signOut();
   }, [firstTimeLoginOnEmail, session])
 
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    console.log('onSubmit', values)
     setIsLoading(true)
     const singInData = await signIn('credentials', {
       redirect: false,
@@ -68,7 +65,6 @@ const SignInForm: FunctionComponent<{
     })
 
     if (singInData?.error) {
-      console.log('singInData?.error', singInData?.error)
       switch (singInData?.error) {
         case 'CredentialsSignin':
           setError({ message: translate(dictionary, "sign-in:error_credentials"), type: 'error' })

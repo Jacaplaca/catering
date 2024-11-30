@@ -20,7 +20,6 @@ import { loadFonts } from '@root/app/lib/loadFonts';
 const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
     .input(getOrdersPdfValid)
     .query(async ({ input, ctx }) => {
-        console.log("dayPdf");
         const { session: { catering } } = ctx;
         const { dayId, mealType, lang } = input;
 

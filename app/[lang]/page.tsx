@@ -8,6 +8,9 @@ import MDXContent from '@root/app/_components/MDXContent';
 import { breadcrumbGen } from '@root/app/lib/schemaGen';
 import { getContentFromApi } from '@root/app/lib/getContentFromApi';
 import makeHref from '@root/app/lib/url/makeHref';
+import { auth } from '@root/app/server/auth';
+import { redirect } from 'next/navigation';
+import { defaultPages } from '@root/app/assets/pageNameTranslation';
 
 export const revalidate = 0
 const pageName = "home"
@@ -17,8 +20,19 @@ const Home: NextPage<{
     lang: LocaleApp
   }>;
 }> = async (props) => {
+  const session = await auth();
   const params = await props.params;
   const lang = params.lang;
+
+  const mainPageRedirect = env.NEXT_PUBLIC_MAIN_PAGE_REDIRECT;
+
+  if (!session) {
+    const signInUrl = makeHref({ lang, page: defaultPages.signIn }, true);
+    mainPageRedirect && redirect(signInUrl);
+  } else {
+    const signInUrl = makeHref({ lang, page: defaultPages.dashboard }, true);
+    mainPageRedirect && redirect(signInUrl);
+  }
 
   const page = await getContentFromApi({ lang, key: pageName, contentType: 'page' });
   const { title, description, content } = page as Page & { customData: HomeCustomPageInterface };

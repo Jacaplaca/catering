@@ -21,7 +21,6 @@ const getNamesOnly = (translations: Record<string, string>): Record<string, stri
 };
 
 const refreshTranslationsCache = async () => {
-    console.log('refreshTranslationsCache');
     const translations = await db.translation.findMany({
         where: {}
     }) as {

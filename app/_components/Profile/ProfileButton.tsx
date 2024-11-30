@@ -3,14 +3,13 @@ import { useEffect, type FunctionComponent, useState } from "react";
 import ElementButton from '@root/app/_components/ui/ContextMenu/ElementButton';
 import ContextMenu from '@root/app/_components/ui/ContextMenu';
 import { type Session } from 'next-auth';
-import { type Locale } from '@root/i18n-config';
 import MyButton from '@root/app/_components/ui/buttons/MyButton';
-import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { type NavProfileElement } from '@root/types';
 import translate from '@root/app/lib/lang/translate';
 import makeHref from '@root/app/lib/url/makeHref';
 import { useRouter } from 'next/navigation';
+import signOutWithRedirect from '@root/app/lib/signOutWithRedirect';
 
 const renderItems = (items: NavProfileElement[]) => {
     return items.filter(el => el.access).map(el => <ElementButton
@@ -64,7 +63,7 @@ const ProfileButton: FunctionComponent<{
     mobile?: boolean,
     href?: string,
     session: Session | null,
-    lang: Locale,
+    lang: LocaleApp,
     dictionary: Record<string, string>,
     children?: React.ReactNode
 }> =
@@ -81,20 +80,10 @@ const ProfileButton: FunctionComponent<{
 
         useEffect(() => {
             setShowSession(!!session);
-
-            // let isMounted = true
-
-            // return () => {
-            //     isMounted = false
-            // }
-
         }, [session]);
 
         const redirect = async () => {
-            await signOut({
-                redirect: true,
-                callbackUrl: makeHref({ lang, page: '/' })
-            })
+            await signOutWithRedirect(lang)
         }
 
         if (!isMounted) {

@@ -1,3 +1,4 @@
+import toBool from '@root/app/lib/toBool';
 import { i18n } from '@root/i18n-config';
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
@@ -103,15 +104,21 @@ export const env = createEnv({
     BACKUP_CRON: z.string(),
     BACKUP_KEEP: z.string(),
     AUTH_TRUST_HOST: z.string(),
+    MAIN_PAGE_REDIRECT: z.string()
+      .optional()
+      .transform(val => toBool(val)),
   },
 
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
    * isn't built with invalid env vars. To expose them to the client, prefix them with
    * `NEXT_PUBLIC_`.
-   */
+  */
   client: {
     NEXT_PUBLIC_DEFAULT_LOCALE: z.enum(i18n.locales),
+    NEXT_PUBLIC_MAIN_PAGE_REDIRECT: z.string()
+      .optional()
+      .transform(val => toBool(val)),
     // NEXT_PUBLIC_CLIENTVAR: z.string(),
   },
 
@@ -165,6 +172,8 @@ export const env = createEnv({
     BACKUP_CRON: process.env.BACKUP_CRON,
     BACKUP_KEEP: process.env.BACKUP_KEEP,
     AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST,
+    MAIN_PAGE_REDIRECT: process.env.NEXT_PUBLIC_MAIN_PAGE_REDIRECT,
+    NEXT_PUBLIC_MAIN_PAGE_REDIRECT: process.env.NEXT_PUBLIC_MAIN_PAGE_REDIRECT,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

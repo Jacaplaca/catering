@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 const ThemeSwitcher = ({ className }: { className: string }) => {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme, resolvedTheme } = useTheme();
-  // console.log("🚀 ~ file: ThemeSwitcher.tsx:11", theme, resolvedTheme)
   useEffect(() => setMounted(true), []);
 
   return (

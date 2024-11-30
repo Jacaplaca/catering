@@ -1,6 +1,6 @@
 import { type Locale } from '@root/i18n-config'
 
-const defaultPages = {
+export const defaultPages = {
     signUp: "sign-up",
     signIn: "sign-in",
     signOut: "sign-out",
