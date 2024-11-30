@@ -1,3 +1,12 @@
+## [1.0.14](https://github.com/Jacaplaca/catering/compare/v1.0.13...v1.0.14) (2024-11-30)
+
+
+### Bug Fixes
+
+* add new .env var for hide main page and use app only in authorized state ([7522a2a](https://github.com/Jacaplaca/catering/commit/7522a2accaacda26ef081dc0d76370ed5cbaae56))
+
+
+
 ## [1.0.13](https://github.com/Jacaplaca/catering/compare/v1.0.12...v1.0.13) (2024-11-21)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * dynamic import init setting, submit button in sign-in, version in footer, manager remove client file ([b72af56](https://github.com/Jacaplaca/catering/commit/b72af566c794369f396c1ba0440ed89aa278c57e))
-
-
-
-## [1.0.9](https://github.com/Jacaplaca/catering/compare/v1.0.8...v1.0.9) (2024-11-12)
-
-
-### Bug Fixes
-
-* **manager:** add client-file handling ([4f1c132](https://github.com/Jacaplaca/catering/commit/4f1c1322c842c601fd0b5e145f1371727d0df6cc))
 
 
 
