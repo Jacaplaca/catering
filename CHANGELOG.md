@@ -1,3 +1,12 @@
+## [1.0.16](https://github.com/Jacaplaca/catering/compare/v1.0.15...v1.0.16) (2024-11-30)
+
+
+### Bug Fixes
+
+* prisma and prisma client major update 5.22 -> 6.0.0 ([87b3bec](https://github.com/Jacaplaca/catering/commit/87b3bec216c63203ee1361b574a0f91865ba3311))
+
+
+
 ## [1.0.15](https://github.com/Jacaplaca/catering/compare/v1.0.14...v1.0.15) (2024-11-30)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * removing not confirmed accounts, reset email templates, expires to invite and confirmation ([e09a6f9](https://github.com/Jacaplaca/catering/commit/e09a6f9a11ff15e302f1b21bf168b7402d31de71))
-
-
-
-## [1.0.11](https://github.com/Jacaplaca/catering/compare/v1.0.10...v1.0.11) (2024-11-16)
-
-
-### Bug Fixes
-
-* files upload more than 1, no refresh after upload, some lint, some libs ([2a204c4](https://github.com/Jacaplaca/catering/commit/2a204c40d5b01576f971d8fbf39d8f5259b9a205))
 
 
 
