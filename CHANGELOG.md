@@ -1,3 +1,12 @@
+## [1.0.15](https://github.com/Jacaplaca/catering/compare/v1.0.14...v1.0.15) (2024-11-30)
+
+
+### Bug Fixes
+
+* minor library updates ([58977f9](https://github.com/Jacaplaca/catering/commit/58977f9aa3f2dbff4a4616a678fe67459b8ee41b))
+
+
+
 ## [1.0.14](https://github.com/Jacaplaca/catering/compare/v1.0.13...v1.0.14) (2024-11-30)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * files upload more than 1, no refresh after upload, some lint, some libs ([2a204c4](https://github.com/Jacaplaca/catering/commit/2a204c40d5b01576f971d8fbf39d8f5259b9a205))
-
-
-
-## [1.0.10](https://github.com/Jacaplaca/catering/compare/v1.0.9...v1.0.10) (2024-11-14)
-
-
-### Bug Fixes
-
-* dynamic import init setting, submit button in sign-in, version in footer, manager remove client file ([b72af56](https://github.com/Jacaplaca/catering/commit/b72af566c794369f396c1ba0440ed89aa278c57e))
 
 
 
