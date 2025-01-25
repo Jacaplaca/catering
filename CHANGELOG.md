@@ -1,3 +1,12 @@
+## [1.0.18](https://github.com/Jacaplaca/catering/compare/v1.0.17...v1.0.18) (2025-01-25)
+
+
+### Bug Fixes
+
+* remove-users-zero-in-date ([9d4e69c](https://github.com/Jacaplaca/catering/commit/9d4e69c80eea067e77111925aee897db09c5c334))
+
+
+
 ## [1.0.17](https://github.com/Jacaplaca/catering/compare/v1.0.16...v1.0.17) (2024-11-30)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * add new .env var for hide main page and use app only in authorized state ([7522a2a](https://github.com/Jacaplaca/catering/commit/7522a2accaacda26ef081dc0d76370ed5cbaae56))
-
-
-
-## [1.0.13](https://github.com/Jacaplaca/catering/compare/v1.0.12...v1.0.13) (2024-11-21)
-
-
-### Bug Fixes
-
-* add tokens validity settings update ([52523a0](https://github.com/Jacaplaca/catering/commit/52523a00251a2277df01ba0f8bcdb6119a9fe1d8))
 
 
 
