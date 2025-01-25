@@ -43,3 +43,7 @@ export const clientEditValidator = z.object({
 export const getClientValidator = z.object({
     id: z.string(),
 });
+
+export const activateClientValidator = z.object({
+    ids: z.array(z.string()),
+});

@@ -192,6 +192,7 @@ model Client {
     orders Order[]
     tags TagClient[]
     files ClientFile[]
+    deactivated Boolean @default(false)
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
@@ -217,7 +218,7 @@ model TagClient {
     tagId String
     tag Tag @relation(fields: [tagId], references: [id])
     clientId String
-    client Client @relation(fields: [clientId], references: [id])
+    client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -257,7 +258,7 @@ model Consumer {
     id String @id @default(cuid()) @map("_id")
     code String? //editable by dietician
     clientId String
-    client Client @relation(fields: [clientId], references: [id])
+    client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
     name String?
     notes String?
 
@@ -514,7 +515,7 @@ model Order {
     cateringId String
     catering Catering @relation(fields: [cateringId], references: [id])
     clientId String
-    client Client @relation(fields: [clientId], references: [id])
+    client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
     status OrderStatus
 
     breakfastStandard Int
@@ -552,9 +553,9 @@ model Order {
 model OrderConsumerBreakfast {
     id         String   @id @default(cuid()) @map("_id")
     orderId    String
-    order      Order    @relation(fields: [orderId], references: [id])
+    order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
     consumerId String
-    consumer   Consumer @relation(fields: [consumerId], references: [id])
+    consumer   Consumer @relation(fields: [consumerId], references: [id], onDelete: Cascade)
 
     @@unique([orderId, consumerId])
 }
@@ -562,9 +563,9 @@ model OrderConsumerBreakfast {
 model OrderConsumerLunch {
     id         String   @id @default(cuid()) @map("_id")
     orderId    String
-    order      Order    @relation(fields: [orderId], references: [id])
+    order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
     consumerId String
-    consumer   Consumer @relation(fields: [consumerId], references: [id])
+    consumer   Consumer @relation(fields: [consumerId], references: [id], onDelete: Cascade)
 
     @@unique([orderId, consumerId])
 }
@@ -572,9 +573,9 @@ model OrderConsumerLunch {
 model OrderConsumerDinner {
     id         String   @id @default(cuid()) @map("_id")
     orderId    String
-    order      Order    @relation(fields: [orderId], references: [id])
+    order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
     consumerId String
-    consumer   Consumer @relation(fields: [consumerId], references: [id])
+    consumer   Consumer @relation(fields: [consumerId], references: [id], onDelete: Cascade)
 
     @@unique([orderId, consumerId])
 }
@@ -582,9 +583,9 @@ model OrderConsumerDinner {
 model OrderConsumerLunchBeforeDeadline {
     id         String   @id @default(cuid()) @map("_id")
     orderId    String
-    order      Order    @relation(fields: [orderId], references: [id])
+    order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
     consumerId String
-    consumer   Consumer @relation(fields: [consumerId], references: [id])
+    consumer   Consumer @relation(fields: [consumerId], references: [id], onDelete: Cascade)
 
     @@unique([orderId, consumerId])
 }
@@ -592,9 +593,9 @@ model OrderConsumerLunchBeforeDeadline {
 model OrderConsumerDinnerBeforeDeadline {
     id         String   @id @default(cuid()) @map("_id")
     orderId    String
-    order      Order    @relation(fields: [orderId], references: [id])
+    order      Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
     consumerId String
-    consumer   Consumer @relation(fields: [consumerId], references: [id])
+    consumer   Consumer @relation(fields: [consumerId], references: [id], onDelete: Cascade)
 
     @@unique([orderId, consumerId])
 }
@@ -613,7 +614,7 @@ type ClientFileWeek {
 model ClientFile {
     id String @id @default(cuid()) @map("_id")
     clientId String
-    client Client @relation(fields: [clientId], references: [id])
+    client Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
     // dieticianId String
     // dietician Dietician @relation(fields: [dieticianId], references: [id])
     cateringId String

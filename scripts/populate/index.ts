@@ -19,11 +19,12 @@ const prisma = new PrismaClient();
 const NUM_SUPERADMIN = 1;
 const NUM_CATERINGS = 1;
 const NUM_MANAGERS = 1;
-const NUM_CLIENTS = 25;
+const NUM_CLIENTS = 20;
 const NUM_DIETICIANS = 2;
 const NUM_KITCHEN = 3;
-const NUM_CONSUMERS = 25;
+const NUM_CONSUMERS = 5;
 const TAGS = 0;
+const CREATE_ORDERS = true;
 
 const fakePassword = 'aaa';
 
@@ -272,7 +273,7 @@ async function main() {
                     description: faker.lorem.sentence()
                 }
 
-                const consumer = await prisma.consumer.create({
+                await prisma.consumer.create({
                     data: {
                         clientId,
                         cateringId,
@@ -328,7 +329,7 @@ async function main() {
 
             }
 
-            const dateRange = generateDateRange();
+            const dateRange = CREATE_ORDERS ? generateDateRange() : [];
 
             for (const deliveryDay of dateRange) {
                 const deliveryDayDate = new Date(deliveryDay.year, deliveryDay.month, deliveryDay.day);

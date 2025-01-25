@@ -34,6 +34,7 @@ export type ClientCustomTable = {
     name?: string;
     code: number;
     tags: string[];
+    deactivated: boolean;
     createdAt: Date;
     updatedAt: Date;
 };

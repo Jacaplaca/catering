@@ -46,9 +46,10 @@ const useClientDataGrid = ({
         }
     })
 
-    const table = rows.map(({ id, name, info }, i) => {
+    const table = rows.map(({ id, name, info, deactivated }, i) => {
         return {
             key: id ?? `placeholderData-${i}`,
+            className: deactivated ? 'opacity-80 bg-clip-content h-[40px] bg-[repeating-linear-gradient(45deg,transparent,transparent_8px,rgba(0,0,0,0.4)_8px,rgba(0,0,0,0.7)_16px)]' : '',
             rows: [
                 {
                     component: <Checkbox

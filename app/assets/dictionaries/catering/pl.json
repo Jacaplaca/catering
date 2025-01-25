@@ -84,7 +84,10 @@
         "user.email_column": "Email(użytkownik)",
         "client_label": "Klient",
         "duplicate_code_error": "Istnieje już klient z takim kodem",
-        "not_found": "Klient nie został znaleziony"
+        "not_found": "Klient nie został znaleziony",
+        "delete_confirmation": "Klient, który ma zamówienia, zostanie zdeaktywowany. Klient bez zamówień zostanie usunięty. Czy na pewno chcesz to zrobić?",
+        "activate_confirmation": "Klienci zostaną aktywowani. Czy na pewno chcesz to zrobić?",
+        "activate_button": "Aktywuj"
     },
     "dieticians": {
         "title": "Dietetycy",

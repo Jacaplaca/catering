@@ -6,7 +6,7 @@ import edit from '@root/app/server/api/routers/specific/client/edit';
 import getFull from '@root/app/server/api/routers/specific/client/getFull';
 import getOne from '@root/app/server/api/routers/specific/client/getOne';
 import getAll from '@root/app/server/api/routers/specific/client/getAll';
-
+import activate from '@root/app/server/api/routers/specific/client/activate';
 const clientRouter = {
     getInfinite,
     count,
@@ -16,6 +16,7 @@ const clientRouter = {
     getFull,
     getOne,
     getAll,
+    activate,
 }
 
 export default clientRouter;

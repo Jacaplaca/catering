@@ -16,9 +16,9 @@ export const orderValidator = z.object({
         dinner: z.array(z.string()),
     }),
     day: z.object({
-        year: z.number().min(1),
-        month: z.number().min(1).max(12),
-        day: z.number().min(1).max(31),
+        year: z.number().min(0),
+        month: z.number().min(0).max(12),
+        day: z.number().min(0).max(31),
     })
 });
 

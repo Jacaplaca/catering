@@ -66,6 +66,7 @@ const getClientsDbQuery = ({
                 code: 1,
                 createdAt: 1,
                 tags: 1,
+                deactivated: 1,
                 // 'user.name': 1
             }
         },

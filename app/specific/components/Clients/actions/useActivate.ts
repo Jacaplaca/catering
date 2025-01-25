@@ -1,7 +1,7 @@
 import { api } from '@root/app/trpc/react';
 import { useBoolean } from 'usehooks-ts'
 
-const useRemoveClient = ({
+const useActivateClient = ({
     onSuccess, ids,
 }: {
     onSuccess: () => unknown,
@@ -9,7 +9,7 @@ const useRemoveClient = ({
 }) => {
     const { value: isConfirmationOpen, setTrue: show, setFalse: hide } = useBoolean(false)
 
-    const removeUsersCall = api.specific.client.deleteOne.useMutation({
+    const activateUsersCall = api.specific.client.activate.useMutation({
         onSuccess: () => {
             onSuccess();
         },
@@ -22,7 +22,7 @@ const useRemoveClient = ({
     });
 
     const action = () => {
-        removeUsersCall.mutate({ ids });
+        activateUsersCall.mutate({ ids });
     }
 
     return {
@@ -30,9 +30,9 @@ const useRemoveClient = ({
         isConfirmationOpen,
         show,
         hide,
-        questionKey: 'clients:delete_confirmation'
+        questionKey: 'clients:activate_confirmation'
     }
 
 };
 
-export default useRemoveClient;
+export default useActivateClient;
