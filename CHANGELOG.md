@@ -1,3 +1,12 @@
+## [1.0.19](https://github.com/Jacaplaca/catering/compare/v1.0.18...v1.0.19) (2025-01-27)
+
+
+### Bug Fixes
+
+* update nodemailer settings after hosting email changed ([7d97d24](https://github.com/Jacaplaca/catering/commit/7d97d24806a3e4139c43c0c12916a49297255bb3))
+
+
+
 ## [1.0.18](https://github.com/Jacaplaca/catering/compare/v1.0.17...v1.0.18) (2025-01-25)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * minor library updates ([58977f9](https://github.com/Jacaplaca/catering/commit/58977f9aa3f2dbff4a4616a678fe67459b8ee41b))
-
-
-
-## [1.0.14](https://github.com/Jacaplaca/catering/compare/v1.0.13...v1.0.14) (2024-11-30)
-
-
-### Bug Fixes
-
-* add new .env var for hide main page and use app only in authorized state ([7522a2a](https://github.com/Jacaplaca/catering/commit/7522a2accaacda26ef081dc0d76370ed5cbaae56))
 
 
 
