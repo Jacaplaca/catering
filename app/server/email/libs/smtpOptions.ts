@@ -31,7 +31,7 @@ const getSmtpOptions = async (customOptions?: CustomEmailSettings['options']) =>
             user: settings.username,
             pass: settings.password,
         },
-        secure: true,
+        // secure: true,
         maxConnections: 10,
         tls: {
             rejectUnauthorized: false,
