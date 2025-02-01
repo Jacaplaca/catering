@@ -9,10 +9,11 @@ import { useForm } from 'react-hook-form';
 import { type z } from 'zod';
 
 const FormSchema = clientSettingsValidator;
-const useClientSettings = ({ dictionary }: {
+const useClientSettings = ({ dictionary, clientId }: {
     dictionary: Record<string, string>;
+    clientId?: string;
 }) => {
-    const { data: settings, refetch: settingsRefetch, isFetching } = api.specific.settings.getForClient.useQuery();
+    const { data: settings, refetch: settingsRefetch, isFetching } = api.specific.settings.getForClient.useQuery({ clientId });
     const { hasFinishedSettings, checkFinishedSettingsRefetch } = useCheckSettings();
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -37,6 +38,7 @@ const useClientSettings = ({ dictionary }: {
     const updateSetting = submitFunction.useMutation({
         onSuccess: async () => {
             await settingsRefetch();
+            window.location.reload();
             hasFinishedSettings ? null : await checkFinishedSettingsRefetch();
         },
         onError: (error) => {
@@ -45,7 +47,7 @@ const useClientSettings = ({ dictionary }: {
     });
 
     const onSubmit = (values: z.infer<typeof FormSchema>) => {
-        updateSetting.mutate(values);
+        updateSetting.mutate({ ...values, clientId });
     };
 
     const Inputs = getInputsBulk<keyof z.infer<typeof FormSchema>>({

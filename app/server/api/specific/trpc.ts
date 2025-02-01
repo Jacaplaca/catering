@@ -77,10 +77,7 @@ const enforceUserHasCatering = ({
     });
 };
 
-export const createCateringProcedure = (allowedRoles?: RoleType[] | RoleType) => {
-    if (typeof allowedRoles === "string") {
-        allowedRoles = [allowedRoles];
-    }
+export const createCateringProcedure = (allowedRoles: RoleType[]) => {
     return t.procedure
         .use(allowActiveApp)
         .use(timingMiddleware)
@@ -92,10 +89,7 @@ export const createCateringProcedure = (allowedRoles?: RoleType[] | RoleType) =>
         });
 };
 
-export const createCateringNotSettingsProcedure = (allowedRoles?: RoleType[] | RoleType) => {
-    if (typeof allowedRoles === "string") {
-        allowedRoles = [allowedRoles];
-    }
+export const createCateringNotSettingsProcedure = (allowedRoles: RoleType[]) => {
     return t.procedure
         .use(allowActiveApp)
         .use(timingMiddleware)

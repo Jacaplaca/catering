@@ -40,3 +40,7 @@ export const removeClientFilesByTypeAndClientIdsValid = z.object({
     clientIds: z.array(z.string()).optional(),
     day: z.date(),
 });
+
+export const filesForClient = z.object({
+    clientId: z.string().optional(),
+});

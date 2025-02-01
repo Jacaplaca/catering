@@ -6,14 +6,15 @@ import useClientSettings from '@root/app/specific/components/Settings/Client/use
 
 const ClientSettings: FunctionComponent<{
     dictionary: Record<string, string>
-}> = ({ dictionary }) => {
+    clientId?: string
+}> = ({ dictionary, clientId }) => {
 
     const {
         form,
         onSubmit,
         hasFinishedSettings,
         Inputs,
-    } = useClientSettings({ dictionary });
+    } = useClientSettings({ dictionary, clientId });
 
     return (
         <SettingsFormRenderer

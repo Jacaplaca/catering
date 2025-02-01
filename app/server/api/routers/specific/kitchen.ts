@@ -4,8 +4,9 @@ import { getKitchensCountValid, getKitchensValid } from '@root/app/validators/sp
 import { deleteElementsValid } from '@root/app/validators/deleteElements';
 import { kitchensSortNames } from '@root/types/specific';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
+import { RoleType } from '@prisma/client';
 
-export const count = createCateringProcedure('manager')
+export const count = createCateringProcedure([RoleType.manager])
     .input(getKitchensCountValid)
     .query(({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -22,7 +23,7 @@ export const count = createCateringProcedure('manager')
         });
     });
 
-export const getMany = createCateringProcedure('manager')
+export const getMany = createCateringProcedure([RoleType.manager])
     .input(getKitchensValid)
     .query(({ ctx, input }) => {
         const { session: { catering } } = ctx;
@@ -48,7 +49,7 @@ export const getMany = createCateringProcedure('manager')
         });
     });
 
-export const deleteMany = createCateringProcedure('manager')
+export const deleteMany = createCateringProcedure([RoleType.manager])
     .input(deleteElementsValid)
     .mutation(({ ctx, input }) => {
         const { db, session } = ctx

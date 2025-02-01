@@ -1,8 +1,8 @@
-import { type TagType } from '@prisma/client';
+import { RoleType, type TagType } from '@prisma/client';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { clientEditValidator } from '@root/app/validators/specific/client';
 
-const edit = createCateringProcedure('manager')
+const edit = createCateringProcedure([RoleType.manager])
     .input(clientEditValidator)
     .mutation(async ({ ctx, input }) => {
         const { db, session } = ctx

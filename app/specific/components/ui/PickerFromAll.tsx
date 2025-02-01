@@ -15,6 +15,7 @@ const PickerFromAll: FunctionComponent<{
     searchPlaceholder: string,
     notFoundLabel: string
 }> = ({ dictionary, search, value, selectAll, deselectAll, items, selected, onSelect, searchPlaceholder, notFoundLabel }) => {
+    // console.log("fragment", value + "AAA");
     return <>
         <SearchInput
             search={search}

@@ -5,8 +5,11 @@ import getMany from '@root/app/server/api/routers/specific/client/getMany';
 import edit from '@root/app/server/api/routers/specific/client/edit';
 import getFull from '@root/app/server/api/routers/specific/client/getFull';
 import getOne from '@root/app/server/api/routers/specific/client/getOne';
-import getAll from '@root/app/server/api/routers/specific/client/getAll';
+import getActiveWithCode from '@root/app/server/api/routers/specific/client/getActiveWithCode';
 import activate from '@root/app/server/api/routers/specific/client/activate';
+import addClient from '@root/app/server/api/routers/specific/client/addClient';
+import removeClient from '@root/app/server/api/routers/specific/client/removeClient';
+
 const clientRouter = {
     getInfinite,
     count,
@@ -15,8 +18,10 @@ const clientRouter = {
     edit,
     getFull,
     getOne,
-    getAll,
+    getActiveWithCode,
     activate,
+    addClient,
+    removeClient
 }
 
 export default clientRouter;

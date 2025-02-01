@@ -10,10 +10,12 @@ import { type FunctionComponent } from 'react';
 
 const renderSettingsComponent = ({
     roleId,
-    dictionary
+    dictionary,
+    clientId
 }: {
     roleId?: RoleType
     dictionary: Record<string, string>
+    clientId?: string
 }) => {
     switch (roleId) {
         case 'manager':
@@ -22,7 +24,7 @@ const renderSettingsComponent = ({
             return <SuperAdmin dictionary={dictionary}>
             </SuperAdmin>;
         case 'client':
-            return <ClientSettings dictionary={dictionary} />;
+            return <ClientSettings dictionary={dictionary} clientId={clientId} />;
         case 'dietician':
             return <DieticianSettings dictionary={dictionary} />;
         default:
@@ -52,8 +54,8 @@ const Settings: FunctionComponent<{
     lang: LocaleApp,
     pageName: string
     dictionary: Record<string, string>
-}> = ({ lang, pageName }) => {
-
+    clientId?: string
+}> = ({ lang, pageName, clientId }) => {
     return (
         <div className='flex flex-col gap-4'>
 
@@ -61,6 +63,7 @@ const Settings: FunctionComponent<{
                 lang={lang}
                 pageName={pageName}
                 renderComponent={renderSettingsComponent}
+                clientId={clientId}
             />
             {/* TODO: add logo upload in ver 1.1 */}
             {/* <DashboardItemWrapper

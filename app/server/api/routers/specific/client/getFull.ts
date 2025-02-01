@@ -1,8 +1,9 @@
+import { RoleType } from '@prisma/client';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
 import { getClientValidator } from '@root/app/validators/specific/client';
 
-const getFull = createCateringProcedure('manager')
+const getFull = createCateringProcedure([RoleType.manager])
     .input(getClientValidator)
     .query(({ input, ctx }) => {
         const { session: { user: doer } } = ctx;

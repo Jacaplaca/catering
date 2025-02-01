@@ -76,27 +76,42 @@ const getClientsFilesListDbQuery = ({
     day?: Date,
     count?: boolean
 }) => {
-
+    console.log({ searchValue })
     const { week, weekYear: year } = day instanceof Date ? dateToWeek(day) : { week: undefined, weekYear: undefined };
 
     type MatchObject = {
         cateringId?: string;
         id?: string;
-        $or?: Record<string, {
-            $regex?: string;
-            $options?: string;
-        }>[];
+        deactivated?: boolean;
+        code?: { $ne: null };
+        $expr?: {
+            $or: {
+                $regexMatch: {
+                    input: string;
+                    regex: string;
+                    options: string;
+                }
+            }[];
+        };
     };
 
     const query: MatchObject = {
-        cateringId: catering.id
+        cateringId: catering.id,
+        deactivated: false,
+        code: { $ne: null }
     }
 
     if (searchValue) {
-        query.$or = [{
-            name: { $regex: searchValue, $options: 'i' },
-            // 'info.code': { $regex: searchValue, $options: 'i' }
-        }];
+        // query.$or = [{
+        //     "info.name": { $regex: searchValue, $options: 'i' },
+        //     "info.code": { $regex: searchValue, $options: 'i' }
+        // }];
+        query.$expr = {
+            $or: [
+                { $regexMatch: { input: '$code', regex: searchValue, options: 'i' } },
+                { $regexMatch: { input: '$name', regex: searchValue, options: 'i' } }
+            ]
+        }
     }
 
     if (id) {
@@ -112,7 +127,8 @@ const getClientsFilesListDbQuery = ({
         {
             $addFields: {
                 code: '$info.code',
-                name: '$info.name'
+                name: '$info.name',
+                deactivated: '$deactivated'
             }
         },
         {
@@ -123,6 +139,7 @@ const getClientsFilesListDbQuery = ({
                 info: 1,
                 name: 1,
                 code: 1,
+                deactivated: 1,
                 createdAt: 1,
             }
         },

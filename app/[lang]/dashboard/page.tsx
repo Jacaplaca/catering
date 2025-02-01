@@ -7,6 +7,7 @@ import { api } from "app/trpc/server";
 import getComponent from '@root/app/specific/lib/getComponent';
 import translate from '@root/app/lib/lang/translate';
 import { redirect } from 'next/navigation';
+import ClientPickerWrapper from '@root/app/specific/components/ui/ClientPicker';
 
 const pageName = 'dashboard';
 const settingsKey = 'settings';
@@ -29,6 +30,7 @@ const page: NextPage<{
     const { key } = searchParams || {};
     const lang = params.lang;
     const dashboard = await getDashboard(lang);
+
     const allowedItems = dashboard.reduce((acc, { items }) => {
         items.forEach(({ key }) => {
             acc[key] = true;
@@ -39,11 +41,11 @@ const page: NextPage<{
     const dictionary = await getDictFromApi(lang, ["dashboard", "shared"]);
     const hasFinishedSettings = await api.privateSettings.hasFinished()
 
-    let redirectUrl = makeHref({ lang, page: pageName, params: new URLSearchParams({ key: settingsKey }) });
+    let redirectUrl = makeHref({ lang, page: pageName, params: new URLSearchParams({ ...searchParams, key: settingsKey }) });
     if (!key) {
         const firstItemKey = dashboard?.[0]?.items[0]?.key;
         if (firstItemKey && allowedItems[firstItemKey] && hasFinishedSettings) {
-            redirectUrl = makeHref({ lang, page: pageName, params: new URLSearchParams({ key: firstItemKey }) });
+            redirectUrl = makeHref({ lang, page: pageName, params: new URLSearchParams({ ...searchParams, key: firstItemKey }) });
             redirect(redirectUrl);
         } else {
             redirect(redirectUrl);
@@ -89,10 +91,16 @@ const page: NextPage<{
             isLogged
             fullPage
         >
-
             <Dashboard
                 menu={dashboard}
+                searchParams={searchParams}
             >
+                <ClientPickerWrapper
+                    lang={lang}
+                    searchParams={searchParams}
+                    pageName={pageName}
+                    dictionary={dictionary}
+                />
                 {component}
             </Dashboard>
 

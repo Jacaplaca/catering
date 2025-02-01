@@ -39,7 +39,7 @@ const HighlightText: React.FC<HighlightTextProps> = ({ text = "", fragment = '',
     return (
         <span
             onClick={onClick}
-            className={className}>
+            className={`${className} whitespace-pre`}>
             {parts.map((part, index) =>
                 part.toLowerCase() === fragment.toLowerCase()
                     ? <strong

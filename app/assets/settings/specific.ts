@@ -12,6 +12,8 @@ const specificSettings = {
     "PUBLIC:client-files:type:STRING_ARRAY": "menu, checklist, diets", //same as ClientFileType enum in prisma
     "PUBLIC:client-files:s3-prefix:STRING": "client-files",
     "PUBLIC:client-files:max-file-size:NUMBER": 10 * 1024 * 1024, // 10MB w bajtach
+    "PUBLIC:main:logoDark:STRING": 'default/ekoplanet_transparent.png',
+    "PUBLIC:main:logoLight:STRING": 'default/ekoplanet_transparent.png',
 }
 
 export default specificSettings;

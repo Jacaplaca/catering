@@ -1,9 +1,9 @@
 import { getTagListValid, getTagsValid } from '@root/app/validators/tag';
 import { db } from '@root/app/server/db';
-import { type Prisma } from '@prisma/client';
+import { RoleType, type Prisma } from '@prisma/client';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 
-const getMany = createCateringProcedure(['manager'])
+const getMany = createCateringProcedure([RoleType.manager])
   .input(getTagsValid)
   .query(({ input, ctx }) => {
     const { name, type } = input;
@@ -26,7 +26,7 @@ const getMany = createCateringProcedure(['manager'])
     });
   });
 
-const getInfinite = createCateringProcedure(['manager', 'kitchen'])
+const getInfinite = createCateringProcedure([RoleType.manager, RoleType.kitchen])
   .input(getTagListValid)
   .query(async ({ input, ctx }) => {
     const { session: { catering } } = ctx;

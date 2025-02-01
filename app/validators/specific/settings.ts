@@ -12,10 +12,15 @@ export const managerSettingsValidator = z.object({
 
 export const clientSettingsValidator = z.object({
     name: z.string().min(4, "4"),
+    clientId: z.string().optional(),
     // lastOrderTime: z.string()
     //     .regex(/^(?:[01]\d|2[0-3]):[0-5]\d$/, "settings:order_deadline_validation")
 });
 
 export const dieticianSettingsValidator = z.object({
     name: z.string().min(4, "4")
+});
+
+export const getClientSettingsValidator = z.object({
+    clientId: z.string().optional()
 });

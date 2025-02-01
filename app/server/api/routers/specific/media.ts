@@ -1,10 +1,11 @@
+import { RoleType } from '@prisma/client';
 import { createCateringNotSettingsProcedure } from '@root/app/server/api/specific/trpc';
 import { getSetting } from '@root/app/server/cache/settings';
 import { s3deleteKeys } from '@root/app/server/s3/delete';
 import { logoUploadValid } from '@root/app/validators/specific/media';
 import { type z } from 'zod';
 
-const logoUpload = createCateringNotSettingsProcedure('manager')
+const logoUpload = createCateringNotSettingsProcedure([RoleType.manager])
     .input(logoUploadValid)
     .mutation(async ({ ctx, input }) => {
         const { session, db } = ctx;

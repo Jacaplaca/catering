@@ -116,6 +116,7 @@ const OrderMatrix: FC = () => {
 
 
     const {
+        clientId,
         dictionary,
         order: {
             diet,
@@ -142,6 +143,7 @@ const OrderMatrix: FC = () => {
         return <ConsumersPicker
             onResultClick={handleConsumerClick}
             mealType={consumersPickerOpen}
+            clientId={clientId}
         />
     }
 

@@ -48,7 +48,6 @@ const Header: FunctionComponent<{
   const dictionary = await getDictFromApi(lang, ["shared", "profile-button", "banner"])
   const profileButtonContent = await getContentFromApi({ lang, key: 'profileButton', contentType: 'mdContent' }) as MdContent;
   const settings = await getSettingsFromApi('app') as unknown as { active: boolean };
-  console.log({ settings })
 
   return (
     <header

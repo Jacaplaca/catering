@@ -18,11 +18,13 @@ const useConsumerTable = ({
     pageName,
     settings,
     dictionary,
+    clientId
 }: {
     lang: LocaleApp,
     pageName: string,
     settings: { main: SettingParsedType },
     dictionary: Record<string, string>,
+    clientId?: string
 }) => {
     const { messageObj, resetMessage, updateMessage } = useMessage(dictionary);
     const { sort, sortDirection, sortName } = useTableSort<ConsumersSortName>("name")
@@ -57,6 +59,7 @@ const useConsumerTable = ({
         dietSearchValue,
         sortName,
         sortDirection,
+        clientPlaceId: clientId
     });
 
 

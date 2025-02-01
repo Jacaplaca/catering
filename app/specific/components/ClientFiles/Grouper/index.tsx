@@ -40,7 +40,13 @@ const Grouper = () => {
 
     const updateSearchValue = (value: string) => {
         setSearchValue(value);
-        setFilteredClients(allClients?.filter(client => client?.name?.toLowerCase().includes(value.toLowerCase())) ?? []);
+        const searchTerm = value.toLowerCase();
+        const filtered = allClients?.filter(client =>
+        (client?.name?.toLowerCase().includes(searchTerm) ||
+            client?.code?.toLowerCase().includes(searchTerm))
+        ) ?? [];
+        console.log("filtered", filtered);
+        setFilteredClients(filtered);
     }
 
     if (!isOpened || !fileTypeOpened) return null;

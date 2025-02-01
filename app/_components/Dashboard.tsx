@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useBoolean } from 'usehooks-ts';
 import { useCheckSettings } from '@root/app/hooks/calls';
 
-const Dashboard: FunctionComponent<{ children: React.ReactNode, menu: DashboardMenuElement[] }> = ({ children, menu }) => {
+const Dashboard: FunctionComponent<{ children: React.ReactNode, menu: DashboardMenuElement[], searchParams: Record<string, string> }> = ({ children, menu, searchParams }) => {
     const { value: isOpen, setTrue, setFalse, toggle } = useBoolean(false);
     const [selectedItem, setSelectedItem] = useState<string>('');
     const breakpoint = useBreakpoint();
@@ -27,8 +27,7 @@ const Dashboard: FunctionComponent<{ children: React.ReactNode, menu: DashboardM
 
     const selectItem = async (key: string) => {
         setSelectedItem(key);
-        const newSearchParams = new URLSearchParams();
-        newSearchParams.set('key', key);
+        const newSearchParams = new URLSearchParams({ ...searchParams, key });
         let forceSettingsHere = !hasFinishedSettings
         if (forceSettingsHere) {
             const { data } = await checkFinishedSettingsRefetch();

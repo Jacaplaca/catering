@@ -13,7 +13,7 @@ const getComponent = ({
     key,
     lang,
     dictionary,
-    // searchParams,
+    searchParams,
 }: {
     key: string
     lang: LocaleApp
@@ -28,7 +28,12 @@ const getComponent = ({
         },
         'settings': {
             title: translate(dictionary, 'dashboard:item-settings-title'),
-            component: <Settings lang={lang} pageName={pageName} dictionary={dictionary} />,
+            component: <Settings
+                lang={lang}
+                pageName={pageName}
+                dictionary={dictionary}
+                clientId={searchParams?.clientId}
+            />,
         },
         'clients': {
             title: translate(dictionary, 'dashboard:item-clients-title'),
@@ -44,11 +49,18 @@ const getComponent = ({
         },
         'consumers': {
             title: translate(dictionary, 'dashboard:item-consumers-title'),
-            component: <Consumers lang={lang} pageName={pageName} />,
+            component: <Consumers lang={lang}
+                pageName={pageName}
+                clientId={searchParams?.clientId}
+            />,
         },
         'orders': {
             title: translate(dictionary, 'dashboard:item-orders-title'),
-            component: <Orders lang={lang} pageName={pageName} />,
+            component: <Orders
+                lang={lang}
+                pageName={pageName}
+                clientId={searchParams?.clientId}
+            />,
         },
         'client-files': {
             title: translate(dictionary, 'dashboard:item-client-files-title'),
@@ -56,7 +68,7 @@ const getComponent = ({
         },
         'documents': {
             title: translate(dictionary, 'dashboard:item-documents-title'),
-            component: <Documents lang={lang} pageName={pageName} />,
+            component: <Documents lang={lang} pageName={pageName} clientId={searchParams?.clientId} />,
         },
     } as Record<string, { title: string, component: JSX.Element }>
 

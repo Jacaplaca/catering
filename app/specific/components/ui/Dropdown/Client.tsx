@@ -22,6 +22,7 @@ export type ItemProps = {
 }
 
 const Item: FunctionComponent<ItemProps> = ({ item, virtualRow, isLoaderRow, onClick, fragment, limitChars = 25, isSelected }) => {
+    // console.log("fragment", fragment + "AAA")
     return (
         <ItemWrapper
             item={item}
@@ -49,7 +50,17 @@ const Item: FunctionComponent<ItemProps> = ({ item, virtualRow, isLoaderRow, onC
                         fragment={fragment}
                     />
                 </div>
-                {item?.code && <div className='text-xs text-neutral-700 dark:text-neutral-200'>{item.code}</div>}
+                {item?.code && <div className='text-xs text-neutral-700 dark:text-neutral-200'>
+                    <HighlightText
+                        isLoading={isLoaderRow}
+                        limit={limitChars}
+                        className={`text-sm  h-full
+                        text-neutral-700 dark:text-white
+                        `}
+                        text={item?.code ?? ''}
+                        fragment={fragment}
+                    />
+                </div>}
             </div>
         </ItemWrapper>
     );

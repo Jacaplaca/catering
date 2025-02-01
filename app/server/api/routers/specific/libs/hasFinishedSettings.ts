@@ -19,12 +19,12 @@ const hasFinishedSettings = async ({
                 && catering?.settings.phone
                 && catering?.settings.email);
         case 'client':
-            const client = await db.client.findUnique({
+            const clients = await db.client.findMany({
                 where: {
                     userId: userId,
                 }
             });
-            return Boolean(client?.name);
+            return Boolean(clients.every(client => client.name));
         case 'dietician':
             const dietician = await db.dietician.findUnique({
                 where: {

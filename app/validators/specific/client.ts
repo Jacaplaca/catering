@@ -47,3 +47,7 @@ export const getClientValidator = z.object({
 export const activateClientValidator = z.object({
     ids: z.array(z.string()),
 });
+
+export const removeClientValidator = z.object({
+    ids: z.array(z.string()),
+});

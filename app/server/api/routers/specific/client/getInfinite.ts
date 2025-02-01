@@ -17,14 +17,26 @@ const getInfinite = createCateringProcedure([RoleType.manager, RoleType.kitchen,
         const pipeFragment = [
             {
                 $match: {
-                    "info.name": {
-                        $type: "string",
-                        $regex: "^.{2,}$",
-                        $options: ""
-                    }
+                    $or: [
+                        {
+                            "info.name": {
+                                $type: "string",
+                                $regex: "^.{2,}$",
+                                $options: ""
+                            }
+                        },
+                        {
+                            "info.code": {
+                                $type: "string",
+                                $regex: "^.{2,}$",
+                                $options: ""
+                            }
+                        }
+                    ]
                 }
             },
-            ...getClientsDbQuery({ searchValue: name, catering, showColumns: ['info.name'] })]
+            ...getClientsDbQuery({ searchValue: name, catering, showColumns: ['info.name', 'info.code'] })
+        ]
 
         const pipelineData = [
             ...pipeFragment,

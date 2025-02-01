@@ -22,12 +22,14 @@ const useOrderTable = ({
     pageName,
     settings,
     dictionary,
+    clientId
 }: {
     session: Session | null,
     lang: LocaleApp,
     pageName: string,
     settings: { main: SettingParsedType },
     dictionary: Record<string, string>,
+    clientId?: string,
 }) => {
     const { messageObj, resetMessage, updateMessage } = useMessage(dictionary);
     const { sort, sortDirection, sortName } = useTableSort<OrdersSortName>("deliveryDay", 'desc')
@@ -59,7 +61,7 @@ const useOrderTable = ({
             limit
         },
     } = useFetchOrders({
-        clientId: filter.clients.clientForFilter?.id,
+        clientId: filter.clients.clientForFilter?.id ?? clientId,
         status: filter.status.statusForFilter,
         tagId: filter.tags.tagId,
         columns,
@@ -93,7 +95,8 @@ const useOrderTable = ({
         session,
         dictionary,
         updateMessage,
-        resetMessage
+        resetMessage,
+        clientId
     });
 
     const { skeleton, table } = useOrderDataGrid({
@@ -121,6 +124,7 @@ const useOrderTable = ({
     }
 
     return {
+        clientId,
         pageName,
         lang,
         dictionary,

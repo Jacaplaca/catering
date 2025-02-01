@@ -7,9 +7,9 @@ const clientSettingsInputsDefs = <TFieldValues extends FieldValues>(form: UseFor
 
     const inputs: InputsBulkType<keyof z.infer<typeof clientSettingsValidator>>[] = [
         {
-            label: 'settings:company_name',
+            label: 'settings:place_name',
             name: 'name',
-            placeholder: 'settings:company_name_placeholder',
+            placeholder: 'settings:place_name_placeholder',
             type: 'text',
             message: form.formState.errors.name?.message
                 ? ['shared:min_characters', form.formState.errors.name?.message as string ?? '']

@@ -7,6 +7,7 @@ import changeWeb3Address from '@root/app/server/api/routers/user/changeWeb3Addre
 import count from '@root/app/server/api/routers/user/count';
 import fetch from '@root/app/server/api/routers/user/fetch';
 import remove from '@root/app/server/api/routers/specific/usersRemove';
+import clients from '@root/app/server/api/routers/user/clients';
 
 export const userRouter = {
     changeEmailRequest,
@@ -17,5 +18,6 @@ export const userRouter = {
     changeWeb3Address,
     fetch,
     remove,
-    count
+    count,
+    clients
 };

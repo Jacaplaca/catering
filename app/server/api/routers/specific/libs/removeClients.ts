@@ -64,10 +64,10 @@ const removeClients = async ({
                     data: { deactivated: true }
                 });
             } else {
-                const client = await tx.client.findUnique({
-                    where: { id: clientId },
-                    select: { userId: true }
-                });
+                // const client = await tx.client.findUnique({
+                //     where: { id: clientId },
+                //     select: { userId: true }
+                // });
 
                 const clientFiles = await getClientS3Keys(clientId);
 
@@ -75,11 +75,11 @@ const removeClients = async ({
                     where: { id: clientId }
                 });
 
-                if (client?.userId) {
-                    await tx.user.delete({
-                        where: { id: client.userId }
-                    });
-                }
+                // if (client?.userId) {
+                //     await tx.user.delete({
+                //         where: { id: client.userId }
+                //     });
+                // }
 
                 await removeClientFiles(clientFiles);
             }

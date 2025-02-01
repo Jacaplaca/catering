@@ -12,6 +12,7 @@ function useFetchConsumers({
     sortName,
     sortDirection,
     clientId,
+    clientPlaceId
 }: {
     columns: TableColumnType[],
     showColumns: string[],
@@ -20,9 +21,10 @@ function useFetchConsumers({
     sortName: ConsumersSortName,
     sortDirection: 'asc' | 'desc',
     clientId?: string,
+    clientPlaceId?: string
 }) {
     const { data: totalCount = 0, refetch: countRefetch, isFetching: countIsFetching }
-        = api.specific.consumer.count.useQuery({ customerSearchValue, dietSearchValue, showColumns, clientId }, {
+        = api.specific.consumer.count.useQuery({ customerSearchValue, dietSearchValue, showColumns, clientId, clientPlaceId }, {
             enabled: showColumns.length > 0,
         });
 
@@ -30,7 +32,7 @@ function useFetchConsumers({
 
     const { data: fetchedRows = [], refetch: rowsRefetch, isFetching }
         = api.specific.consumer.getMany
-            .useQuery({ page, limit, sortName, sortDirection, customerSearchValue, dietSearchValue, showColumns, clientId },
+            .useQuery({ page, limit, sortName, sortDirection, customerSearchValue, dietSearchValue, showColumns, clientId, clientPlaceId },
                 {
                     enabled: showColumns.length > 0,
                     placeholderData: placeholderData<ConsumerCustomTable>(limit, columns),

@@ -5,24 +5,27 @@ import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
 import { options } from '@root/app/server/api/specific/aggregate';
 
-const getAll = createCateringProcedure([RoleType.dietician, RoleType.manager])
-    .query(({ ctx }) => {
+const getActiveWithCode = createCateringProcedure([RoleType.dietician, RoleType.manager])
+    .query(async ({ ctx }) => {
         const { session: { catering } } = ctx;
 
         const pipeFragment = [
             ...getClientsDbQuery({ catering, showColumns: ['info.name'] })]
 
         const pipelineData = [
+            { $match: { deactivated: false, "info.code": { $ne: null } } },
             ...pipeFragment,
             ...getLowerCaseSort({ "info.name": 1 }),
             { $addFields: { name: "$info.name" } },
         ]
 
-        return db.client.aggregateRaw({
+        const result = await db.client.aggregateRaw({
             pipeline: pipelineData,
             options
         }) as unknown as ({ name: string, id: string, code: string })[]
 
+        return result
+
     });
 
-export default getAll;
+export default getActiveWithCode;

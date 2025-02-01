@@ -53,9 +53,9 @@ const ConsumersTable: FunctionComponent = () => {
     const role = session?.user.roleId;
     const isDietician = role === 'dietician';
     const isManager = role === 'manager';
-    const showForDietician = isDietician || isManager;
+    const showForDieticianOrManager = isDietician || isManager;
 
-    const clickable = showForDietician;
+    const clickable = showForDieticianOrManager;
 
     const addConsumerOpen = () => {
         onRowClick(null);
@@ -70,7 +70,7 @@ const ConsumersTable: FunctionComponent = () => {
                 dictionary={dictionary}
                 getData={getConfirmationData}
             />
-            {showForDietician && <MainModal
+            {showForDieticianOrManager && <MainModal
                 isOpen={isAddConsumerOpen}
                 closeModal={addConsumerClose}
                 header={t(dictionary, 'consumers:add_consumer')}
@@ -84,7 +84,7 @@ const ConsumersTable: FunctionComponent = () => {
                     title={'consumers:title'}
                     searchPlaceholder={'consumers:search_placeholder'}
                 >
-                    {showForDietician ? <MyButton
+                    {showForDieticianOrManager ? <MyButton
                         onClick={addConsumerOpen}
                         icon='fas fa-user-plus'
                         id={t(dictionary, 'consumers:add_consumer')}
@@ -97,20 +97,20 @@ const ConsumersTable: FunctionComponent = () => {
                     toggleColumn={toggleColumn}
                     checkedColumns={showColumns}
                 >
-                    {showForDietician && <RowActions
+                    {showForDieticianOrManager && <RowActions
                         label={t(dictionary, 'shared:actions')}
                         actions={actions}
                         disabled={!showActions}
                         dictionary={dictionary}
                     />}
 
-                    {showForDietician && <ClientDropdown
+                    {showForDieticianOrManager && <ClientDropdown
                         dictionary={dictionary}
                         select={chooseClient}
                         selected={clientForFilter}
                     />}
 
-                    {showForDietician && <SearchInput
+                    {showForDieticianOrManager && <SearchInput
                         search={dietSearch}
                         // inputClassName='w-[300px]'
                         label={t(dictionary, 'shared:search')}

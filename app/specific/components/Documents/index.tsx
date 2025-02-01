@@ -5,9 +5,10 @@ import { type FunctionComponent } from 'react';
 
 const Documents: FunctionComponent<{
     lang: LocaleApp,
-    pageName: string
-}> = async ({ lang }) => {
-    const clientFiles = await api.specific.clientFiles.asClient();
+    pageName: string,
+    clientId?: string
+}> = async ({ lang, clientId }) => {
+    const clientFiles = await api.specific.clientFiles.asClient({ clientId });
     const [
         dictionary,
     ] = await Promise.all([

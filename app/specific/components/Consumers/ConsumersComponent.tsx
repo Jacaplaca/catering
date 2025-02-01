@@ -11,6 +11,7 @@ const ConsumersComponent: FunctionComponent<{
     pageName: string
     dictionary: Record<string, string>
     settings: { main: SettingParsedType }
+    clientId?: string
 }> = (props) => {
 
     return (

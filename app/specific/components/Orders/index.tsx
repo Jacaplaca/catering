@@ -8,8 +8,9 @@ import { auth } from '@root/app/server/auth';
 
 const Orders: FunctionComponent<{
     lang: LocaleApp,
-    pageName: string
-}> = async ({ lang, pageName }) => {
+    pageName: string,
+    clientId?: string
+}> = async ({ lang, pageName, clientId }) => {
 
     const [
         dictionary,
@@ -31,12 +32,14 @@ const Orders: FunctionComponent<{
                 dictionary={dictionary}
                 settings={{ main: mainSettings }}
                 session={session}
+                clientId={clientId}
             /> : <ClientOrdersComponent
                 lang={lang}
                 pageName={pageName}
                 dictionary={dictionary}
                 settings={{ main: mainSettings }}
                 session={session}
+                clientId={clientId}
             />}
         </div>
     );

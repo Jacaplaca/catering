@@ -5,6 +5,7 @@ import { ordersSortNames, MealType } from '@root/types/specific';
 import { z } from 'zod';
 
 export const orderValidator = z.object({
+    clientId: z.string(),
     standards: z.object({
         breakfast: z.number().min(0),
         lunch: z.number().min(0),
@@ -81,5 +82,13 @@ export const getOrdersPdfValid = z.object({
     dayId: z.string(),
     mealType: z.nativeEnum(MealType),
     lang: z.enum(i18n.locales).default(env.NEXT_PUBLIC_DEFAULT_LOCALE),
+});
+
+export const getLastOrderValid = z.object({
+    clientId: z.string(),
+});
+
+export const orderedDatesValid = z.object({
+    clientId: z.string(),
 });
 

@@ -98,7 +98,7 @@ model User {
     superAdmin  SuperAdmin?
     cateringId   String?
     catering     Catering? @relation(fields: [cateringId], references: [id])
-    client      Client?
+    client      Client[]
     dietician   Dietician?
     kitchen     Kitchen?
     manager    Manager?
@@ -139,7 +139,7 @@ model Catering {
     dieticians Dietician[]
     kitchens Kitchen[]
     managers Manager[]
-    diets Diet[]
+    diets Diet[]    
     consumers Consumer[]
     tags Tag[]
     settings CateringSettings
@@ -181,7 +181,7 @@ type ClientInfo {
 
 model Client {
     id String @id @default(cuid()) @map("_id")
-    userId String @unique
+    userId String
     user User @relation(fields: [userId], references: [id])
     cateringId String
     catering Catering @relation(fields: [cateringId], references: [id])

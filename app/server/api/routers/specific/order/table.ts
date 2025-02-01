@@ -1,16 +1,15 @@
 import { db } from '@root/app/server/db';
 import { getQueryOrder, getQueryPagination } from '@root/app/lib/safeDbQuery';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
 import getOrderDbQuery from '@root/app/server/api/routers/specific/libs/getOrdersDbQuery';
 import { getOrdersCountValid, getOrdersValid } from '@root/app/validators/specific/order';
 import { type OrdersCustomTable, ordersSortNames } from '@root/types/specific';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { options } from '@root/app/server/api/specific/aggregate';
-import { type Prisma } from '@prisma/client';
+import { RoleType, type Prisma } from '@prisma/client';
 
-const table = createCateringProcedure(['manager', 'kitchen', 'client'])
+const table = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])
     .input(getOrdersValid)
-    .query(async ({ input, ctx }) => {
+    .query(({ input, ctx }) => {
         const { session: { catering, user } } = ctx;
         const { page, limit, sortName, sortDirection, searchValue, showColumns, clientId, status, tagId } = input;
 
@@ -53,11 +52,7 @@ const table = createCateringProcedure(['manager', 'kitchen', 'client'])
             ];
         }
 
-        const jobId = user.roleId === 'client' ? await getJobId({
-            userId: user.id,
-            cateringId: catering.id,
-            roleId: 'client'
-        }) : undefined;
+        const jobId = user.roleId === RoleType.client ? clientId : undefined;
 
         const pipeline = [
             ...getOrderDbQuery({
@@ -80,17 +75,13 @@ const table = createCateringProcedure(['manager', 'kitchen', 'client'])
         }) as unknown as OrdersCustomTable[];
     });
 
-const count = createCateringProcedure(['manager', 'kitchen', 'client'])
+const count = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])
     .input(getOrdersCountValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering, user } } = ctx;
         const { searchValue, showColumns, clientId, status, tagId } = input;
 
-        const jobId = user.roleId === 'client' ? await getJobId({
-            userId: user.id,
-            cateringId: catering.id,
-            roleId: 'client'
-        }) : undefined;
+        const jobId = user.roleId === RoleType.client ? clientId : undefined;
 
         const count = await db.order.aggregateRaw({
             pipeline: [

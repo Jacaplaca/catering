@@ -19,6 +19,7 @@ const OrdersComponent: FunctionComponent<{
     dictionary: Record<string, string>
     settings: { main: SettingParsedType }
     session: Session | null
+    clientId?: string
 }> = (props) => {
 
 

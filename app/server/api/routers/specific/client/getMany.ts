@@ -6,7 +6,9 @@ import { db } from '@root/app/server/db';
 import { getClients as clientsValidator } from '@root/app/validators/specific/client';
 import { type ClientCustomTable, clientSortNames } from '@root/types/specific';
 import { options } from '@root/app/server/api/specific/aggregate';
-const getMany = createCateringProcedure('manager')
+import { RoleType } from '@prisma/client';
+
+const getMany = createCateringProcedure([RoleType.manager])
     .input(clientsValidator)
     .query(({ input, ctx }) => {
         const { session: { catering } } = ctx;

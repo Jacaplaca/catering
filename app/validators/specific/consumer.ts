@@ -10,6 +10,7 @@ export const getConsumersValid = z.object({
     dietSearchValue: z.string().optional(),
     showColumns: z.array(z.string()).optional(),
     clientId: z.string().optional(),
+    clientPlaceId: z.string().optional(),
 });
 
 export const getConsumersCountValid = z.object({
@@ -17,6 +18,7 @@ export const getConsumersCountValid = z.object({
     dietSearchValue: z.string().optional(),
     showColumns: z.array(z.string()).optional(),
     clientId: z.string().optional(),
+    clientPlaceId: z.string().optional(),
 });
 
 export const consumerEditValidator = z.object({
@@ -43,5 +45,9 @@ export const getConsumerListValid = z.object({
     cursor: z.number().optional(),
     limit: z.number().min(1).max(100).default(50),
     name: z.string().optional(),
+});
+
+export const getDietaryAllForClientValid = z.object({
+    clientId: z.string(),
 });
 

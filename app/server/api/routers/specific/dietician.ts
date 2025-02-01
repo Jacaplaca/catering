@@ -4,8 +4,9 @@ import { getDieticiansCountValid, getDieticiansValid } from '@root/app/validator
 import { deleteElementsValid } from '@root/app/validators/deleteElements';
 import { dieticianSortNames } from '@root/types/specific';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
+import { RoleType } from '@prisma/client';
 
-const count = createCateringProcedure('manager')
+const count = createCateringProcedure([RoleType.manager])
     .input(getDieticiansCountValid)
     .query(({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -22,7 +23,7 @@ const count = createCateringProcedure('manager')
         });
     });
 
-const getMany = createCateringProcedure('manager')
+const getMany = createCateringProcedure([RoleType.manager])
     .input(getDieticiansValid)
     .query(({ ctx, input }) => {
         const { session: { catering } } = ctx;
@@ -48,7 +49,7 @@ const getMany = createCateringProcedure('manager')
         });
     });
 
-const deleteMany = createCateringProcedure('manager')
+const deleteMany = createCateringProcedure([RoleType.manager])
     .input(deleteElementsValid)
     .mutation(({ ctx, input }) => {
         const { db, session } = ctx

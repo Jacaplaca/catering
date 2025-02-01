@@ -1,14 +1,13 @@
 import { db } from '@root/app/server/db';
-import { getOrderValid, orderForTableValid } from '@root/app/validators/specific/order';
+import { getLastOrderValid, getOrderValid, orderForTableValid } from '@root/app/validators/specific/order';
 import { type OrdersCustomTable, type OrderForView } from '@root/types/specific';
 import getOrderDbQuery from '@root/app/server/api/routers/specific/libs/getOrdersDbQuery';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { options } from '@root/app/server/api/specific/aggregate';
 import getOrder from '@root/app/server/api/routers/specific/libs/getOrder';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
-import { OrderStatus } from '@prisma/client';
+import { OrderStatus, RoleType } from '@prisma/client';
 
-const forView = createCateringProcedure(['manager', 'kitchen'])
+const forView = createCateringProcedure([RoleType.manager, RoleType.kitchen])
     .input(getOrderValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -151,7 +150,7 @@ const forView = createCateringProcedure(['manager', 'kitchen'])
         return rawOrder;
     });
 
-const forEdit = createCateringProcedure('client')
+const forEdit = createCateringProcedure([RoleType.client])
     .input(getOrderValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -161,16 +160,12 @@ const forEdit = createCateringProcedure('client')
         return getOrder({ orderId, cateringId });
     });
 
-const last = createCateringProcedure('client')
-    .query(async ({ ctx }) => {
+const last = createCateringProcedure([RoleType.client])
+    .input(getLastOrderValid)
+    .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
         const cateringId = catering.id;
-        const clientId = await getJobId({
-            userId: ctx.session.user.id,
-            cateringId,
-            roleId: 'client'
-        });
-
+        const { clientId } = input;
         const today = new Date();
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth(); // 0-11
@@ -210,13 +205,14 @@ const last = createCateringProcedure('client')
 
 
         if (!lastOrder) {
-            throw new Error('orders:no_orders_found');
+            // throw new Error('orders:no_orders_found');
+            return null;
         }
 
         return getOrder({ orderId: lastOrder.id });
     });
 
-const forTable = createCateringProcedure(['manager', 'kitchen', 'client'])
+const forTable = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])
     .input(orderForTableValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;

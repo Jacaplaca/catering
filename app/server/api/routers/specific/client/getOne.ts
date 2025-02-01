@@ -3,8 +3,9 @@ import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
 import { getClientValidator } from '@root/app/validators/specific/client';
 import { type ClientCustomTable } from '@root/types/specific';
+import { RoleType } from '@prisma/client';
 
-const getOne = createCateringProcedure('manager')
+const getOne = createCateringProcedure([RoleType.manager])
     .input(getClientValidator)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;

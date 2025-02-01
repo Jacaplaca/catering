@@ -12,7 +12,7 @@ const removeNotConfirmedUsers = async (users: User[]) => {
 
             switch (user.roleId) {
                 case 'client':
-                    await db.client.delete({ where: whereCondition });
+                    await db.client.deleteMany({ where: whereCondition });
                     break;
                 case 'dietician':
                     await db.dietician.delete({ where: whereCondition });

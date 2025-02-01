@@ -7,8 +7,9 @@ import { type FunctionComponent } from 'react';
 const SettingsWrapper: FunctionComponent<{
     lang: LocaleApp,
     pageName: string,
-    renderComponent: (props: { roleId?: RoleType, dictionary: Record<string, string> }) => JSX.Element | null
-}> = async ({ lang, renderComponent }) => {
+    clientId?: string,
+    renderComponent: (props: { roleId?: RoleType, dictionary: Record<string, string>, clientId?: string }) => JSX.Element | null
+}> = async ({ lang, renderComponent, clientId }) => {
     const dictionary = await getDictFromApi(lang, ["shared", "settings"]);
     const session = await auth();
 
@@ -17,7 +18,7 @@ const SettingsWrapper: FunctionComponent<{
             title={translate(dictionary, 'settings:title')}
             className='max-w-screen-xl'
         >
-            {renderComponent({ roleId: session?.user?.roleId, dictionary })}
+            {renderComponent({ roleId: session?.user?.roleId, dictionary, clientId })}
         </DashboardItemWrapper>
     );
 };

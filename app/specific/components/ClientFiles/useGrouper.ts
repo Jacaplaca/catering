@@ -72,7 +72,7 @@ const useGrouper = ({ clientFiles, updateMessage, dictionary, clientId, clientFi
         },
     });
 
-    const { data: allClients } = api.specific.client.getAll.useQuery();
+    const { data: allClients } = api.specific.client.getActiveWithCode.useQuery();
 
     const pickClient = (id: string | null, allIds: { id: string, name: string, code: string }[]) => {
         if (id) {

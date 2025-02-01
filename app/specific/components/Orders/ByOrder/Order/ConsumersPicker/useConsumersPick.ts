@@ -4,17 +4,19 @@ import { useEffect, useState } from 'react';
 const useConsumersPick = ({
     selectedIds,
     updateSelected,
-    allowedIds
+    allowedIds,
+    clientId
 }: {
     selectedIds: string[],
     updateSelected: (ids: string[]) => void,
     allowedIds?: string[],
+    clientId?: string,
 }) => {
 
     const [selectedItems, setSelectedItems] = useState<{ id: string, name: string, code: string }[]>([]);
 
     const [inputValue, setInputValue] = useState<string>('');
-    const { data: allItems, isLoading } = api.specific.consumer.dietaryAll.useQuery();
+    const { data: allItems, isLoading } = api.specific.consumer.dietaryAll.useQuery({ clientId: clientId ?? '' }, { enabled: !!clientId });
 
     const allowedItems = allowedIds ? allItems?.filter(item => allowedIds.includes(item.id)) : allItems;
 

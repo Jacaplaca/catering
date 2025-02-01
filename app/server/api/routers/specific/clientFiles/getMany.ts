@@ -10,7 +10,7 @@ import { RoleType } from '@prisma/client';
 
 const getMany = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(clientsFilesValidator)
-    .query(({ input, ctx }) => {
+    .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
         const { page, limit, sortName, sortDirection, day, searchValue } = input;
 
@@ -32,10 +32,12 @@ const getMany = createCateringProcedure([RoleType.dietician, RoleType.manager])
             { $limit: pagination.take },
         ]
 
-        return db.client.aggregateRaw({
+        const result = await db.client.aggregateRaw({
             pipeline,
             options
         }) as unknown as ClientFilesCustomTable[];
+
+        return result;
     });
 
 export default getMany;

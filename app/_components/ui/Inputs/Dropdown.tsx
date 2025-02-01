@@ -139,6 +139,7 @@ const Dropdown = <T extends IOption>({
             marginTop: '-1px',
             padding: '3px',
             boxShadow,
+            zIndex: 1000,
             ...styles?.menu,
         }),
         singleValue: (provided: CSSProperties) => ({

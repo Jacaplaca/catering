@@ -1,8 +1,9 @@
+import { RoleType } from '@prisma/client';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
 import { activateClientValidator } from '@root/app/validators/specific/client';
 
-const activate = createCateringProcedure('manager')
+const activate = createCateringProcedure([RoleType.manager])
     .input(activateClientValidator)
     .mutation(({ input }) => {
         const { ids } = input;

@@ -1,10 +1,11 @@
+import { RoleType } from '@prisma/client';
 import checkIfHasFinishedSettings from '@root/app/server/api/routers/specific/libs/hasFinishedSettings';
 import { createCateringNotSettingsProcedure } from '@root/app/server/api/specific/trpc';
 import { createRoleProcedure, publicProcedure } from '@root/app/server/api/trpc';
 import { getSettingsGroup } from '@root/app/server/cache/settings';
-import { clientSettingsValidator, dieticianSettingsValidator, managerSettingsValidator } from '@root/app/validators/specific/settings';
+import { clientSettingsValidator, dieticianSettingsValidator, managerSettingsValidator, getClientSettingsValidator } from '@root/app/validators/specific/settings';
 
-const managerSettings = createCateringNotSettingsProcedure('manager')
+const managerSettings = createCateringNotSettingsProcedure([RoleType.manager])
     .query(({ ctx }) => {
         const { session } = ctx;
         const { catering } = session;
@@ -14,13 +15,14 @@ const managerSettings = createCateringNotSettingsProcedure('manager')
         }
     });
 
-const clientSettings = createCateringNotSettingsProcedure('client')
-    .query(async ({ ctx }) => {
-        const { session, db } = ctx;
-        const { user } = session;
+const clientSettings = createCateringNotSettingsProcedure([RoleType.client])
+    .input(getClientSettingsValidator)
+    .query(async ({ ctx, input }) => {
+        const { clientId } = input;
+        const { db } = ctx;
         const client = await db.client.findUnique({
             where: {
-                userId: user.id,
+                id: clientId,
             }
         });
         if (!client) {
@@ -32,7 +34,7 @@ const clientSettings = createCateringNotSettingsProcedure('client')
         }
     });
 
-const dieticianSettings = createCateringNotSettingsProcedure('dietician')
+const dieticianSettings = createCateringNotSettingsProcedure([RoleType.dietician])
     .query(async ({ ctx }) => {
         const { session, db } = ctx;
         const { user } = session;
@@ -49,7 +51,7 @@ const dieticianSettings = createCateringNotSettingsProcedure('dietician')
         }
     });
 
-const updateManagerSettings = createCateringNotSettingsProcedure('manager')
+const updateManagerSettings = createCateringNotSettingsProcedure([RoleType.manager])
     .input(managerSettingsValidator)
     .mutation(({ ctx, input }) => {
         const { session, db } = ctx;
@@ -73,14 +75,14 @@ const updateManagerSettings = createCateringNotSettingsProcedure('manager')
         });
     });
 
-const updateClientSettings = createCateringNotSettingsProcedure('client')
+const updateClientSettings = createCateringNotSettingsProcedure([RoleType.client])
     .input(clientSettingsValidator)
     .mutation(({ ctx, input }) => {
-        const { session, db } = ctx;
-        const { user } = session;
+        const { db } = ctx;
+        const { clientId } = input;
         return db.client.update({
             where: {
-                userId: user.id,
+                id: clientId,
             },
             data: {
                 name: input.name,
@@ -88,7 +90,7 @@ const updateClientSettings = createCateringNotSettingsProcedure('client')
         });
     });
 
-const updateDieticianSettings = createCateringNotSettingsProcedure('dietician')
+const updateDieticianSettings = createCateringNotSettingsProcedure([RoleType.dietician])
     .input(dieticianSettingsValidator)
     .mutation(({ ctx, input }) => {
         const { session, db } = ctx;
@@ -103,7 +105,7 @@ const updateDieticianSettings = createCateringNotSettingsProcedure('dietician')
         });
     });
 
-const hasFinished = createRoleProcedure(['manager', 'client', 'superAdmin', 'dietician', 'kitchen'])
+const hasFinished = createRoleProcedure([RoleType.manager, RoleType.client, RoleType.superAdmin, RoleType.dietician, RoleType.kitchen])
     .query(async ({ ctx }) => {
         const { session, db } = ctx;
         const { user } = session;
@@ -163,10 +165,11 @@ const getCateringSettings = publicProcedure
             Object.entries(cateringSettings.settings)
                 .filter(([, value]) => value)
         );
-        return {
+        const personalization = {
             ...settings,
             ...cleanedSettings
         } as unknown as PersonalizationSettings;
+        return personalization;
     });
 
 const settingsRouter = {

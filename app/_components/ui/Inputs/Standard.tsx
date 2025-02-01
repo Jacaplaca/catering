@@ -46,7 +46,7 @@ const InputStandard = forwardRef<HTMLInputElement, InputStandardProps>((
         borderErrorColor,
         disabled,
         id,
-        autoComplete = "new-password",
+        autoComplete = "off",
         maxLength = Infinity,
         className,
         mouseLeave,

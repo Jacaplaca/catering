@@ -26,7 +26,7 @@ const remove = createRoleProcedure([settings.superAdminRole])
 
                 switch (user?.roleId) {
                     case 'client':
-                        await db.client.delete(whereCondition);
+                        await db.client.deleteMany(whereCondition);
                         break;
                     case 'dietician':
                         await db.dietician.delete(whereCondition);

@@ -18,7 +18,7 @@ const defaultDiet = {
     dinner: [],
 } as { breakfast: string[], lunch: string[], dinner: string[] };
 
-const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder }: {
+const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, clientId }: {
     orderForEdit?: OrderForEdit,
     newOrder: boolean,
     setRows: Dispatch<SetStateAction<OrdersCustomTable[]>>,
@@ -26,6 +26,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder }: {
     dictionary: Record<string, string>,
     updateMessage: UpdateMessageType,
     resetMessage: () => void,
+    clientId?: string,
 }) => {
     const isClient = session?.user.roleId === 'client';
     const utils = api.useUtils();
@@ -92,8 +93,8 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder }: {
     }
 
     const { data: cateringSettings } = api.specific.settings.get.useQuery();
-    const { data: orderedDates } = api.specific.order.orderedDates.useQuery(undefined, { enabled: isClient });
-    const { data: lastOrder } = api.specific.order.last.useQuery(undefined, { enabled: newOrder && isClient });
+    const { data: orderedDates } = api.specific.order.orderedDates.useQuery({ clientId: clientId ?? '' }, { enabled: isClient && !!clientId });
+    const { data: lastOrder } = api.specific.order.last.useQuery({ clientId: clientId ?? '' }, { enabled: newOrder && isClient && !!clientId });
 
     useEffect(() => {
         if (lastOrder && newOrder) {
@@ -195,6 +196,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder }: {
         diet,
         day: day ?? { year: 0, month: 0, day: 0 },
         id: orderForEdit?.id,
+        clientId: clientId ?? '',
     }
 
 

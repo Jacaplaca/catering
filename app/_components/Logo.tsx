@@ -35,18 +35,26 @@ const Logo: FunctionComponent<{
 
   const mainPage = getMainPageUrl(lang);
 
+  // Calculate proportional dimensions
+  const originalWidth = parseInt(width.replace("px", ""));
+  const originalHeight = parseInt(height.replace("px", ""));
+  const maxHeight = 60;
+  const scale = Math.min(maxHeight / originalHeight, 1);
+  const scaledWidth = Math.round(originalWidth * scale);
+  const scaledHeight = Math.round(originalHeight * scale);
+
   return (
     <Link href={mainPage} className="navbar-brand inline-block">
       {logoPath ? (
         <Image
-          width={parseInt(width.replace("px", "")) * 2}
-          height={parseInt(height.replace("px", "")) * 2}
+          width={scaledWidth * 2}
+          height={scaledHeight * 2}
           src={logoPath}
           alt={title}
           priority
           style={{
-            height: height.replace("px", "") + "px",
-            width: width.replace("px", "") + "px",
+            height: `${scaledHeight}px`,
+            width: `${scaledWidth}px`,
           }}
         />
       ) : text ? (

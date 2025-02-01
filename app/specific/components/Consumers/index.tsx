@@ -5,8 +5,9 @@ import { type FunctionComponent } from 'react';
 
 const Consumers: FunctionComponent<{
     lang: LocaleApp,
-    pageName: string
-}> = async ({ lang, pageName }) => {
+    pageName: string,
+    clientId?: string
+}> = async ({ lang, pageName, clientId }) => {
 
     const [
         dictionary,
@@ -22,6 +23,7 @@ const Consumers: FunctionComponent<{
                 lang={lang}
                 pageName={pageName}
                 dictionary={dictionary}
+                clientId={clientId}
                 settings={{
                     main: mainSettings,
                 }}

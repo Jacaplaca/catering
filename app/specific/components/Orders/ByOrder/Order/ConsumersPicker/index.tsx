@@ -8,11 +8,13 @@ import { MealType } from '@root/types/specific';
 type ConsumersPickerProps = {
     onResultClick: (id: string | null, allItems: { id: string, name: string }[]) => void,
     mealType: MealType,
+    clientId?: string,
 }
 
 const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
     onResultClick,
     mealType,
+    clientId
 }) => {
 
     const {
@@ -79,7 +81,8 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
     } = useConsumersPick({
         selectedIds: selectedConsumers,
         allowedIds: isBetween ? consumersBeforeDeadline : undefined,
-        updateSelected
+        updateSelected,
+        clientId
     });
 
     if (!allItems) return null;

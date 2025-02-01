@@ -21,6 +21,7 @@ const getClientsDbQuery = ({
     type MatchObject = {
         cateringId?: string;
         id?: string;
+        deactivated?: boolean;
         $or?: Record<string, {
             $regex?: string;
             $options?: string;
@@ -28,7 +29,8 @@ const getClientsDbQuery = ({
     };
 
     const query: MatchObject = {
-        cateringId: catering.id
+        cateringId: catering.id,
+        deactivated: false
     }
 
     if (id) {
@@ -47,7 +49,8 @@ const getClientsDbQuery = ({
         },
         {
             $addFields: {
-                code: '$info.code'
+                code: '$info.code',
+                deactivated: '$deactivated'
             }
         },
         // {

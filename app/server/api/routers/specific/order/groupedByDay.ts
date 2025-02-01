@@ -3,10 +3,10 @@ import { getQueryPagination } from '@root/app/lib/safeDbQuery';
 import { getDayValid, getOrdersGroupedByDayValid } from '@root/app/validators/specific/order';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import type { OrderGroupedByDayCustomTable, OrderMealPopulated } from '@root/types/specific';
-import type { Client, OrderConsumerBreakfast, OrderConsumerDinner, OrderConsumerLunch, OrderStatus } from '@prisma/client';
+import { RoleType, type Client, type OrderConsumerBreakfast, type OrderConsumerDinner, type OrderConsumerLunch, type OrderStatus } from '@prisma/client';
 import processMeals from '@root/app/server/api/routers/specific/libs/processMeals';
 
-const day = createCateringProcedure(['manager', 'kitchen'])
+const day = createCateringProcedure([RoleType.manager, RoleType.kitchen])
     .input(getDayValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -192,7 +192,7 @@ const day = createCateringProcedure(['manager', 'kitchen'])
         return { dayData: dayDataCleaned, summary, standard, diet };
     });
 
-const table = createCateringProcedure(['manager', 'kitchen'])
+const table = createCateringProcedure([RoleType.manager, RoleType.kitchen])
     .input(getOrdersGroupedByDayValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -293,7 +293,7 @@ const table = createCateringProcedure(['manager', 'kitchen'])
         return groupedOrders as unknown as OrderGroupedByDayCustomTable[];
     });
 
-const count = createCateringProcedure(['manager', 'kitchen'])
+const count = createCateringProcedure([RoleType.manager, RoleType.kitchen])
     .query(async ({ ctx }) => {
         const { session: { catering } } = ctx;
 

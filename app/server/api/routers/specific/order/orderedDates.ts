@@ -1,17 +1,13 @@
-import { OrderStatus } from '@prisma/client';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
+import { OrderStatus, RoleType } from '@prisma/client';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
+import { orderedDatesValid } from '@root/app/validators/specific/order';
 import { format } from 'date-fns-tz';
 
-const orderedDates = createCateringProcedure(['client'])
-    .query(async ({ ctx }) => {
+const orderedDates = createCateringProcedure([RoleType.client])
+    .input(orderedDatesValid)
+    .query(async ({ ctx, input }) => {
         const { session: { catering }, db } = ctx;
-
-        const clientId = await getJobId({
-            userId: ctx.session.user.id,
-            cateringId: catering.id,
-            roleId: 'client'
-        });
+        const { clientId } = input;
 
         const today = new Date();
         const twoWeeksFromNow = new Date(today);

@@ -119,6 +119,7 @@ const SignInForm: FunctionComponent<{
                   value={form.watch('email')}
                   onChange={(e) => form.setValue('email', e.target.value)}
                   type='email'
+                  autoComplete="username"
                 />
               </AuthInput>
 
@@ -132,6 +133,7 @@ const SignInForm: FunctionComponent<{
                   onChange={(e) => form.setValue('password', e.target.value)}
                   placeholder={translate(dictionary, 'sign-in:password_input_placeholder')}
                   type='password'
+                  autoComplete="current-password"
                 />
               </AuthInput>
               <Message

@@ -8,7 +8,8 @@ const getConsumerDbQuery = ({
     id,
     clientId,
     withNameOnly,
-    withDiet
+    withDiet,
+    isClient
 }: {
     customerSearchValue?: string,
     dietSearchValue?: string,
@@ -17,7 +18,8 @@ const getConsumerDbQuery = ({
     id?: string,
     clientId?: string,
     withNameOnly?: boolean,
-    withDiet?: boolean
+    withDiet?: boolean,
+    isClient?: boolean
 }) => {
     const orConditions = showColumns?.map(column => ({
 
@@ -26,6 +28,7 @@ const getConsumerDbQuery = ({
 
     type MatchObject = {
         // cateringId?: string;
+        "client.deactivated"?: boolean;
         id?: string;
         $or?: Record<string, {
             $regex?: string;
@@ -35,6 +38,7 @@ const getConsumerDbQuery = ({
 
     const query: MatchObject = {
         // cateringId: catering.id
+        "client.deactivated": false
     }
 
     if (id) {
@@ -71,7 +75,7 @@ const getConsumerDbQuery = ({
 
     const startWith = (el: string) => showColumns ? showColumns.some(item => item.startsWith(el)) : true;
 
-    if (startWith('client.')) {
+    if (startWith('client.') || isClient) {
         pipeline.push({
             $lookup: {
                 from: 'Client',
@@ -123,11 +127,12 @@ const getConsumerDbQuery = ({
 
     const fieldsToAdd = { $addFields: { id: "$_id" } as Record<string, unknown> };
 
-    if (startWith('client.')) {
+    if (startWith('client.') || isClient) {
         fieldsToAdd.$addFields.client = {
             id: '$client._id',
             name: '$client.info.name',
             code: '$client.info.code',
+            deactivated: '$client.deactivated',
         }
     }
 
@@ -142,6 +147,7 @@ const getConsumerDbQuery = ({
             id: 1,
             name: 1,
             code: 1,
+            deactivated: 1,
         },
         diet: 1,
         notes: 1,

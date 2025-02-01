@@ -1,5 +1,4 @@
-import { OrderStatus } from '@prisma/client';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
+import { OrderStatus, RoleType } from '@prisma/client';
 import { orderValidator } from '@root/app/validators/specific/order';
 import { type z } from 'zod';
 import { type Context, createCateringProcedure } from '@root/app/server/api/specific/trpc';
@@ -12,28 +11,8 @@ const save = async ({ ctx, input, status }: {
 }) => {
     const { db, session } = ctx;
 
-    const { catering, user } = session;
-    const { day, diet, standards } = input;
-
-    const jobId = await getJobId({
-        userId: user.id,
-        cateringId: catering.id,
-        roleId: user.roleId
-    });
-
-    if (!jobId) {
-        throw new Error("shared:cant_find_user");
-    }
-
-    // const client = await db.client.findUnique({
-    //     where: {
-    //         id: jobId,
-    //     }
-    // });
-
-    // const time = client?.settings.lastOrderTime ?? catering.settings.lastOrderTime;
-    // const timeZone = catering.settings.timeZone;
-    // const deadline = { time, timeZone };
+    const { catering } = session;
+    const { day, diet, standards, clientId } = input;
 
     const {
         first: firstDeadline,
@@ -55,7 +34,7 @@ const save = async ({ ctx, input, status }: {
             id: input.id,
         } : {
             cateringId: catering.id,
-            clientId: jobId,
+            clientId,
 
             deliveryDay: {
                 equals: day,
@@ -69,7 +48,7 @@ const save = async ({ ctx, input, status }: {
 
     const orderPlaceData = {
         cateringId: catering.id,
-        clientId: jobId,
+        clientId,
         deliveryDay: day,
     }
 
@@ -176,14 +155,14 @@ const save = async ({ ctx, input, status }: {
     }
 }
 
-export const place = createCateringProcedure('client')
+export const place = createCateringProcedure([RoleType.client])
     .input(orderValidator)
     .mutation(async ({ ctx, input }) => {
         // await new Promise(resolve => setTimeout(resolve, 1000));
         return save({ ctx, input, status: OrderStatus.in_progress })
     })
 
-export const saveDraft = createCateringProcedure('client')
+export const saveDraft = createCateringProcedure([RoleType.client])
     .input(orderValidator)
     .mutation(async ({ ctx, input }) => {
         // await new Promise(resolve => setTimeout(resolve, 1000));

@@ -1,23 +1,18 @@
-// import { type Consumer, type RoleType } from '@prisma/client';
 import getLowerCaseSort from '@root/app/lib/lower-case-sort-pipeline';
 import { getQueryOrder, getQueryPagination } from '@root/app/lib/safeDbQuery';
 import getConsumerDbQuery from '@root/app/server/api/routers/specific/libs/getConsumersDbQuery';
-import getJobId from '@root/app/server/api/routers/specific/libs/getJobId';
 import { options } from '@root/app/server/api/specific/aggregate';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
-import { consumerEditValidator, deleteConsumersValid, getConsumerValid, getConsumersCountValid, getConsumersValid } from '@root/app/validators/specific/consumer';
+import { consumerEditValidator, deleteConsumersValid, getConsumerValid, getConsumersCountValid, getConsumersValid, getDietaryAllForClientValid } from '@root/app/validators/specific/consumer';
 import { type ConsumerCustomTable, consumersSortNames } from '@root/types/specific';
+import { RoleType } from '@prisma/client';
 
-const dietaryAll = createCateringProcedure(['client'])
-    .query(async ({ ctx }) => {
+const dietaryAll = createCateringProcedure([RoleType.client])
+    .input(getDietaryAllForClientValid)
+    .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
-
-        const clientId = await getJobId({
-            userId: ctx.session.user.id,
-            cateringId: catering.id,
-            roleId: 'client'
-        });
+        const { clientId } = input;
 
         const allowedSortNames = consumersSortNames;
 
@@ -33,7 +28,7 @@ const dietaryAll = createCateringProcedure(['client'])
                 ...getConsumerDbQuery({
                     withDiet: true,
                     showColumns: ['name', 'code']
-                    , catering, clientId, withNameOnly: true
+                    , catering, clientId, withNameOnly: true, isClient: true
                 }),
                 ...getLowerCaseSort(orderBy),
             ],
@@ -42,69 +37,11 @@ const dietaryAll = createCateringProcedure(['client'])
 
     });
 
-
-// const getInfinite = createCateringProcedure(['client'])
-//     .input(getConsumerListValid)
-//     .query(async ({ input, ctx }) => {
-//         const { session: { catering } } = ctx;
-//         const { cursor, limit } = input;
-//         const skip = cursor ?? 0;
-
-//         const clientId = await getJobId({
-//             userId: ctx.session.user.id,
-//             cateringId: catering.id,
-//             roleId: 'client'
-//         });
-
-//         const showColumns = ['name', 'code'];
-//         const sortName = 'name';
-//         const sortDirection = 'asc';
-//         const searchValue = '';
-
-//         const allowedSortNames = consumersSortNames;
-
-//         const pipeFirst = getConsumerDbQuery({ searchValue, showColumns, catering, clientId, withNameOnly: true });
-
-//         const count = await db.consumer.aggregateRaw({
-//             pipeline: [
-//                 ...pipeFirst,
-//                 { $count: 'count' },
-//             ]
-//         }) as unknown as { count: number }[];
-
-//         const orderBy = getQueryOrder({
-//             name: sortName,
-//             direction: sortDirection,
-//             allowedNames: allowedSortNames,
-//             inNumbers: true
-//         });
-
-//         const pipeline = [
-//             ...pipeFirst,
-//             ...getLowerCaseSort(orderBy),
-//             { $skip: skip },
-//             { $limit: limit },
-//         ]
-
-//         const items = await db.consumer.aggregateRaw({
-//             pipeline
-//         }) as unknown as (ConsumerCustomTable & { name: string })[];
-
-//         const totalCount = count[0]?.count ?? 0;
-//         const nextCursor = skip + limit < totalCount ? skip + limit : undefined;
-
-//         return {
-//             items,
-//             nextCursor,
-//             totalCount,
-//         };
-//     });
-
-const getMany = createCateringProcedure(['manager', 'dietician', 'client'])
+const getMany = createCateringProcedure([RoleType.manager, RoleType.dietician, RoleType.client])
     .input(getConsumersValid)
-    .query(async ({ input, ctx }) => {
+    .query(({ input, ctx }) => {
         const { session: { catering, user } } = ctx;
-        const { page, limit, sortName, sortDirection, customerSearchValue, dietSearchValue, showColumns, clientId } = input;
+        const { page, limit, sortName, sortDirection, customerSearchValue, dietSearchValue, showColumns, clientId, clientPlaceId } = input;
 
         const pagination = getQueryPagination({ page, limit });
 
@@ -117,14 +54,11 @@ const getMany = createCateringProcedure(['manager', 'dietician', 'client'])
             inNumbers: true
         });
 
-        const jobId = user.roleId === 'client' ? await getJobId({
-            userId: user.id,
-            cateringId: catering.id,
-            roleId: 'client'
-        }) : undefined;
+        const jobId = clientPlaceId;
+        const isClient = user.roleId === RoleType.client;
 
         const pipeline = [
-            ...getConsumerDbQuery({ customerSearchValue, dietSearchValue, showColumns, catering, clientId: jobId ? jobId : clientId }),
+            ...getConsumerDbQuery({ customerSearchValue, dietSearchValue, showColumns, catering, clientId: jobId ? jobId : clientId, isClient }),
             ...getLowerCaseSort(orderBy),
             { $skip: pagination.skip },
             { $limit: pagination.take },
@@ -136,28 +70,26 @@ const getMany = createCateringProcedure(['manager', 'dietician', 'client'])
         }) as unknown as ConsumerCustomTable[];
     });
 
-const count = createCateringProcedure(['manager', 'dietician', 'client'])
+const count = createCateringProcedure([RoleType.manager, RoleType.dietician, RoleType.client])
     .input(getConsumersCountValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering, user } } = ctx;
-        const { customerSearchValue, dietSearchValue, showColumns, clientId } = input;
+        const { customerSearchValue, dietSearchValue, showColumns, clientId, clientPlaceId } = input;
 
-        const jobId = user.roleId === 'client' ? await getJobId({
-            userId: user.id,
-            cateringId: catering.id,
-            roleId: 'client'
-        }) : undefined;
+        const isClient = user.roleId === RoleType.client;
+
+        const jobId = clientPlaceId;
 
         const count = await db.consumer.aggregateRaw({
             pipeline: [
-                ...getConsumerDbQuery({ customerSearchValue, dietSearchValue, showColumns, catering, clientId: jobId ? jobId : clientId }),
+                ...getConsumerDbQuery({ customerSearchValue, dietSearchValue, showColumns, catering, clientId: jobId ? jobId : clientId, isClient }),
                 { $count: 'count' },
             ]
         }) as unknown as { count: number }[];
         return count[0]?.count ?? 0;
     });
 
-const getOne = createCateringProcedure(['dietician', 'client', 'manager'])
+const getOne = createCateringProcedure([RoleType.dietician, RoleType.client, RoleType.manager])
     .input(getConsumerValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -169,61 +101,7 @@ const getOne = createCateringProcedure(['dietician', 'client', 'manager'])
         return clients[0];
     });
 
-
-// const handleDiet = async ({
-//     diet,
-//     userId,
-//     roleId,
-//     consumer
-// }: {
-//     diet: z.infer<typeof consumerEditValidator>['diet'];
-//     userId: string;
-//     roleId: RoleType;
-//     consumer: Consumer;
-// }) => {
-//     if (!diet) return;
-
-//     const { id: consumerId, dietId, cateringId } = consumer;
-
-//     const dieticianId = await getJobId({
-//         userId,
-//         cateringId,
-//         roleId
-//     });
-
-//     const { description, notes } = diet;
-
-//     const createDiet = !dietId && dieticianId && (description ?? notes);
-//     if (createDiet) {
-//         const code = await getNewCode({
-//             cateringId,
-//             modelName: "diet"
-//         });
-
-//         const newDiet = await db.diet.create({
-//             data: {
-//                 code,
-//                 cateringId,
-//                 dieticianId,
-//                 description,
-//                 notes
-//             }
-//         });
-//         return db.consumer.update({
-//             where: { id: consumerId },
-//             data: { dietId: newDiet.id }
-//         })
-
-//     }
-//     if (dietId && (description ?? notes)) {
-//         return db.diet.update({
-//             where: { id: dietId },
-//             data: { description, notes, dieticianId }
-//         })
-//     }
-// }
-
-const addOne = createCateringProcedure(['dietician', 'manager'])
+const addOne = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(consumerEditValidator)
     .mutation(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -265,7 +143,7 @@ const addOne = createCateringProcedure(['dietician', 'manager'])
     });
 
 
-const edit = createCateringProcedure(['dietician', 'manager'])
+const edit = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(consumerEditValidator)
     .mutation(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -307,7 +185,7 @@ const edit = createCateringProcedure(['dietician', 'manager'])
         // })
     });
 
-const deleteOne = createCateringProcedure(['dietician', 'manager'])
+const deleteOne = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(deleteConsumersValid)
     .mutation(async ({ input, ctx }) => {
         const { ids } = input;

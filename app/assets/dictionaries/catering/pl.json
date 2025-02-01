@@ -31,7 +31,11 @@
         "item-client-files-title": "Zarządzaj plikami klienta",
         "item-documents-label": "Menu/Diety/Wykaz",
         "item-documents-title": "Menu/Diety/Wykaz",
-        "group-users-label": "Użytkownicy"
+        "group-users-label": "Użytkownicy",
+        "client-no-name": "Brak nazwy!",
+        "add-new-client": "Dodaj nową placówkę",
+        "remove-place": "Usuń",
+        "remove-place-confirmation": "Czy na pewno chcesz usunąć tę placówkę?"
     },
     "users": {
         "title": "Użytkownicy",
@@ -42,9 +46,11 @@
         "title": "Ustawienia",
         "fill_to_use": "Skonfiguruj najpierw aplikację, aby móc przejść do innych modułów",
         "company_name": "Nazwa firmy",
+        "place_name": "Nazwa placówki",
         "dietician": "Dietetyk",
         "name_surname_dietician_placeholder": "Imię i nazwisko dietetyka",
         "company_name_placeholder": "Wpisz nazwę firmy",
+        "place_name_placeholder": "Wpisz nazwę placówki",
         "first_order_deadline": "Termin składania zamówień podstawowych na dzień przed realizacją",
         "second_order_deadline": "Termin korekty zamówień w dniu realizacji",
         "order_deadline_validation": "Czas musi być w formacie HH:MM",
@@ -220,7 +226,7 @@
     "documents": {
         "tab_menu": "Tygodniowe",
         "menu": "Menu standardowe",
-        "diets": "Menu dietetyczne",
+        "diet": "Menu dietetyczne",
         "checklist": "Wykaz składników"
     }
 }

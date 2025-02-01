@@ -12,6 +12,7 @@ const ElementToPick: FunctionComponent<ItemProps> = ({ item, onClick, fragment, 
     const clickable = onClick && item?.id;
 
     const selected = selectedItems?.includes(item?.id ?? '');
+    console.log("fragment", fragment + "AAA");
 
     return (
         <div
