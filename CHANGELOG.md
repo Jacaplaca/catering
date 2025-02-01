@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/Jacaplaca/catering/compare/v1.0.19...v1.1.0) (2025-02-01)
+
+
+### Features
+
+* multiple clients and more ([c95c5a1](https://github.com/Jacaplaca/catering/commit/c95c5a1d9f68241225e6a00a54c2432bf1af6db5))
+
+
+
 ## [1.0.19](https://github.com/Jacaplaca/catering/compare/v1.0.18...v1.0.19) (2025-01-27)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * prisma and prisma client major update 5.22 -> 6.0.0 ([87b3bec](https://github.com/Jacaplaca/catering/commit/87b3bec216c63203ee1361b574a0f91865ba3311))
-
-
-
-## [1.0.15](https://github.com/Jacaplaca/catering/compare/v1.0.14...v1.0.15) (2024-11-30)
-
-
-### Bug Fixes
-
-* minor library updates ([58977f9](https://github.com/Jacaplaca/catering/commit/58977f9aa3f2dbff4a4616a678fe67459b8ee41b))
 
 
 
