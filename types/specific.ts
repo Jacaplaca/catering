@@ -3,7 +3,7 @@ import { type TableTypeValues } from '@root/app/validators/settings';
 import { type orderForEditValid } from '@root/app/validators/specific/order';
 import { type z } from 'zod';
 
-export const clientSortNames = ['name', 'code', "info.name", "info.email", "info.phone",
+export const clientSortNames = ['name', 'email', 'code', "info.name", "info.email", "info.phone",
     "info.address", "info.city", "info.zip", "info.contactPerson", "info.country",
     // 'settings.lastOrderTime'
 ] as const;
@@ -32,11 +32,13 @@ export type ClientCustomTable = {
     // settings: ClientSettings;
     info: ClientInfo;
     name?: string;
+    email?: string;
     code: number;
     tags: string[];
     deactivated: boolean;
     createdAt: Date;
     updatedAt: Date;
+
 };
 
 export const consumersSortNames = ['name', 'client.name', 'client.code', 'diet.description', 'diet.dietician.name', 'code', 'diet.code', 'createdAt'] as const;

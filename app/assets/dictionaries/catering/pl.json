@@ -65,6 +65,7 @@
         "add_client": "Dodaj klienta",
         "search_placeholder": "Szukaj klientów",
         "name_column": "Nazwa(użytkownik)",
+        "email_column": "Email(użytkownik)",
         "info.name_column": "Nazwa",
         "info.name_placeholder": "Wpisz nazwę klienta",
         "info.code_column": "Kod",

@@ -24,6 +24,11 @@ const useClientColumns = ({
             sort: () => sort('name')
         },
         {
+            key: "email",
+            title: 'clients:email_column',
+            sort: () => sort('email')
+        },
+        {
             key: "info.email",
             title: 'clients:info.email_column',
             sort: () => sort('info.email')

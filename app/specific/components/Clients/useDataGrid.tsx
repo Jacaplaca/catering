@@ -46,7 +46,7 @@ const useClientDataGrid = ({
         }
     })
 
-    const table = rows.map(({ id, name, info, deactivated }, i) => {
+    const table = rows.map(({ id, name, info, email, deactivated }, i) => {
         return {
             key: id ?? `placeholderData-${i}`,
             className: deactivated ? 'opacity-80 bg-clip-content h-[40px] bg-[repeating-linear-gradient(45deg,transparent,transparent_8px,rgba(0,0,0,0.4)_8px,rgba(0,0,0,0.7)_16px)]' : '',
@@ -79,6 +79,13 @@ const useClientDataGrid = ({
                         text={name ?? ""}
                         fragment={searchValue} />,
                     key: 'name'
+                },
+                {
+                    component: <HighlightText
+                        className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
+                        text={email ?? ""}
+                        fragment={searchValue} />,
+                    key: 'email'
                 },
                 {
                     component: <HighlightText

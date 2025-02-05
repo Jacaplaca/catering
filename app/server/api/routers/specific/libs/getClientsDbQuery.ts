@@ -59,6 +59,19 @@ const getClientsDbQuery = ({
         //     }
         // },
         {
+            $lookup: {
+                from: 'User',
+                localField: 'userId',
+                foreignField: '_id',
+                as: 'user'
+            }
+        },
+        {
+            $addFields: {
+                email: { $first: '$user.email' }
+            }
+        },
+        {
             $project: {
                 _id: 0,
                 id: 1,
@@ -70,7 +83,7 @@ const getClientsDbQuery = ({
                 createdAt: 1,
                 tags: 1,
                 deactivated: 1,
-                // 'user.name': 1
+                email: 1
             }
         },
         {
