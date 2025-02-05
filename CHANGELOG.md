@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/Jacaplaca/catering/compare/v1.1.0...v1.1.1) (2025-02-05)
+
+
+### Bug Fixes
+
+* added email column to client table ([3c0a043](https://github.com/Jacaplaca/catering/commit/3c0a0437370ea83e908f980b9e6d42067e56b3a9))
+
+
+
 # [1.1.0](https://github.com/Jacaplaca/catering/compare/v1.0.19...v1.1.0) (2025-02-01)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * add files to multiple clients modal ([6ecf886](https://github.com/Jacaplaca/catering/commit/6ecf886a5af13122467241ca29a4838576612dc8))
-
-
-
-## [1.0.16](https://github.com/Jacaplaca/catering/compare/v1.0.15...v1.0.16) (2024-11-30)
-
-
-### Bug Fixes
-
-* prisma and prisma client major update 5.22 -> 6.0.0 ([87b3bec](https://github.com/Jacaplaca/catering/commit/87b3bec216c63203ee1361b574a0f91865ba3311))
 
 
 
