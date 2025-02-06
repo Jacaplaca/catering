@@ -1,3 +1,12 @@
+## [1.1.2](https://github.com/Jacaplaca/catering/compare/v1.1.1...v1.1.2) (2025-02-06)
+
+
+### Bug Fixes
+
+* consumers without diet code now showing in report ([9a7ff71](https://github.com/Jacaplaca/catering/commit/9a7ff7129a9c5ffb5aaf067e8df4da2eac3b5cbb))
+
+
+
 ## [1.1.1](https://github.com/Jacaplaca/catering/compare/v1.1.0...v1.1.1) (2025-02-05)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * remove-users-zero-in-date ([9d4e69c](https://github.com/Jacaplaca/catering/commit/9d4e69c80eea067e77111925aee897db09c5c334))
-
-
-
-## [1.0.17](https://github.com/Jacaplaca/catering/compare/v1.0.16...v1.0.17) (2024-11-30)
-
-
-### Bug Fixes
-
-* add files to multiple clients modal ([6ecf886](https://github.com/Jacaplaca/catering/commit/6ecf886a5af13122467241ca29a4838576612dc8))
 
 
 
