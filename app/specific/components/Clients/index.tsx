@@ -14,7 +14,7 @@ const Clients: FunctionComponent<{
     ] = await Promise.all([
         getDictFromApi(lang, ["shared", "role", "invite", "dashboard", "clients"]),
         getSettingsFromApi('main'),
-    ])
+    ]);
 
     return (
         <div>

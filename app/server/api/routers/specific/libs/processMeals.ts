@@ -2,13 +2,16 @@ import type { OrderConsumerBreakfast, OrderConsumerLunch, OrderConsumerDinner } 
 import type { OrderMealPopulated } from '@root/types/specific';
 
 const processMeals = (meals: (OrderConsumerBreakfast & OrderMealPopulated | OrderConsumerLunch & OrderMealPopulated | OrderConsumerDinner & OrderMealPopulated)[]) => {
-    return meals.filter(meal => meal.consumer.code && meal.consumer.diet?.code).reduce((acc, meal) => {
+    return meals.filter(meal => meal.consumer.code).reduce((acc, meal) => {
         const code = meal.consumer.code;
         if (code) {
-            acc[code] = meal.consumer.diet?.code ?? '';
+            acc[code] = {
+                code: meal.consumer.diet?.code ? meal.consumer.diet?.code : '---',
+                description: meal.consumer.diet?.description ? meal.consumer.diet?.description : '',
+            };
         }
         return acc;
-    }, {} as Record<string, string>);
+    }, {} as Record<string, { code: string, description: string }>);
 }
 
 export default processMeals;

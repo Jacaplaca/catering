@@ -129,7 +129,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                 acc[code] = processMeals(diet);
             }
             return acc;
-        }, {} as Record<string, Record<string, string>>);
+        }, {} as Record<string, Record<string, { code: string, description: string }>>);
 
 
         const standard = Object.entries(standardObject).map(([clientCode, value]) => ({
@@ -143,7 +143,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                 diet,
             }));
             return acc;
-        }, {} as Record<string, { consumerCode: string, diet: string }[]>);
+        }, {} as Record<string, { consumerCode: string, diet: { code: string, description: string } }[]>);
 
         const dictionary = await getDict({ lang, keys: ['shared', 'orders'] })
 
@@ -269,7 +269,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                     align: 'center'
                 });
 
-            Object.entries(diet).forEach(([clientCode, orders]) => {
+            Object.entries(diet).filter(([_, orders]) => orders.length > 0).forEach(([clientCode, orders]) => {
                 doc.moveDown()
                     .fontSize(12)
                     .font('Roboto-Bold')
@@ -277,7 +277,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                     .font('Roboto');
 
                 orders.forEach(order => {
-                    doc.text(`${order.consumerCode}: ${order.diet}`, 50);
+                    doc.text(`${order.consumerCode}: ${order.diet.code}`, 50);
                 });
             });
 

@@ -5,8 +5,14 @@ h1: 'O nas'
 description: 'O nas'
 ---
 
-# Przykład
+# Historia firmy zaczęła się od 2012
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam id elementum tellus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent eget volutpat diam. Nulla elementum, ex vel sagittis blandit, eros tellus hendrerit diam, quis aliquet ipsum nulla non lacus. Suspendisse ac diam ut sem facilisis luctus. Nulla pretium sit amet quam ut ornare. In hac habitasse platea dictumst. Etiam euismod, ante quis commodo rutrum, lacus nisi aliquam leo, quis malesuada enim dui at libero. Aenean commodo magna nibh, vitae fermentum mauris sollicitudin vel. Morbi ut facilisis eros. Pellentesque quis justo lacus. Vestibulum sollicitudin libero arcu, eget suscipit purus faucibus id.
+## "Losy narodów zależą od sposobu ich odżywiania." - A. Brillat – Savarin
 
-Donec sodales elementum tortor, non elementum felis vulputate tincidunt. Sed aliquam lobortis ultricies. Integer massa mauris, aliquet ut molestie et, fermentum ut neque. Aenean vel lobortis sapien. Nunc dapibus eleifend sem, sed ornare elit sollicitudin et. Nunc justo mauris, interdum sit amet leo id, pretium commodo purus. Ut congue ex in mattis faucibus. Proin in eleifend dui, nec lobortis urna. Duis at cursus nulla. Vivamus molestie purus id posuere ultricies. Curabitur elementum sem vitae ipsum interdum lobortis. Donec non ex eu erat suscipit ornare. Vivamus porttitor elementum tellus at mattis. Morbi vestibulum porta posuere. 
+Nasz cel to wzrost świadomości żywieniowej i kulinarnej u najmłodszych dzieci, ale również wśród rodziców dbających o prawidłową dietę swojego dziecka, jak również opiekunów w placówkach oświatowo-wychowawczych. Dieta dzieci powinna być zrównoważona odżywczo, odpowiednia dla danego wieku, różnorodna i oparta o produkty jak najmniej przetworzone.
+
+# Zaufaj specjalistom
+
+## Zbilansowana dieta
+
+Nasze menu dostarcza dzieciom wszystkich niezbędnych składników odżywczych. Opiera się na piramidzie żywienia, którą zaleca Światowa Organizacja Zdrowia. Przestrzegane przez nas zasady żywienia są zgodne z Rozporządzeniem Ministra Zdrowia z dnia 26 sierpnia 2015 r. w sprawie grup środków spożywczych przeznaczonych do sprzedaży dzieciom i młodzieży w jednostkach systemu oświaty oraz wymagań, jakie muszą spełniać środki spożywcze stosowane w ramach żywienia zbiorowego dzieci i młodzieży w tych jednostkach.

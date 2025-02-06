@@ -13,6 +13,18 @@ const edit = createCateringProcedure([RoleType.manager])
             throw new Error("Catering ID is missing");
         }
 
+        const client = await db.client.findUnique({
+            where: {
+                id,
+                cateringId
+            }
+        });
+
+        if (!client) {
+            throw new Error("clients:already_removed");
+        }
+
+
         await db.tagClient.deleteMany({
             where: {
                 clientId: id,

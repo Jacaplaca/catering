@@ -5,7 +5,7 @@ import { addNewEmailTemplates } from '@root/scripts/lib/resetEmailTemplates';
 import { type EmailTemplatePropsType, type ArticlePropsType, type PagePropsType } from '@root/types';
 const db = new PrismaClient();
 
-async function initContent<T extends "pages" | "articles" | 'mdContent' | 'emailTemplate'>(contentFolder: T) {
+export const initContent = async <T extends "pages" | "articles" | 'mdContent' | 'emailTemplate'>(contentFolder: T) => {
 
   if (contentFolder === "emailTemplate") {
     const emailTemplatesHDD = getContent<EmailTemplatePropsType>(contentFolder);
@@ -113,4 +113,41 @@ async function initContent<T extends "pages" | "articles" | 'mdContent' | 'email
   }
 }
 
-export default initContent;
+export const resetPages = async (pages: string[]) => {
+  await db.page.deleteMany({
+    where: {
+      key: {
+        in: pages
+      }
+    }
+  });
+  const pagesHDD = getContent<PagePropsType>('pages');
+  const pagesHDDFiltered = pagesHDD.filter((item) => {
+    return pages.includes(item.key);
+  });
+  await db.page.createMany({
+    data: pagesHDDFiltered.map((item) => {
+      const { group, ...rest } = item;
+      return rest;
+    })
+  });
+
+  await db.translation.deleteMany({
+    where: {
+      group: 'page',
+      name: {
+        in: pages
+      }
+    }
+  })
+  await db.translation.createMany({
+    data: pagesHDDFiltered.map((item) => {
+      return {
+        group: 'page',
+        name: item.key,
+        value: item.anchor,
+        lang: item.lang
+      }
+    })
+  })
+}

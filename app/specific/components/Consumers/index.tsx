@@ -1,5 +1,6 @@
 import getDictFromApi from '@root/app/lib/lang/getDictFromApi';
 import getSettingsFromApi from '@root/app/lib/settings/getSettingsFromApi';
+import { auth } from '@root/app/server/auth';
 import ConsumersComponent from '@root/app/specific/components/Consumers/ConsumersComponent';
 import { type FunctionComponent } from 'react';
 
@@ -17,6 +18,10 @@ const Consumers: FunctionComponent<{
         getSettingsFromApi('main'),
     ])
 
+    const session = await auth();
+    const { user } = session ?? {};
+    const userRole = user?.roleId;
+
     return (
         <div>
             <ConsumersComponent
@@ -24,6 +29,7 @@ const Consumers: FunctionComponent<{
                 pageName={pageName}
                 dictionary={dictionary}
                 clientId={clientId}
+                userRole={userRole}
                 settings={{
                     main: mainSettings,
                 }}

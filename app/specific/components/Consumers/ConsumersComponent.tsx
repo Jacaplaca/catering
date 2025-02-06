@@ -1,4 +1,5 @@
 'use client';
+import { RoleType } from '@prisma/client';
 import ConsumersTable from '@root/app/specific/components/Consumers/ConsumersTable';
 import { ConsumerTableContextProvider } from '@root/app/specific/components/Consumers/context';
 import useConsumerTable from '@root/app/specific/components/Consumers/useConsumerTable';
@@ -12,6 +13,7 @@ const ConsumersComponent: FunctionComponent<{
     dictionary: Record<string, string>
     settings: { main: SettingParsedType }
     clientId?: string
+    userRole?: RoleType
 }> = (props) => {
 
     return (

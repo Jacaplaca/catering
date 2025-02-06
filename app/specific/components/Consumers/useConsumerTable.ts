@@ -1,3 +1,4 @@
+import { type RoleType } from '@prisma/client';
 import useTableColumns from '@root/app/hooks/clipboard/useTableColumns';
 import useRows from '@root/app/hooks/table/useRows';
 import useTableSort from '@root/app/hooks/table/useTableSort';
@@ -18,16 +19,19 @@ const useConsumerTable = ({
     pageName,
     settings,
     dictionary,
-    clientId
+    clientId,
+    userRole
 }: {
     lang: LocaleApp,
     pageName: string,
     settings: { main: SettingParsedType },
     dictionary: Record<string, string>,
-    clientId?: string
+    clientId?: string,
+    userRole?: RoleType
 }) => {
     const { messageObj, resetMessage, updateMessage } = useMessage(dictionary);
     const { sort, sortDirection, sortName } = useTableSort<ConsumersSortName>("name")
+
     const { searchValue: customerSearchValue, search: customerSearch } = useSearch({ lang, pageName });
     const { searchValue: dietSearchValue, search: dietSearch } = useSearch({ lang, pageName });
 
@@ -87,7 +91,9 @@ const useConsumerTable = ({
         limit,
         totalCount,
         columns,
+        userRole
     })
+
 
     async function resetTable() {
         await countRefetch();
@@ -109,7 +115,8 @@ const useConsumerTable = ({
         sort: { sortName, sortDirection },
         action,
         filter,
-        message: { messageObj, resetMessage, updateMessage }
+        message: { messageObj, resetMessage, updateMessage },
+        userRole
     }
 };
 export default useConsumerTable;

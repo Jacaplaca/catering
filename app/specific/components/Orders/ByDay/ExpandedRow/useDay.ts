@@ -21,14 +21,30 @@ const useDay = () => {
     });
 
     const [diet, setDiet] = useState<{
-        breakfast: Record<string, { consumerCode: string, diet: string }[]>
-        lunch: Record<string, { consumerCode: string, diet: string }[]>
-        dinner: Record<string, { consumerCode: string, diet: string }[]>
+        breakfast: Record<string, {
+            consumerCode: string, diet: {
+                code: string,
+                description: string,
+            }
+        }[]>
+        lunch: Record<string, {
+            consumerCode: string, diet: {
+                code: string,
+                description: string,
+            }
+        }[]>
+        dinner: Record<string, {
+            consumerCode: string, diet: {
+                code: string,
+                description: string,
+            }
+        }[]>
     }>({
         breakfast: {},
         lunch: {},
         dinner: {},
     })
+
 
     const onClick = (key: string | null) => {
         setDayId(state => state === key ? null : key);
@@ -78,23 +94,41 @@ const useDay = () => {
                             diet,
                         }));
                         return acc;
-                    }, {} as Record<string, { consumerCode: string, diet: string }[]>),
+                    }, {} as Record<string, {
+                        consumerCode: string, diet: {
+                            code: string,
+                            description: string,
+                        }
+                    }[]>),
+
                     lunch: Object.entries(lunch).reduce((acc, [clientCode, value]) => {
                         acc[clientCode] = Object.entries(value).map(([consumerCode, diet]) => ({
                             consumerCode,
                             diet,
                         }));
                         return acc;
-                    }, {} as Record<string, { consumerCode: string, diet: string }[]>),
+                    }, {} as Record<string, {
+                        consumerCode: string, diet: {
+                            code: string,
+                            description: string,
+                        }
+                    }[]>),
+
                     dinner: Object.entries(dinner).reduce((acc, [clientCode, value]) => {
                         acc[clientCode] = Object.entries(value).map(([consumerCode, diet]) => ({
                             consumerCode,
                             diet,
                         }));
                         return acc;
-                    }, {} as Record<string, { consumerCode: string, diet: string }[]>),
+                    }, {} as Record<string, {
+                        consumerCode: string, diet: {
+                            code: string,
+                            description: string,
+                        }
+                    }[]>),
                 }
                 setDiet(processedDiet);
+
             }
             processSummary();
             processStandard();

@@ -177,10 +177,11 @@ const day = createCateringProcedure([RoleType.manager, RoleType.kitchen])
             }
             return acc;
         }, {
-            breakfast: {} as Record<string, Record<string, string>>,
-            lunch: {} as Record<string, Record<string, string>>,
-            dinner: {} as Record<string, Record<string, string>>,
+            breakfast: {} as Record<string, Record<string, { code: string, description: string }>>,
+            lunch: {} as Record<string, Record<string, { code: string, description: string }>>,
+            dinner: {} as Record<string, Record<string, { code: string, description: string }>>,
         })
+
 
         const dayDataCleaned = dayData.map(({
             breakfastDiet: _breakfastDiet,

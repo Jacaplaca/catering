@@ -18,11 +18,9 @@ import { useConsumerTableContext } from '@root/app/specific/components/Consumers
 import ConsumerExpandedRow from '@root/app/specific/components/Consumers/ExpandedRow';
 import { api } from '@root/app/trpc/react';
 import ClientDropdown from '@root/app/specific/components/ui/Dropdown/Client';
-import { useSession } from 'next-auth/react';
 import TableToast from '@root/app/_components/Table/Toast';
 import SearchInput from '@root/app/_components/ui/Inputs/Search';
-
-
+import { RoleType } from '@prisma/client';
 
 const ConsumersTable: FunctionComponent = () => {
     const {
@@ -44,15 +42,15 @@ const ConsumersTable: FunctionComponent = () => {
             actions
         },
         filter: { clients: { clientForFilter, chooseClient } },
-        message
+        message,
+        userRole
     } = useConsumerTableContext();
+
 
     const [isAddConsumerOpen, setAddConsumerOpen] = useState(false);
     const utils = api.useUtils();
-    const { data: session } = useSession();
-    const role = session?.user.roleId;
-    const isDietician = role === 'dietician';
-    const isManager = role === 'manager';
+    const isDietician = userRole === RoleType.dietician;
+    const isManager = userRole === RoleType.manager;
     const showForDieticianOrManager = isDietician || isManager;
 
     const clickable = showForDieticianOrManager;
@@ -63,6 +61,8 @@ const ConsumersTable: FunctionComponent = () => {
         void utils.specific.client.getInfinite.invalidate();
     }
     const addConsumerClose = () => { setAddConsumerOpen(false) }
+
+    const showCheckboxes = isDietician || isManager;
 
     return (
         <div className='relative'>
@@ -125,12 +125,13 @@ const ConsumersTable: FunctionComponent = () => {
                 >
                     <TableColumns
                         columns={columns}
-                        check={checkAllOnPage}
-                        isCheck={isAllChecked}
+                        check={showCheckboxes ? checkAllOnPage : undefined}
+                        isCheck={showCheckboxes ? isAllChecked : undefined}
                         sortName={sortName}
                         sortDirection={sortDirection}
                         dictionary={dictionary}
                         show={showColumns}
+
                     />
                     <TableContent
                         tableData={isFetching ? skeleton : table}

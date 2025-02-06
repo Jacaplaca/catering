@@ -1,3 +1,4 @@
+import { RoleType } from '@prisma/client';
 import HighlightText from '@root/app/_components/Table/HighlightText';
 import SkeletonCell from '@root/app/_components/Table/SkeletonCell';
 import Checkbox from '@root/app/_components/ui/Inputs/Checkbox';
@@ -12,31 +13,37 @@ const useConsumersDataGrid = ({
     limit,
     totalCount,
     columns,
+    userRole
 }: {
     rows: ConsumerCustomTable[]
     idsChecked: string[]
     toggleCheck: (id: string) => void
     searchValue: string,
     limit: number,
+
     totalCount: number,
-    columns: { key: string }[]
+    columns: { key: string }[],
+    userRole?: RoleType
 }) => {
+
+    const showCheckboxes = userRole === RoleType.dietician || userRole === RoleType.manager;
 
     const skeletonRowsCount = limit > totalCount ? totalCount : limit
     const skeleton = Array.from({ length: skeletonRowsCount }, (_, i) => {
+        const checkbox = {
+            component: <Checkbox
+                id="checkbox-table-search-1"
+                name="checkbox-table-search-1"
+                checked={false}
+                skeleton
+                onChange={() => { return void 0 }}
+            />,
+            className: "p-4 w-6"
+        };
         return {
             key: `skeleton-${i}`,
             rows: [
-                {
-                    component: <Checkbox
-                        id="checkbox-table-search-1"
-                        name="checkbox-table-search-1"
-                        checked={false}
-                        skeleton
-                        onChange={() => { return void 0 }}
-                    />,
-                    className: "p-4 w-6"
-                },
+                ...(showCheckboxes ? [checkbox] : []),
                 ...columns.map(({ key }) => {
                     return {
                         component: <SkeletonCell />,
@@ -48,18 +55,19 @@ const useConsumersDataGrid = ({
     })
 
     const table = rows.map(({ id, name, code, client, diet, createdAt, dietician }, i) => {
+        const checkboxes = {
+            component: <Checkbox
+                id="checkbox-table-search-1"
+                name="checkbox-table-search-1"
+                checked={idsChecked.includes(id)}
+                onChange={() => toggleCheck(id)}
+            />,
+            className: "p-4 w-6"
+        }
         return {
             key: id ?? `placeholderData-${i}`,
             rows: [
-                {
-                    component: <Checkbox
-                        id="checkbox-table-search-1"
-                        name="checkbox-table-search-1"
-                        checked={idsChecked.includes(id)}
-                        onChange={() => toggleCheck(id)}
-                    />,
-                    className: "p-4 w-6"
-                },
+                ...(showCheckboxes ? [checkboxes] : []),
                 {
                     component: <HighlightText
                         className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
