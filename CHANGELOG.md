@@ -1,3 +1,12 @@
+## [1.1.3](https://github.com/Jacaplaca/catering/compare/v1.1.2...v1.1.3) (2025-02-08)
+
+
+### Bug Fixes
+
+* making orders now are responsive ([5830f91](https://github.com/Jacaplaca/catering/commit/5830f915745c47d63a5e281adef1b81f9db46061))
+
+
+
 ## [1.1.2](https://github.com/Jacaplaca/catering/compare/v1.1.1...v1.1.2) (2025-02-06)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * update nodemailer settings after hosting email changed ([7d97d24](https://github.com/Jacaplaca/catering/commit/7d97d24806a3e4139c43c0c12916a49297255bb3))
-
-
-
-## [1.0.18](https://github.com/Jacaplaca/catering/compare/v1.0.17...v1.0.18) (2025-01-25)
-
-
-### Bug Fixes
-
-* remove-users-zero-in-date ([9d4e69c](https://github.com/Jacaplaca/catering/commit/9d4e69c80eea067e77111925aee897db09c5c334))
 
 
 
