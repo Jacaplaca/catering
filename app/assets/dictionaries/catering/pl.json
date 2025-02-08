@@ -143,6 +143,7 @@
     "orders": {
         "orders_by_order": "Poszczególne zamówienia",
         "orders_by_day": "Dni dostaw",
+        "orders_by_month": "Miesiące",
         "title": "Zamówienia",
         "create_order": "Stwórz zamówienie",
         "date_picker_label": "Data dostawy",
@@ -157,7 +158,7 @@
         "selected_lunches": "Wybrane obiady",
         "selected_dinners": "Wybrane podwieczorki",
         "selected_consumers": "Wybrane dzieci",
-        "select_consumers_tooltip": "Kliknij aby wybrać dzieci dietetyczne",
+        "select_consumers_tooltip": "Kliknij aby wybrać dzieci z dietami",
         "order_input_tooltip_overdue": "Nie można już edytować zamówienia",
         "breakfast": "Śniadania",
         "lunch": "Obiady",

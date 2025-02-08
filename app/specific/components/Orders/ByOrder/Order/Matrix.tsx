@@ -70,7 +70,7 @@ const MealCell: FC<{
     const isLocked = (isBreakfast && isBetween) || isAfterSecond;
 
     if (type === 'standard') {
-        return <div className='flex flex-row gap-2 items-center justify-center'>
+        return <div className='flex flex-row gap-1 items-center justify-center'>
             <InputStandard
                 id={`${meal}-${type}-meals-count`}
                 type="number"
@@ -86,7 +86,7 @@ const MealCell: FC<{
         </div>
     }
 
-    return <div className='flex flex-row gap-2 items-center justify-center'>
+    return <div className='flex flex-row gap-1 items-center justify-center'>
         <Tooltip content={translate(dictionary, isLocked
             ? "orders:order_input_tooltip_overdue"
             : "orders:select_consumers_tooltip")} >
@@ -113,7 +113,6 @@ const MealCell: FC<{
 
 
 const OrderMatrix: FC = () => {
-
 
     const {
         clientId,
@@ -148,53 +147,56 @@ const OrderMatrix: FC = () => {
     }
 
     return (
-        <div className="grid grid-cols-3 grid-rows-4 gap-4 p-4">
-            <div className="p-2 flex items-center justify-center font-semibold" />
-            <div className="p-2 flex items-center justify-center font-semibold text-neutral-800 dark:text-neutral-200">
-                {translate(dictionary, "orders:standard")}
-            </div>
-            <div className="p-2 flex items-center justify-center font-semibold text-neutral-800 dark:text-neutral-200">
-                {translate(dictionary, "orders:diet")}
-            </div>
-            <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
-                {translate(dictionary, "orders:breakfast")}
-            </div>
-            <MealCell
-                meal={MealType.Breakfast}
-                type="standard"
-            />
-            <MealCell
-                meal={MealType.Breakfast}
-                type="diet"
-                onClick={setConsumersPickerOpen}
-            />
+        <div className="flex flex-col items-center justify-center">
 
-            <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
-                {translate(dictionary, "orders:lunch")}
-            </div>
+            <div className="grid grid-cols-3 grid-rows-4 gap-2 sm:gap-4 p-2 sm:p-4 max-w-96">
+                <div className="p-2 flex items-center justify-center font-semibold" />
+                <div className="p-2 flex items-center justify-center font-semibold text-neutral-800 dark:text-neutral-200">
+                    {translate(dictionary, "orders:standard")}
+                </div>
+                <div className="p-2 flex items-center justify-center font-semibold text-neutral-800 dark:text-neutral-200">
+                    {translate(dictionary, "orders:diet")}
+                </div>
+                <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
+                    {translate(dictionary, "orders:breakfast")}
+                </div>
+                <MealCell
+                    meal={MealType.Breakfast}
+                    type="standard"
+                />
+                <MealCell
+                    meal={MealType.Breakfast}
+                    type="diet"
+                    onClick={setConsumersPickerOpen}
+                />
 
-            <MealCell
-                meal={MealType.Lunch}
-                type="standard"
-            />
-            <MealCell
-                meal={MealType.Lunch}
-                type="diet"
-                onClick={setConsumersPickerOpen}
-            />
+                <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
+                    {translate(dictionary, "orders:lunch")}
+                </div>
 
-            <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
-                {translate(dictionary, "orders:dinner")}
+                <MealCell
+                    meal={MealType.Lunch}
+                    type="standard"
+                />
+                <MealCell
+                    meal={MealType.Lunch}
+                    type="diet"
+                    onClick={setConsumersPickerOpen}
+                />
+
+                <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
+                    {translate(dictionary, "orders:dinner")}
+                </div>
+                <MealCell
+                    meal={MealType.Dinner}
+                    type="standard"
+                />
+                <MealCell
+                    meal={MealType.Dinner}
+                    type="diet"
+                    onClick={setConsumersPickerOpen}
+                />
             </div>
-            <MealCell
-                meal={MealType.Dinner}
-                type="standard"
-            />
-            <MealCell
-                meal={MealType.Dinner}
-                type="diet"
-                onClick={setConsumersPickerOpen}
-            />
         </div>
     );
 };

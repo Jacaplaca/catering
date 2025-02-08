@@ -18,7 +18,7 @@ const paginationTheme = {
         base: "xs:mt-0 mt-2 inline-flex items-center -space-x-px",
         showIcon: "inline-flex",
         previous: {
-            base: `ml-0 rounded-l-lg  px-3 py-2
+            base: `ml-0 rounded-l-lg px-3 py-2
             leading-tight enabled:hover:bg-neutral-100 enabled:hover:text-neutral-700
             border border-neutral-300 dark:border-neutral-700
             bg-white dark:bg-neutral-800
@@ -39,7 +39,7 @@ const paginationTheme = {
             w-9 py-2 text-sm
             `,
             active: `bg-neutral-100 dark:bg-neutral-700
-            text-neutral-600 dark:text-white  hover:text-red-700
+            text-neutral-600 dark:text-white hover:text-red-700
             dark:border-neutral-700`,
             disabled: "cursor-not-allowed opacity-50"
         }
@@ -92,11 +92,11 @@ const TableFooter: FunctionComponent<{
 
         const limits = [10, 20, 50, 100].map((value) => ({ label: value.toString(), value: value.toString() }));
         return (
-            <div className={`relative  rounded-b-lg bg-neutral-50 shadow-md dark:bg-darkmode-table-darker
-            border-t border-neutral-100 dark:border-neutral-700
-            `}>
-                <div className="flex flex-col items-start justify-between space-y-3 p-4 md:flex-row md:items-center md:space-y-0">
-                    <div className="flex items-center space-x-3">
+            <div className={`relative rounded-b-lg bg-neutral-50 shadow-md dark:bg-darkmode-table-darker
+        border-t border-neutral-100 dark:border-neutral-700
+        `}>
+                <div className="flex flex-col items-start justify-between space-y-2 sm:space-y-3 p-2 sm:p-4 md:flex-row md:items-center md:space-y-0">
+                    <div className="flex items-center space-x-2 sm:space-x-3">
                         <Label
                             htmlFor="rows"
                             className="text-sm font-normal text-neutral-500 dark:text-neutral-400"
@@ -137,6 +137,5 @@ const TableFooter: FunctionComponent<{
             </div>
         );
     }
-
 
 export default TableFooter;

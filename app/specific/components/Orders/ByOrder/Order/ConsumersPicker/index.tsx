@@ -43,7 +43,6 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
     const selectedConsumers = diet[mealType];
     const consumersBeforeDeadline = orderForEdit?.dietBeforeDeadline?.[mealType as keyof typeof orderForEdit.dietBeforeDeadline] ?? [];
 
-
     const getSelectedLabel = () => {
         switch (mealType) {
             case MealType.Breakfast:
@@ -89,24 +88,28 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
 
     return (
         <div className={`w-full 
-        border-[1px] border-neutral-200 dark:border-neutral-700 
-        rounded-md p-4`}>
-            <div className='flex flex-row gap-12 mb-4'>
-                <button onClick={onBack}><i
-                    className={`fa-solid fa-chevron-left
-                    px-3 py-2
-                    hover:bg-secondary dark:hover:bg-darkmode-secondary-accent
-                    rounded-md
-                    `}
-                /></button>
-                <div className='font-semibold text-lg'>{translate(dictionary, getTitle())}</div>
+        border-[0px]  sm:border-[1px] sm:border-neutral-200 dark:sm:border-neutral-700 
+        rounded-md p-1 sm:p-4`}>
+            <div className='flex flex-row gap-4 md:gap-12 mb-2 md:mb-4'>
+                <button onClick={onBack} className="self-start">
+
+                    <i
+                        className={`fa-solid fa-chevron-left
+                        px-1 py-1 md:px-3 md:py-2
+                        hover:bg-secondary dark:hover:bg-darkmode-secondary-accent
+                        rounded-md
+                        `}
+                    />
+                </button>
+                <div className='font-semibold text-sm sm:text-lg'>{translate(dictionary, getTitle())}</div>
             </div>
 
-            <div className='flex flex-row gap-4 h-[370px] '>
-
-                <div className='flex flex-col gap-2 w-2/5 px-2'>
+            <div className='flex flex-col md:flex-row gap-4 h-[290px] md:h-[370px] overflow-y-auto'>
+                <div className='flex flex-col gap-2 w-full md:w-2/5 px-2'>
                     <PickerFromAll
                         dictionary={dictionary}
+
+
                         selected={selectedConsumers}
                         onSelect={onResultClick}
                         items={filteredItems}
@@ -117,36 +120,37 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
                         searchPlaceholder='orders:search_consumer_placeholder'
                         notFoundLabel='orders:dietary_consumers_not_found'
                     />
-                </div >
+                </div>
 
-                {selectedItems.length > 0 ? <div className="w-3/5 flex flex-col px-2">
-                    <div className='flex flex-row justify-start items-center mb-2 '>
-                        <div className="font-semibold">
-                            {translate(dictionary, getSelectedLabel())}
+                {selectedItems.length > 0 ? (
+                    <div className="hidden md:flex w-full md:w-3/5 flex-col px-2">
+                        <div className='flex flex-row justify-start items-center mb-2'>
+                            <div className="font-semibold">
+                                {translate(dictionary, getSelectedLabel())}
+                            </div>
+                            <div className='text-sm font-semibold ml-2'>
+                                {selectedItems.length}
+                            </div>
                         </div>
-                        <div className='text-sm font-semibold ml-2'>
-                            {selectedItems.length}
+                        <div className="flex-grow overflow-y-auto">
+                            <div className="flex flex-wrap gap-2 justify-stretch">
+                                {selectedItems.map((consumer) => (
+                                    <Selected
+                                        key={consumer.id}
+                                        element={consumer}
+                                        onClick={() => onResultClick(consumer.id, allItems)}
+                                    />
+                                ))}
+                            </div>
                         </div>
                     </div>
-                    <div className="flex-grow overflow-y-auto">
-                        <div className="flex flex-wrap gap-2 justify-stretch">
-                            {selectedItems.map((consumer) => (
-                                <Selected
-                                    key={consumer.id}
-                                    element={consumer}
-                                    onClick={() => onResultClick(consumer.id, allItems)}
-                                />
-                            ))}
-                        </div>
+                ) : (
+                    <div className='hidden md:flex w-full md:w-3/5 flex-col justify-center items-center h-full'>
+                        <i className='fa-solid fa-plate-utensils text-4xl text-neutral-400' />
                     </div>
-                </div> : <div className='flex w-3/5 flex-col justify-center items-center h-full'>
-                    <i className='fa-solid fa-plate-utensils text-4xl text-neutral-400' />
-                </div>}
+                )}
             </div>
-
         </div>
-
-
     );
 }
 

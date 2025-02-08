@@ -52,7 +52,7 @@ const useOrderDataGrid = ({
                         skeleton
                         onChange={() => { return void 0 }}
                     />,
-                    className: "p-4 w-6"
+                    className: "p-1 md:p-4 w-6"
                 },
                 ...columns.map(({ key }) => {
                     return {
@@ -84,7 +84,7 @@ const useOrderDataGrid = ({
                         disabled={disableMainCheckbox}
                         className={`${disableMainCheckbox ? "opacity-50" : ""}`}
                     />,
-                    className: `p-4 w-6`,
+                    className: "p-1 md:p-4 w-6",
                 },
                 {
                     component: <HighlightText

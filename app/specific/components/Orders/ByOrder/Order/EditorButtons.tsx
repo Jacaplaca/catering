@@ -33,11 +33,11 @@ const OrderEditorButtons: FC = () => {
         return <div />
     }
 
-    return <div className='flex justify-between gap-4'>
+    return <div className='flex flex-col sm:flex-row justify-between gap-2 sm:gap-4 w-full'>
         {canSaveDraft ? <Tooltip content={translate(dictionary, 'orders:draft_save_tooltip')}>
             <MyButton
                 loading={savingDraft}
-                className='bg-transparent dark:bg-transparent'
+                className='w-full sm:w-auto bg-transparent dark:bg-transparent'
                 icon='fas fa-save'
                 ariaLabel={translate(dictionary, 'orders:draft_save_button')}
                 onClick={onSubmitDraft}
@@ -47,13 +47,16 @@ const OrderEditorButtons: FC = () => {
                 {translate(dictionary, 'orders:draft_save_button')}
             </MyButton>
         </Tooltip> : <div />}
-        {(canEditInProgress || canSaveOrder) ? <Buttons
-            submitLabel={translate(dictionary, canSaveOrder ? 'orders:send_button' : 'orders:edit_order_button_label')}
-            onSubmit={onSubmitPlace}
-            submitLoading={placing}
-            cancelLabel={translate(dictionary, 'shared:reset')}
-            onCancel={reset}
-        /> : null}
+        {(canEditInProgress || canSaveOrder) ? <div className='w-full sm:w-auto'>
+            <Buttons
+                submitLabel={translate(dictionary, canSaveOrder ? 'orders:send_button' : 'orders:edit_order_button_label')}
+                onSubmit={onSubmitPlace}
+                submitLoading={placing}
+                cancelLabel={translate(dictionary, 'shared:reset')}
+                onCancel={reset}
+                className='w-full sm:w-auto'
+            />
+        </div> : null}
     </div>
 }
 

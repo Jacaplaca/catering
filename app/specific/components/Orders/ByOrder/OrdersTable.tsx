@@ -7,7 +7,7 @@ import TableFooter from '@root/app/_components/Table/Footer';
 import TableHeader from '@root/app/_components/Table/Header.tsx';
 import QuickFilterRow from '@root/app/_components/Table/QuickFilterRow';
 import t from '@root/app/lib/lang/translate';
-import { type FunctionComponent } from "react";
+import { useEffect, type FunctionComponent } from "react";
 import RowActions from '@root/app/_components/Table/Actions';
 import TableWrapper from '@root/app/_components/Table/Wrapper';
 import TableActionConfirm from '@root/app/_components/Table/ActionConfirm';
@@ -22,7 +22,8 @@ import OrderStatusSelect from '@root/app/specific/components/ui/OrderStatusSelec
 import TagSearch from '@root/app/specific/components/ui/TagSearch';
 import TableToast from '@root/app/_components/Table/Toast';
 import OrderExpandedRow from '@root/app/specific/components/Orders/ByOrder/ExpandedRow';
-
+import useBreakpoint from '@root/app/hooks/useBreakpoint';
+import { useBoolean } from 'usehooks-ts';
 
 const OrdersTable: FunctionComponent = () => {
 
@@ -52,9 +53,22 @@ const OrdersTable: FunctionComponent = () => {
         message
     } = useOrderTableContext();
 
+    const { value: isTableShown, setTrue: showTable, setFalse: hideTable } = useBoolean(true);
+
+    const breakpoint = useBreakpoint();
+
+    useEffect(() => {
+        if ((breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') && isAddOrderOpen) {
+            hideTable();
+        } else {
+            showTable();
+        }
+    }, [breakpoint, isAddOrderOpen, hideTable, showTable]);
+
     const clickable = true;
 
     const { data: session } = useSession();
+
     const role = session?.user.roleId;
     const isClient = role === RoleType.client;
     const isManager = role === RoleType.manager;
@@ -80,13 +94,14 @@ const OrdersTable: FunctionComponent = () => {
                 >
                     {isClient ? <MyButton
                         onClick={openOrderModal}
-                        icon='fas fa-user-plus'
+                        icon='fa-solid fa-truck'
                         id={t(dictionary, 'orders:create_order')}
                         ariaLabel={t(dictionary, 'orders:create_order')}
+                    // className='items-start sm:items-center'
                     >{t(dictionary, 'orders:create_order')}</MyButton> : null}
                 </TableHeader>
-                <QuickFilterRow
 
+                {isTableShown && <QuickFilterRow
                     dictionary={dictionary}
                     // columns={columns}
                     toggleColumn={toggleColumn}
@@ -114,12 +129,13 @@ const OrdersTable: FunctionComponent = () => {
                         changeStatus={chooseStatus}
                         omitStatus={isManagerOrKitchen ? OrderStatus.draft : undefined}
                     />
-                </QuickFilterRow>
+                </QuickFilterRow>}
 
-                <Table
+                {isTableShown && <Table
                     theme={tableTheme}
                     hoverable
                 >
+
                     <TableColumns
                         columns={columns}
                         check={checkAllOnPage}
@@ -139,13 +155,13 @@ const OrdersTable: FunctionComponent = () => {
                         expandedRowId={expandedRowId}
                         ExpandedRow={OrderExpandedRow}
                     />
-                </Table>
-                <TableFooter
+                </Table>}
+                {isTableShown && <TableFooter
                     totalCount={totalCount}
                     pageName={pageName}
                     lang={lang}
                     dictionary={dictionary}
-                />
+                />}
             </TableWrapper>
             <TableToast
                 message={message?.messageObj}

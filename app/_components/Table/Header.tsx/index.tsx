@@ -26,9 +26,9 @@ const TableHeader: FunctionComponent<{
                         <h5 className="font-semibold dark:text-white">{t(dictionary, title)}</h5>
                     </div>
                 </div>
-                <div className="flex flex-col-reverse items-center justify-between py-3 md:flex-row md:space-x-4">
-                    {search ? <div className="flex w-full flex-col space-y-3 md:flex-row md:items-center md:space-y-0 lg:w-2/3">
-                        <div className="w-full flex-1 md:mr-4 md:max-w-sm">
+                <div className="flex flex-col-reverse items-start justify-between py-3 md:flex-row md:space-x-4">
+                    {search ? <div className="flex w-auto flex-col space-y-3 md:flex-row md:items-center md:space-y-0 lg:w-2/3">
+                        <div className="w-auto flex-1 md:mr-4 md:max-w-sm">
                             <Label
 
                                 htmlFor="default-search"
@@ -46,7 +46,7 @@ const TableHeader: FunctionComponent<{
                         </div>
 
                     </div> : <div></div>}
-                    {children && <div className="mb-3 flex w-full shrink-0 flex-col items-stretch justify-end md:mb-0 md:w-auto md:flex-row md:items-center md:space-x-3">
+                    {children && <div className="mb-3 flex w-auto shrink-0 flex-col items-start justify-end md:mb-0 md:w-auto md:flex-row md:items-center md:space-x-3">
                         {children}
                     </div>}
                 </div>

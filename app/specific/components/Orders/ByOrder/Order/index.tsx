@@ -25,7 +25,7 @@ const Order: FC = () => {
         setConsumersPickerOpen(null);
     }, []);
 
-    return <div className="flex flex-col gap-4 py-4">
+    return <div className="flex flex-col gap-2 sm:gap-4 py-2 sm:py-4">
         {orderForEdit ? <Deadline /> : <OrderDatePicker />}
         <OrderMatrix />
         {expandedRowId ? null : lastOrder ? <LastOrderInfo day={lastOrder.day} dictionary={dictionary} /> : null}

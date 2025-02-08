@@ -45,7 +45,7 @@ const Dashboard: FunctionComponent<{ children: React.ReactNode, menu: DashboardM
                 handleClick={selectItem}
                 selected={selectedItem}
             />
-            <div className='p-6 w-full'>
+            <div className='p-2 sm:p-6 w-full'>
                 {isOpen && breakpoint === 'xs' ? null : children}
             </div>
         </div>

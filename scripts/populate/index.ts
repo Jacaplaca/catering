@@ -19,10 +19,10 @@ const prisma = new PrismaClient();
 const NUM_SUPERADMIN = 1;
 const NUM_CATERINGS = 1;
 const NUM_MANAGERS = 1;
-const NUM_CLIENTS = 20;
+const NUM_CLIENTS = 1;
 const NUM_DIETICIANS = 2;
 const NUM_KITCHEN = 3;
-const NUM_CONSUMERS = 5;
+const NUM_CONSUMERS = 30;
 const TAGS = 0;
 const CREATE_ORDERS = true;
 
@@ -310,12 +310,12 @@ async function main() {
                 const dates: { year: number, month: number, day: number }[] = [];
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
-                const oneMonthAgo = new Date(today);
-                oneMonthAgo.setMonth(today.getMonth() - 1);
-                const tenDaysLater = new Date(today);
-                tenDaysLater.setDate(today.getDate() + 10);
+                const past = new Date(today);
+                past.setMonth(today.getMonth() - 30);
+                const future = new Date(today);
+                future.setDate(today.getDate() + 2);
 
-                for (let date = new Date(oneMonthAgo); date <= tenDaysLater; date.setDate(date.getDate() + 1)) {
+                for (let date = new Date(past); date <= future; date.setDate(date.getDate() + 1)) {
                     if (date.getDay() !== 0 && date.getDay() !== 6) {
                         dates.push({
                             year: date.getFullYear(),

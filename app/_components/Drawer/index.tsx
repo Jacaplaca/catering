@@ -75,12 +75,11 @@ ${key ? 'transition-all duration-300 ease-in-out overflow-hidden' : ''}`}
                                 : { onClick: () => handleClick(item.key) }
                             )}
                             icon={isOpen ? Icon : null}
-                            className={`px-4 cursor-pointer text-sm font-medium
-                            hover:dark:bg-darkmode-secondary hover:bg-secondary
-                            hover:dark:text-white hover:text-neutral-800
-                            transition-all duration-150
-                            ${group.key ? 'pb-1.5 pt-1.5' : ''}
-
+                            className={`px-2 sm:px-4 cursor-pointer text-sm font-medium
+                                hover:dark:bg-darkmode-secondary hover:bg-secondary
+                                hover:dark:text-white hover:text-neutral-800
+                                transition-all duration-150
+                                ${group.key ? 'pb-1 pt-1 sm:pb-1.5 sm:pt-1.5' : ''}
                             ${selectedKey === item.key
                                     ? `font-semibold dark:text-darkmode-drawer-icon-selected text-drawer-icon-selected
                                 dark:bg-neutral-800 bg-neutral-200`
@@ -116,7 +115,7 @@ ${isOpen ? "ps-3" : "ps-0"}
                 {
                     root: {
                         base: `
-        transition-w duration-300 ${isOpen ? "!w-64" : "!w-16"}
+        transition-w duration-300 ${isOpen ? "!w-48 sm:!w-64" : "!w-12 sm:!w-16"}
         left-0 !h-full `,
                         backdrop: "bg-black bg-opacity-50",
                         // edge: "border-r border-red-800",
@@ -134,7 +133,7 @@ bg-drawer-background text-white h-full shadow-drawer dark:shadow-darkmode-drawer
                 </button>
                 {true && <Sidebar
                     aria-label="Sidebar with multi-level dropdown example"
-                    className={`${isOpen ? "!w-64" : "!w-16"} [&>div]:bg-transparent [&>div]:p-0 px-2`}>
+                    className={`${isOpen ? "!w-48 sm:!w-64" : "!w-12 sm:!w-16"} [&>div]:bg-transparent [&>div]:p-0 px-2`}>
                     <div className="flex h-full flex-col justify-between py-2 dark:bg-darkmode-drawer-background bg-drawer-background">
                         <div className='pt-0'>
                             <Sidebar.Items className='pl-0 ' >

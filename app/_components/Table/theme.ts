@@ -10,7 +10,7 @@ const tableTheme = {
     body: {
         base: "group/body",
         cell: {
-            base: `px-4 py-4
+            base: `px-2 py-2 sm:px-4 sm:py-4
             group-first/body:group-first/row:first:rounded-tl-lg
             group-first/body:group-first/row:last:rounded-tr-lg
             group-last/body:group-last/row:first:rounded-bl-lg
@@ -22,7 +22,7 @@ const tableTheme = {
         border-b dark:border-neutral-700 dark:bg-neutral-900
         bg-neutral-50 dark:bg-darkmode-table-darker`,
         cell: {
-            base: "px-6 py-3 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg"
+            base: `px-2 py-2 sm:px-2 sm:py-2 group-first/head:first:rounded-tl-lg group-first/head:last:rounded-tr-lg`
         }
     },
     row: {

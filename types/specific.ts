@@ -69,6 +69,10 @@ export const ordersGroupedByDaySortNames = ['deliveryDay'] as const;
 
 export type OrdersGroupedByDaySortName = typeof ordersGroupedByDaySortNames[number];
 
+export const ordersGroupedByMonthSortNames = ['deliveryMonth'] as const;
+
+export type OrdersGroupedByMonthSortName = typeof ordersGroupedByMonthSortNames[number];
+
 export type OrdersCustomTable = {
     id: string;
     deliveryDay: DeliveryDay;

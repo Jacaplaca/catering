@@ -50,9 +50,52 @@ const Message: React.FC<{
             icon: 'fas fa-exclamation-triangle text-alarm dark:text-darkmode-alarm',
         }
     }
+
+    // return (
+    //     <div className="pointer-events-none fixed inset-0 flex items-center justify-center">
+    //         <div className="pointer-events-auto" onClick={onClose}>
+    //             lsdkfjgldkfgj
+    //         </div>
+    //     </div>
+    // );
+
+    //     import { createPortal } from 'react-dom';
+    // import { type FunctionComponent, useEffect, useState } from 'react';
+    // import Message, { type MessageStatusType } from '@root/app/_components/ui/form/Message';
+
+    // const TableToast: FunctionComponent<{
+    //     message?: { content: string, status: MessageStatusType, spinner?: boolean } | null,
+    //     onClose: () => void
+    // }> = ({ message, onClose }) => {
+    //     // Check if we are running in a browser environment
+    //     const [isBrowser, setIsBrowser] = useState(false);
+
+    //     useEffect(() => {
+    //         // Mark as true once mounted on client side
+    //         setIsBrowser(true);
+    //     }, []);
+
+    //     if (!isBrowser) {
+    //         return null;
+    //     }
+
+    //     return createPortal(
+    //         <div className="pointer-events-none fixed inset-0 flex items-center justify-center z-50">
+    //             <div className="pointer-events-auto" onClick={onClose}>
+    //                 lsdkfjgldkfgj
+    //             </div>
+    //         </div>,
+    //         document.body
+    //     );
+    // }
+
+    // export default TableToast;
+
+
     return <Alert
         status={status}
-        className={`dark:bg-neutral-900 bg-white text-text dark:text-darkmode-text 
+        className={`
+            dark:bg-neutral-900 bg-white text-text dark:text-darkmode-text 
             border-border dark:border-darkmode-border shadow-small dark:shadow-darkmode-small ${className}
         ${animate ? `${animateClass[animate]} ${mainAnimateClass}` : ""}
         ${onClose ? 'cursor-pointer' : ""}

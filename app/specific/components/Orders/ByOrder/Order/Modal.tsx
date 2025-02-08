@@ -23,7 +23,7 @@ const OrderModal: FC<OrderModalProps> = ({ isOpen, closeModal }) => {
 
 
     return <MainModal
-        width={750}
+        // width={750}
         isOpen={isOpen}
         closeModal={consumersPickerOpen ? undefined : closeModal}
         closeTooltip={consumersPickerOpen

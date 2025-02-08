@@ -9,6 +9,7 @@
     "db:studio": "prisma studio",
     "db:init": "ts-node -r tsconfig-paths/register scripts/initEmpty.ts",
     "dev": "ts-node -r tsconfig-paths/register scripts/initRun.ts && next dev",
+    "dev:phone": "ts-node -r tsconfig-paths/register scripts/initRun.ts && next dev --hostname 0.0.0.0",
     "seed": "ts-node -r tsconfig-paths/register scripts/seed.ts && next dev",
     "backup": "ts-node -r tsconfig-paths/register scripts/backup.ts",
     "dev:orig": "next dev",

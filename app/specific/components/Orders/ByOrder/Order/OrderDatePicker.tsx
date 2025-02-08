@@ -12,14 +12,13 @@ registerLocale('pl', pl);
 const ExampleCustomInput = forwardRef<HTMLButtonElement, { value?: string; onClick?: () => void }>(
     ({ value, onClick }, ref) => (
         <button onClick={onClick} ref={ref}
-            className={`flex flex-row gap-2 items-center
-                px-4 py-2 rounded-md
+            className={`flex flex-row gap-2 items-center px-2 sm:px-4 py-1 sm:py-2 rounded-md
             hover:bg-secondary hover:dark:bg-darkmode-secondary-accent
             text-gray-900 dark:text-gray-100
             `}
         >
             <i className="fa-solid fa-calendar-days" />
-            <span className="hidden md:block text-base font-bold">{value}</span>
+            <span className="whitespace-nowrap block text-base font-bold">{value}</span>
         </button>
     ),
 );
@@ -76,10 +75,10 @@ const OrderDatePicker: FC = () => {
         }
 
         return false;
-    }
+    };
 
     return (
-        <div className="flex flex-row gap-4 justify-center items-center w-full pb-4">
+        <div className="flex flex-col md:flex-row gap-1 md:gap-4 justify-center items-center w-full pb-2 md:pb-4">
             {/* <label className="font-normal text-base">{translate(dictionary, 'orders:date_picker_label')}</label> */}
             <DatePicker
                 locale={lang}
@@ -93,7 +92,8 @@ const OrderDatePicker: FC = () => {
                 dayClassName={(date) => {
                     const dateString = format(date, 'yyyy-MM-dd');
                     return blockedDays.filter(blockedDate => new Date(blockedDate) >= new Date(minDate)).includes(dateString)
-                        ? 'react-datepicker__day--ordered' : '';
+                        ? 'react-datepicker__day--ordered'
+                        : '';
                 }}
             />
             <Deadline />

@@ -38,15 +38,11 @@ const HeadCellSortable: FunctionComponent<{
         return (
             <Table.HeadCell
                 scope="col"
-                className={`
-                    px-4 py-3 ${sort ? 'cursor-pointer' : ''}
-                    `}
+                className={`px-2 py-1 sm:px-4 sm:py-3  ${sort ? 'cursor-pointer' : ''}`}
                 onClick={() => sort && sort(name)}>
-                <div className={`
-                    flex items-center ${align ? `justify-${align}` : ''}
-                `}>
-                    <span className="flex items-center gap-1">
-                        {special?.icon && <Tooltip content={special.tooltip} >
+                <div className={`flex items-center ${align ? `justify-${align}` : ''}`}>
+                    <span className="flex flex-col sm:flex-row items-center gap-1">
+                        {special?.icon && <Tooltip content={special.tooltip}>
                             <button
                                 className={`p-2 flex items-center opacity-80 hover:opacity-100`}
                                 onClick={special.action}

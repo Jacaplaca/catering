@@ -26,7 +26,7 @@ const Status: FC<{
             className={`
         ${colorClass}
         text-gray-900 dark:text-gray-100 font-semibold flex justify-center
-        whitespace-nowrap
+        whitespace-nowrap font-xs sm:font-sm p-1 px-2 sm:p-2 sm:px-4
         `}>{translate(dictionary, status ? orderStatusDictionary[status] : 'orders:status_all')}</Badge>
     </div>
 }

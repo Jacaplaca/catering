@@ -1,7 +1,7 @@
 import { OrderStatus } from '@prisma/client';
 import { env } from '@root/app/env';
 import { i18n } from '@root/i18n-config';
-import { ordersSortNames, MealType } from '@root/types/specific';
+import { ordersSortNames, MealType, ordersGroupedByMonthSortNames } from '@root/types/specific';
 import { z } from 'zod';
 
 export const orderValidator = z.object({
@@ -91,4 +91,13 @@ export const getLastOrderValid = z.object({
 export const orderedDatesValid = z.object({
     clientId: z.string(),
 });
+
+export const monthListValid = z.object({
+    clientId: z.string(),
+    limit: z.number().int().min(1).default(10),
+    page: z.number().int().min(1).default(1),
+    sortName: z.enum(ordersGroupedByMonthSortNames).optional(),
+    sortDirection: z.enum(['asc', 'desc']).optional(),
+});
+
 

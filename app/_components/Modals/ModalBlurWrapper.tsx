@@ -80,7 +80,7 @@ const ModalBlurWrapper: FunctionComponent<Props> = ({
                 className={`
                   fixed
                   flex justify-center items-center h-screen w-screen
-                  px-4
+                  px-2 sm:px-4
                   ${blurBackground ? 'bg-gray-200/10 dark:bg-gray-800/10 backdrop-blur-sm' : 'bg-transparent'}
                   transition-all duration-300
                   `}
