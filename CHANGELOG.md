@@ -1,3 +1,12 @@
+## [1.1.4](https://github.com/Jacaplaca/catering/compare/v1.1.3...v1.1.4) (2025-02-10)
+
+
+### Bug Fixes
+
+* current date in one place ([48c55a5](https://github.com/Jacaplaca/catering/commit/48c55a51298834715d181443aff25d70f81eee33))
+
+
+
 ## [1.1.3](https://github.com/Jacaplaca/catering/compare/v1.1.2...v1.1.3) (2025-02-08)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * multiple clients and more ([c95c5a1](https://github.com/Jacaplaca/catering/commit/c95c5a1d9f68241225e6a00a54c2432bf1af6db5))
-
-
-
-## [1.0.19](https://github.com/Jacaplaca/catering/compare/v1.0.18...v1.0.19) (2025-01-27)
-
-
-### Bug Fixes
-
-* update nodemailer settings after hosting email changed ([7d97d24](https://github.com/Jacaplaca/catering/commit/7d97d24806a3e4139c43c0c12916a49297255bb3))
 
 
 
