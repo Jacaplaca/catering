@@ -6,6 +6,7 @@ import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { options } from '@root/app/server/api/specific/aggregate';
 import getOrder from '@root/app/server/api/routers/specific/libs/getOrder';
 import { OrderStatus, RoleType } from '@prisma/client';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 const forView = createCateringProcedure([RoleType.manager, RoleType.kitchen])
     .input(getOrderValid)
@@ -166,7 +167,7 @@ const last = createCateringProcedure([RoleType.client])
         const { session: { catering } } = ctx;
         const cateringId = catering.id;
         const { clientId } = input;
-        const today = new Date();
+        const today = getCurrentTime();
         const currentYear = today.getFullYear();
         const currentMonth = today.getMonth(); // 0-11
         const currentDay = today.getDate();

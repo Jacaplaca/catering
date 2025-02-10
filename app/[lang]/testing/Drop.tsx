@@ -3,6 +3,7 @@ import { type FunctionComponent, useEffect, useState } from "react";
 import { useDropzone } from 'react-dropzone';
 import FileList from '../../_components/form/FileList';
 import useUpload, { type FileAndAttachment } from '@root/app/hooks/useUpload';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 const Drop: FunctionComponent<{
     lang: LocaleApp;
@@ -41,7 +42,7 @@ const Drop: FunctionComponent<{
                     id: '',
                     postId: '',
                     fileId: '',
-                    createdAt: new Date(),
+                    createdAt: getCurrentTime(),
                     file: {
                         id: '',
                         url: '',
@@ -52,10 +53,11 @@ const Drop: FunctionComponent<{
                         size,
                         height: null,
                         width: null,
-                        createdAt: new Date(),
+                        createdAt: getCurrentTime(),
                     },
                 },
             };
+
             return acc;
         }, {} as Record<string, FileAndAttachment>);
 

@@ -3,6 +3,7 @@ import { orderValidator } from '@root/app/validators/specific/order';
 import { type z } from 'zod';
 import { type Context, createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import getDeadlinesStatus from '@root/app/specific/lib/getDeadlinesStatus';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 const save = async ({ ctx, input, status }: {
     ctx: Context,
@@ -73,7 +74,7 @@ const save = async ({ ctx, input, status }: {
             create: dinnerDiets
         },
         dinnerDietCount: dinnerDiets.length,
-        sentToCateringAt: status === OrderStatus.in_progress ? new Date() : undefined,
+        sentToCateringAt: status === OrderStatus.in_progress ? getCurrentTime() : undefined,
     }
 
     const beforeFirstDeadlineUpdateData = {

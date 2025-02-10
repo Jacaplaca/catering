@@ -1,4 +1,5 @@
 import { type RoleType } from '@prisma/client';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { removeExpiredInviteTokens } from '@root/app/lib/removeExpiredTokens';
 import makeHref from '@root/app/lib/url/makeHref';
 import staticEmailContext from '@root/app/server/api/routers/specific/libs/staticEmailContext';
@@ -34,7 +35,7 @@ const sendInvite = protectedProcedure
         });
         if (currentInvitation && sendEmail) {
             const { expires } = currentInvitation;
-            const now = new Date();
+            const now = getCurrentTime();
             const hours = Math.abs(expires.getTime() - now.getTime()) / 36e5;
             await throwTranslation(lang, 'invite:form-error-user-invited', [email, hours.toFixed(0)]);
         }

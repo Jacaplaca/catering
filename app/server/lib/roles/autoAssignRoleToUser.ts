@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { removeExpiredInviteTokens } from '@root/app/lib/removeExpiredTokens';
 import { getUserByIdFromDB } from '@root/app/server/lib/getUserDb';
 import assignAutoRoleDuringConfirmation from '@root/app/server/lib/roles/assignAutoRoleDuringConfirmation';
@@ -19,7 +20,7 @@ const autoAssignRoleToUser = async ({ userId, inviteToken }: { userId?: string, 
             where: {
                 token: inviteToken.toLowerCase().trim(),
                 expires: {
-                    gt: new Date()
+                    gt: getCurrentTime()
                 }
             }, include: {
                 inviter: true,

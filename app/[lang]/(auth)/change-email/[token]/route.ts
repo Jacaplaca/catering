@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { removeExpiredChangeEmailTokens } from '@root/app/lib/removeExpiredTokens';
 import makeHref from '@root/app/lib/url/makeHref';
 import { redirect } from 'next/navigation';
@@ -23,7 +24,7 @@ export async function GET(
         where: {
             token: token.toLowerCase().trim(),
             expires: {
-                gt: new Date()
+                gt: getCurrentTime()
             }
         },
     });
@@ -47,7 +48,7 @@ export async function GET(
         },
         data: {
             email: tokenExists.newEmail,
-            emailVerified: new Date()
+            emailVerified: getCurrentTime()
         }
     })
 

@@ -1,4 +1,5 @@
 import { OrderStatus, RoleType } from '@prisma/client';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { orderedDatesValid } from '@root/app/validators/specific/order';
 import { format } from 'date-fns-tz';
@@ -9,9 +10,10 @@ const orderedDates = createCateringProcedure([RoleType.client])
         const { session: { catering }, db } = ctx;
         const { clientId } = input;
 
-        const today = new Date();
+        const today = getCurrentTime();
         const twoWeeksFromNow = new Date(today);
         twoWeeksFromNow.setDate(today.getDate() + 14);
+
         const twoWeeksFromNotObject = {
             year: twoWeeksFromNow.getFullYear(),
             month: twoWeeksFromNow.getMonth(),

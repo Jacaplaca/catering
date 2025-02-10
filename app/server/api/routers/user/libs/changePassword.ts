@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { getSetting } from '@root/app/server/cache/settings';
 import { db } from '@root/app/server/db';
 import { hash } from 'bcryptjs';
@@ -19,7 +20,7 @@ const changePassword = async ({ userId, password }: {
         passwordHash,
     }
     if (!user?.emailVerified) {
-        data.emailVerified = new Date()
+        data.emailVerified = getCurrentTime()
     }
 
     await db.user.update({

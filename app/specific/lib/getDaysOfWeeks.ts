@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { startOfWeek, addWeeks, isBefore, setDay } from 'date-fns';
 
 const dayToNumber = {
@@ -13,7 +14,7 @@ const dayToNumber = {
 type DayOfWeek = keyof typeof dayToNumber;
 
 const getDaysOfWeeks = (pivotDay: DayOfWeek = 'saturday'): Date[] => {
-    const today = new Date();
+    const today = getCurrentTime();
     const currentWeekMonday = startOfWeek(today, { weekStartsOn: 1 });
     const lastWeekMonday = addWeeks(currentWeekMonday, -1);
     const nextWeekMonday = addWeeks(currentWeekMonday, 1);

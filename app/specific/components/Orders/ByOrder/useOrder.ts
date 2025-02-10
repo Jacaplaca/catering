@@ -1,4 +1,5 @@
 import { type UpdateMessageType } from '@root/app/hooks/useMessage';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import getDeadlinesStatus from '@root/app/specific/lib/getDeadlinesStatus';
 import { api } from '@root/app/trpc/react';
 import { MealType, type OrderForEdit, type OrdersCustomTable } from '@root/types/specific';
@@ -105,7 +106,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
     }, [lastOrder, newOrder]);
 
     const getNextAvailableDate = () => {
-        const today = new Date();
+        const today = getCurrentTime();
         today.setHours(0, 0, 0, 0);
         const currentDate = new Date(today);
 

@@ -6,6 +6,7 @@ import { useOrderTableContext } from '@root/app/specific/components/Orders/ByOrd
 import { format } from 'date-fns-tz';
 import Deadline from '@root/app/specific/components/Orders/ByOrder/Order/Deadline';
 import getDeadlinesStatus from '@root/app/specific/lib/getDeadlinesStatus';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 registerLocale('pl', pl);
 
@@ -50,16 +51,18 @@ const OrderDatePicker: FC = () => {
             updateDay({ year, month, day: dayNum });
         }
     };
-    const minDate = new Date();
-    const maxDate = new Date();
+    const minDate = getCurrentTime();
+    const maxDate = getCurrentTime();
     maxDate.setDate(maxDate.getDate() + 14);
     const blockedDays = orderedDates ?? [];
+
 
     const filterDate = (date: Date) => {
         const day = date.getDay();
         const dateString = format(date, 'yyyy-MM-dd');
-        const today = new Date();
+        const today = getCurrentTime();
         today.setHours(0, 0, 0, 0); // reset time to start of day
+
 
         const unblocked = (
             day !== 0 && // not Sunday

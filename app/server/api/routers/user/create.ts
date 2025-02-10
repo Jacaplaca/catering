@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import getInviteToken from '@root/app/lib/getInviteToken';
 import { removeExpiredConfirmationSignupByEmailTokens } from '@root/app/lib/removeExpiredTokens';
 import isUserWithEmailAndPassExists from '@root/app/server/api/routers/user/libs/isUserWithEmailAndPassExists';
@@ -57,7 +58,7 @@ const create = publicProcedure
                 data: {
                     email: email.toLowerCase().trim(),
                     passwordHash,
-                    emailVerified: hasSuperAdmin ? null : new Date(),
+                    emailVerified: hasSuperAdmin ? null : getCurrentTime(),
                     roleId: hasSuperAdmin ? null : 'superAdmin',
                     name: null,
                     image: null,

@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import isWorkingDay from '@root/app/specific/lib/isWorkingDay';
 
 interface LastOrder {
@@ -37,7 +38,7 @@ function canPlaceOrder(
 
     // Function to get the current time in the specified time zone
     // const getTimeInTimeZone = (timeZone: string): { year: number, month: number, day: number, hours: number, minutes: number } => {
-    //     const now = new Date();
+    //     const now = getCurrentTim();
 
     //     const options = {
     //         timeZone,
@@ -75,7 +76,7 @@ function canPlaceOrder(
 
     // Create a date object for the current time in the specified time zone
     // const currentDate = new Date(currentTime.year, currentTime.month, currentTime.day, currentTime.hours, currentTime.minutes);
-    const currentDate = new Date();
+    const currentDate = getCurrentTime();
 
     // Create a date object for the user's desired order date (year, month, day)
     const desiredOrderDate = new Date(desiredDate.year, desiredDate.month, desiredDate.day); // Months are 0-indexed

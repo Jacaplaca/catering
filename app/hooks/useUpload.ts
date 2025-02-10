@@ -3,6 +3,7 @@ import axios, { type AxiosProgressEvent } from 'axios';
 import { v4 as uuidV4 } from "uuid";
 import mapSeries from '@root/app/lib/mapSeries';
 import { api } from '@root/app/trpc/react';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 type Progress = Record<string, { loaded: number, fileSize: number }>;
 
@@ -73,7 +74,7 @@ const useUpload = (prefix: string, onUploadComplete: ({ key, fileName }: { key: 
                     id: uuidV4(),
                     postId: uuidV4(),
                     fileId: uuidV4(),
-                    createdAt: new Date(),
+                    createdAt: getCurrentTime(),
                     file: {
                         id: uuidV4(),
                         type: '',
@@ -84,10 +85,11 @@ const useUpload = (prefix: string, onUploadComplete: ({ key, fileName }: { key: 
                         size: file.size,
                         height: null,
                         width: null,
-                        createdAt: new Date(),
+                        createdAt: getCurrentTime(),
                     },
                 };
                 newPreviewAttachments[attachment.file.name] = { attachment, file };
+
             }
 
             setTotalSize((prevTotalSize) => {

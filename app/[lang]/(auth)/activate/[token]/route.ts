@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { removeExpiredConfirmationSignupByEmailTokens } from '@root/app/lib/removeExpiredTokens';
 import makeHref from '@root/app/lib/url/makeHref';
 import assignAutoRoleDuringConfirmation from '@root/app/server/lib/roles/assignAutoRoleDuringConfirmation';
@@ -25,7 +26,7 @@ export async function GET(
         where: {
             token: token.toLowerCase().trim(),
             expires: {
-                gt: new Date()
+                gt: getCurrentTime()
             }
         },
     });
@@ -48,7 +49,7 @@ export async function GET(
             email: tokenExists.identifier
         },
         data: {
-            emailVerified: new Date()
+            emailVerified: getCurrentTime()
         }
     })
 

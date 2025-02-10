@@ -6,6 +6,7 @@ import { subDays } from 'date-fns';
 import init from '../init';
 import dropDb from '@root/scripts/dropDb';
 import { updateSetting } from '@root/app/server/cache/settings';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 const superAdminEmail = 'superadmin@example.com';
 const managerEmail = 'manager@example.com';
@@ -50,7 +51,7 @@ async function main() {
                 name: "Super Admin",
                 passwordHash,
                 role: { connect: { id: 'superAdmin' } },
-                emailVerified: new Date(),
+                emailVerified: getCurrentTime(),
                 superAdmin: {
                     create: {}
                 }
@@ -66,9 +67,10 @@ async function main() {
             email: email ? email : faker.internet.email(),
             passwordHash,
             role: { connect: { id: role } },
-            emailVerified: new Date()
+            emailVerified: getCurrentTime()
         }
     }
+
 
     const getClientsData = (currentCodes: string[]) => {
         const usedCodes = new Set(currentCodes);
@@ -308,12 +310,13 @@ async function main() {
 
             function generateDateRange(): { year: number, month: number, day: number }[] {
                 const dates: { year: number, month: number, day: number }[] = [];
-                const today = new Date();
+                const today = getCurrentTime();
                 today.setHours(0, 0, 0, 0);
                 const past = new Date(today);
                 past.setMonth(today.getMonth() - 30);
                 const future = new Date(today);
                 future.setDate(today.getDate() + 2);
+
 
                 for (let date = new Date(past); date <= future; date.setDate(date.getDate() + 1)) {
                     if (date.getDay() !== 0 && date.getDay() !== 6) {
@@ -333,10 +336,11 @@ async function main() {
 
             for (const deliveryDay of dateRange) {
                 const deliveryDayDate = new Date(deliveryDay.year, deliveryDay.month, deliveryDay.day);
-                const isInFuture = deliveryDayDate > new Date();
+                const isInFuture = deliveryDayDate > getCurrentTime();
                 const status = isInFuture
                     ? faker.helpers.arrayElement(['draft', 'in_progress'])
                     : faker.helpers.arrayElement(['draft', 'in_progress', 'completed']);
+
                 const isNotDraft = status !== 'draft';
 
                 const sentToCateringAt = isNotDraft

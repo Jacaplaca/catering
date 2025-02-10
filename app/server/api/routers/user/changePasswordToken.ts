@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import { removeExpiredPasswordTokens } from '@root/app/lib/removeExpiredTokens';
 import changePassword from '@root/app/server/api/routers/user/libs/changePassword';
 import validatePasswordCustomApi from '@root/app/server/api/routers/user/libs/validatePasswordCustomApi';
@@ -22,7 +23,7 @@ const changePasswordToken = publicProcedure
             where: {
                 token: token.toLowerCase().trim(),
                 expires: {
-                    gt: new Date()
+                    gt: getCurrentTime()
                 }
             },
         });

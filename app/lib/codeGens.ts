@@ -1,3 +1,5 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+
 export type GenerateCodeOptions = {
     schema?: string;
     prefix?: string;
@@ -19,10 +21,10 @@ export const codeGen = ({
     const generateRandomUppercaseLetter = () => String.fromCharCode(Math.floor(Math.random() * 26) + 65);
     const generateRandomLowercaseLetter = () => String.fromCharCode(Math.floor(Math.random() * 26) + 97);
 
-    const currentYear = new Date().getFullYear();
+    const currentYear = getCurrentTime().getFullYear();
     const lastTwoDigitsOfYear = (currentYear % 100).toString().padStart(2, '0');
     const fullYear = currentYear.toString();
-    const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+    const currentMonth = (getCurrentTime().getMonth() + 1).toString().padStart(2, '0');
 
     // Format the incrementValue according to iLen
     const formattedIncrementValue = incrementValue.toString().padStart(iLen, '0');

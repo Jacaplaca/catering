@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import makeHref from '@root/app/lib/url/makeHref';
 import { redirect } from 'next/navigation';
 import type { NextRequest } from 'next/server'
@@ -21,7 +22,7 @@ export async function GET(
         where: {
             token: token.toLowerCase().trim(),
             expires: {
-                gt: new Date()
+                gt: getCurrentTime()
             }
         },
     });

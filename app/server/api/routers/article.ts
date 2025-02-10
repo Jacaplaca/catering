@@ -8,6 +8,7 @@ import { i18n, type Locale } from '@root/i18n-config'
 import { type Article } from '@prisma/client';
 import generateSitemap from '@root/scripts/init/generate-sitemap';
 import { articleValidator, generateArticles, getOneArticleValidator, groupArticlesCountValidator } from '@root/app/validators/article';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 export const articleRouter = {
     getLangsSlugs: publicProcedure.input(getOneArticleValidator)
@@ -110,7 +111,7 @@ export const articleRouter = {
                 const author = faker.helpers.arrayElement(authors);
                 const date = faker.date.between({
                     from: new Date(2020, 0, 1),
-                    to: new Date(),
+                    to: getCurrentTime(),
                 })
                 const addLang = (lang: string, str: string) => `[${lang}]_${str}`
                 languages.forEach((lang) => {
@@ -159,12 +160,13 @@ export const articleRouter = {
                     content: [content],
                     lang,
                     author,
-                    date: new Date(),
+                    date: getCurrentTime(),
                     key,
                     group,
                     categories: categories ? categories.toLowerCase().trim().split(',') : [],
                     tags: tags ? tags.toLowerCase().trim().split(',') : [],
                     coverImage: image,
+
                 }
             });
             await generateSitemap();
