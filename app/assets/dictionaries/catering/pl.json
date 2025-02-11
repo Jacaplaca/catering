@@ -34,6 +34,7 @@
         "group-users-label": "Użytkownicy",
         "client-no-name": "Brak nazwy!",
         "add-new-client": "Dodaj nową placówkę",
+        "add-new-client-confirmation": "Czy na pewno chcesz dodać nową placówkę?",
         "remove-place": "Usuń",
         "remove-place-confirmation": "Czy na pewno chcesz usunąć tę placówkę?"
     },

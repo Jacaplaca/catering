@@ -139,8 +139,9 @@ const save = async ({ ctx, input, status }: {
                 dinnerDietCount: newDietDinners.length,
 
             }
-
-            data = { ...orderUpdateData, ...betweenDeadlineUpdateData }
+            const forUpdate = { ...orderUpdateData, ...betweenDeadlineUpdateData }
+            const { breakfastDiet, breakfastDietCount, ...rest } = forUpdate;
+            data = { ...rest }
         } else {
             data = orderUpdateData
         }

@@ -87,8 +87,8 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
     if (!allItems) return null;
 
     return (
-        <div className={`w-full 
-        border-[0px]  sm:border-[1px] sm:border-neutral-200 dark:sm:border-neutral-700 
+        <div className={`w-full md:w-[680px]
+        border-[0px] sm:border-[1px] sm:border-neutral-200 dark:sm:border-neutral-700 
         rounded-md p-1 sm:p-4`}>
             <div className='flex flex-row gap-4 md:gap-12 mb-2 md:mb-4'>
                 <button onClick={onBack} className="self-start">
@@ -105,7 +105,7 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
             </div>
 
             <div className='flex flex-col md:flex-row gap-4 h-[290px] md:h-[370px] overflow-y-auto'>
-                <div className='flex flex-col gap-2 w-full md:w-2/5 px-2'>
+                <div className='flex flex-col gap-2 w-full md:w-1/2 px-2'>
                     <PickerFromAll
                         dictionary={dictionary}
 
@@ -123,7 +123,7 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
                 </div>
 
                 {selectedItems.length > 0 ? (
-                    <div className="hidden md:flex w-full md:w-3/5 flex-col px-2">
+                    <div className="hidden md:flex w-full md:w-1/2 flex-col px-2">
                         <div className='flex flex-row justify-start items-center mb-2'>
                             <div className="font-semibold">
                                 {translate(dictionary, getSelectedLabel())}
@@ -145,7 +145,7 @@ const ConsumersPicker: React.FC<ConsumersPickerProps> = ({
                         </div>
                     </div>
                 ) : (
-                    <div className='hidden md:flex w-full md:w-3/5 flex-col justify-center items-center h-full'>
+                    <div className='hidden md:flex w-full md:w-1/2 flex-col justify-center items-center h-full'>
                         <i className='fa-solid fa-plate-utensils text-4xl text-neutral-400' />
                     </div>
                 )}

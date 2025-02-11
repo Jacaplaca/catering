@@ -113,7 +113,7 @@ const AddClientAndPick: FunctionComponent<{
             <MyButton
                 id='add-client'
                 ariaLabel='add-client'
-                onClick={handleAddClient}
+                onClick={() => setIsConfirmationOpen(true)}
                 className='flex flex-col sm:flex-row gap-2'
             >
                 <div className='hidden sm:flex gap-2'>
@@ -122,6 +122,13 @@ const AddClientAndPick: FunctionComponent<{
                 </div>
                 <span className='text-sm'>{translate(dictionary, 'dashboard:add-new-client')}</span>
             </MyButton>
+            <ConfirmationModal
+                question={translate(dictionary, 'dashboard:add-new-client-confirmation')}
+                isModalOpen={isConfirmationOpen}
+                hide={() => setIsConfirmationOpen(false)}
+                confirmAction={handleAddClient}
+                dictionary={dictionary}
+            />
         </div>
     )
 }
