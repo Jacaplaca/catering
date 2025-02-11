@@ -1,3 +1,12 @@
+## [1.1.5](https://github.com/Jacaplaca/catering/compare/v1.1.4...v1.1.5) (2025-02-11)
+
+
+### Bug Fixes
+
+* Unique constraint failed on the constraint in OrderConsumerBreakfast_orderId_consumerId_key footer ([2833533](https://github.com/Jacaplaca/catering/commit/283353312cbabf3bfed8467c77301d1f33bff9ab))
+
+
+
 ## [1.1.4](https://github.com/Jacaplaca/catering/compare/v1.1.3...v1.1.4) (2025-02-10)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * added email column to client table ([3c0a043](https://github.com/Jacaplaca/catering/commit/3c0a0437370ea83e908f980b9e6d42067e56b3a9))
-
-
-
-# [1.1.0](https://github.com/Jacaplaca/catering/compare/v1.0.19...v1.1.0) (2025-02-01)
-
-
-### Features
-
-* multiple clients and more ([c95c5a1](https://github.com/Jacaplaca/catering/commit/c95c5a1d9f68241225e6a00a54c2432bf1af6db5))
 
 
 
