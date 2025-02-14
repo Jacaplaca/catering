@@ -1,52 +1,53 @@
 import { type TableColumnType } from '@root/types'
-import { type OrdersGroupedByDaySortName } from '@root/types/specific'
+import { type OrdersGroupedByMonthSortName } from '@root/types/specific'
 
 const useOrderGroupedByDayColumns = ({
     sort
 }: {
-    sort: (by: OrdersGroupedByDaySortName) => void
+    sort: (by: OrdersGroupedByMonthSortName) => void
 }) => {
 
     const columns: TableColumnType[] = [
         {
-            key: "deliveryDay",
-            title: 'orders:delivery_day_column',
-            sort: () => sort('deliveryDay'),
+            key: "id",
+            title: 'orders:orders_by_month',
+            sort: () => sort('id'),
             align: 'center'
         },
         {
-            key: "breakfast",
+            key: "breakfastStandard",
             title: 'orders:breakfast_column',
+            sort: () => sort('breakfastStandard'),
             align: 'center'
         },
         {
-            key: "lunch",
+            key: "lunchStandard",
             title: 'orders:lunch_column',
+            sort: () => sort('lunchStandard'),
             align: 'center'
         },
         {
-            key: "dinner",
+            key: "dinnerStandard",
             title: 'orders:dinner_column',
+            sort: () => sort('dinnerStandard'),
             align: 'center'
         },
-        // {
-        //     key: "breakfastDietCount",
-        //     title: 'orders:breakfastDiet_column',
-        //     align: 'center'
-        // },
-        // {
-        //     key: "lunchDietCount",
-        //     title: 'orders:lunchDiet_column',
-        //     align: 'center'
-        // },
-        // {
-        //     key: "dinnerDietCount",
-        //     title: 'orders:dinnerDiet_column',
-        //     align: 'center'
-        // },
         {
-            key: "sentToCateringAt",
-            title: 'orders:sentToCateringAt_column',
+            key: "breakfastDiet",
+            title: 'orders:breakfastDiet_column',
+            sort: () => sort('breakfastDiet'),
+            align: 'center'
+        },
+        {
+            key: "lunchDiet",
+            title: 'orders:lunchDiet_column',
+            sort: () => sort('lunchDiet'),
+            align: 'center'
+        },
+        {
+            key: "dinnerDiet",
+            title: 'orders:dinnerDiet_column',
+            sort: () => sort('dinnerDiet'),
             align: 'center'
         },
     ]

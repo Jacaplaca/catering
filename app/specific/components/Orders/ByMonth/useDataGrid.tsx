@@ -1,27 +1,25 @@
 import HighlightText from '@root/app/_components/Table/HighlightText';
 import SkeletonCell from '@root/app/_components/Table/SkeletonCell';
-import DayMealsCell from '@root/app/specific/components/Orders/ByDay/DayMealsCell';
-import { MealType, type OrderGroupedByDayCustomTable } from '@root/types/specific';
-import { format } from 'date-fns-tz';
-// import { type FC } from 'react';
+import { type OrderGroupedByMonthCustomTable } from '@root/types/specific';
+import { type FC } from 'react';
 
-// const MealCount: FC<{ count: number }> = ({ count }) => {
-//     return <div className={`
-//     flex justify-center
-//     text-gray-900 dark:text-gray-100 font-bold text-base
-//     ${count ? "opacity-100" : "opacity-70"}
-//     `}>
-//         {count ? count : '-'}
-//     </div>
-// }
+const MealCount: FC<{ count: number }> = ({ count }) => {
+    return <div className={`
+    flex justify-center
+    text-gray-900 dark:text-gray-100 font-bold text-base
+    ${count ? "opacity-100" : "opacity-70"}
+    `}>
+        {count ? count : '-'}
+    </div>
+}
 
-const useOrderGroupedByDayDataGrid = ({
+const useOrderGroupedByMonthDataGrid = ({
     rows,
     limit,
     totalCount,
     columns,
 }: {
-    rows: OrderGroupedByDayCustomTable[]
+    rows: OrderGroupedByMonthCustomTable[]
     limit: number,
     totalCount: number,
     columns: { key: string }[],
@@ -40,66 +38,41 @@ const useOrderGroupedByDayDataGrid = ({
         }
     })
 
-    const table = rows.map(({ id, deliveryDay, breakfastStandard,
-        lunchStandard, dinnerStandard, breakfastDietCount, lunchDietCount, dinnerDietCount, sentToCateringAt }, i) => {
-        const deliveryDayDate = new Date(deliveryDay?.year ?? 0,
-            deliveryDay?.month ?? 0,
-            deliveryDay?.day ?? 0);
+    const table = rows.map(({ id, breakfastStandard,
+        lunchStandard, dinnerStandard, breakfastDiet, lunchDiet, dinnerDiet }, i) => {
         return {
             key: id ?? `placeholderData-${i}`,
             rows: [
                 {
                     component: <HighlightText
                         className="whitespace-nowrap font-medium text-gray-900 dark:text-white flex justify-center"
-                        text={deliveryDayDate ? format(deliveryDayDate, 'dd-MM-yyyy') : ''}
+                        text={id}
                     />,
                     key: 'deliveryDay'
                 },
                 {
-                    component: <DayMealsCell
-                        standard={breakfastStandard}
-                        diet={breakfastDietCount}
-                        meal={MealType.Breakfast}
-                        dayId={id}
-                    />,
-                    key: 'breakfast'
+                    component: <MealCount count={breakfastStandard} />,
+                    key: 'breakfastStandard'
                 },
                 {
-                    component: <DayMealsCell
-                        standard={lunchStandard}
-                        diet={lunchDietCount}
-                        meal={MealType.Lunch}
-                        dayId={id}
-                    />,
-                    key: 'lunch'
+                    component: <MealCount count={lunchStandard} />,
+                    key: 'lunchStandard'
                 },
                 {
-                    component: <DayMealsCell
-                        standard={dinnerStandard}
-                        diet={dinnerDietCount}
-                        meal={MealType.Dinner}
-                        dayId={id}
-                    />,
-                    key: 'dinner'
+                    component: <MealCount count={dinnerStandard} />,
+                    key: 'dinnerStandard'
                 },
-                // {
-                //     component: <MealCount count={breakfastDietCount} />,
-                //     key: 'breakfastDietCount'
-                // },
-                // {
-                //     component: <MealCount count={lunchDietCount} />,
-                //     key: 'lunchDietCount'
-                // },
-                // {
-                //     component: <MealCount count={dinnerDietCount} />,
-                //     key: 'dinnerDietCount'
-                // },
                 {
-                    component: <HighlightText
-                        className="whitespace-nowrap font-medium text-gray-900 dark:text-white flex justify-center"
-                        text={sentToCateringAt?.$date ? format(sentToCateringAt.$date, 'dd-MM-yyyy HH:mm') : ''}
-                    />,
-                    key: 'sentToCateringAt'
+                    component: <MealCount count={breakfastDiet} />,
+                    key: 'breakfastDiet'
+                },
+                {
+                    component: <MealCount count={lunchDiet} />,
+                    key: 'lunchDiet'
+                },
+                {
+                    component: <MealCount count={dinnerDiet} />,
+                    key: 'dinnerDiet'
                 },
             ]
         }
@@ -109,4 +82,4 @@ const useOrderGroupedByDayDataGrid = ({
 
 }
 
-export default useOrderGroupedByDayDataGrid;
+export default useOrderGroupedByMonthDataGrid;

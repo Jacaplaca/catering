@@ -2,16 +2,14 @@ import useRows from '@root/app/hooks/table/useRows';
 import useTableSort from '@root/app/hooks/table/useTableSort';
 import useMessage from '@root/app/hooks/useMessage';
 import useSearch from '@root/app/hooks/useSearch';
-import useMealPdf from '@root/app/specific/components/Orders/ByDay/DayMealsCell/useMealPdf';
-import useDay from '@root/app/specific/components/Orders/ByDay/ExpandedRow/useDay';
-import useOrderGroupedByDayColumns from '@root/app/specific/components/Orders/ByDay/useColumns';
-import useOrderGroupedByDayDataGrid from '@root/app/specific/components/Orders/ByDay/useDataGrid';
-import useFetchOrdersByDay from '@root/app/specific/components/Orders/ByDay/useFetch';
-import useOrderAction from '@root/app/specific/components/Orders/ByOrder/useRowAction';
+import useFetchOrdersByMonth from '@root/app/specific/components/Orders/ByMonth/useFetch';
+import useOrderGroupedByMonthDataGrid from '@root/app/specific/components/Orders/ByMonth/useDataGrid';
+import useOrderGroupedByMonthColumns from '@root/app/specific/components/Orders/ByMonth/useColumns';
 import { type SettingParsedType } from '@root/types';
-import { type OrderGroupedByDayCustomTable, type OrdersSortName } from '@root/types/specific';
+import { type OrdersGroupedByMonthSortName, type OrderGroupedByMonthCustomTable } from '@root/types/specific';
 import { type Session } from 'next-auth';
 import { useEffect } from 'react';
+import useMonth from '@root/app/specific/components/Orders/ByMonth/ExpandedRow/useMonth';
 
 const useOrderByMonthTable = ({
     session,
@@ -19,19 +17,20 @@ const useOrderByMonthTable = ({
     pageName,
     settings,
     dictionary,
+    clientId
 }: {
     session: Session | null,
     lang: LocaleApp,
     pageName: string,
     settings: { main: SettingParsedType },
     dictionary: Record<string, string>,
+    clientId?: string
 }) => {
     const { messageObj, resetMessage, updateMessage } = useMessage(dictionary);
-    const { sort, sortDirection, sortName } = useTableSort<OrdersSortName>("deliveryDay", 'desc')
+    const { sort, sortDirection, sortName } = useTableSort<OrdersGroupedByMonthSortName>("id", 'desc')
     const { searchValue, search } = useSearch({ lang, pageName });
-    const mealPdf = useMealPdf(lang);
 
-    const columns = useOrderGroupedByDayColumns({ sort });
+    const columns = useOrderGroupedByMonthColumns({ sort });
 
     const {
         data: {
@@ -39,48 +38,32 @@ const useOrderByMonthTable = ({
             fetchedRows,
             isFetching
         },
-        refetch: {
-            countRefetch,
-            rowsRefetch,
-        },
         pagination: {
             page,
             limit
         },
-    } = useFetchOrdersByDay({
+    } = useFetchOrdersByMonth({
+        sortName,
         columns,
         sortDirection,
+        clientId
     });
 
-    const [rows] = useRows<OrderGroupedByDayCustomTable>(fetchedRows);
+    const [rows] = useRows<OrderGroupedByMonthCustomTable>(fetchedRows);
 
-    const row = useDay();
-
-    const action = useOrderAction({
-        onSuccess: resetTable,
-        rows: rows.map(el => el.id),
-        session,
-        updateMessage
-    });
+    const row = useMonth(clientId);
 
     useEffect(() => {
-        action.uncheckAll();
         void row.onClick(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page, limit, searchValue]);
 
-    const { skeleton, table } = useOrderGroupedByDayDataGrid({
+    const { skeleton, table } = useOrderGroupedByMonthDataGrid({
         rows,
         limit,
         totalCount,
         columns,
     })
-
-    async function resetTable() {
-        await countRefetch();
-        await rowsRefetch();
-        action.uncheckAll();
-    }
 
     return {
         pageName,
@@ -94,9 +77,7 @@ const useOrderByMonthTable = ({
         search,
         row,
         sort: { sortName, sortDirection },
-        action,
         message: { messageObj, resetMessage, updateMessage },
-        mealPdf
     };
 }
 export default useOrderByMonthTable;

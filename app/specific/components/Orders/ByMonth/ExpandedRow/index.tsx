@@ -1,32 +1,26 @@
 
 import ExpandedRow from '@root/app/_components/Table/ExpandedRow';
-import { useOrderByDayTableContext } from '@root/app/specific/components/Orders/ByDay/context';
-import Diet from '@root/app/specific/components/Orders/ByDay/ExpandedRow/Diet';
-import SummaryStandard from '@root/app/specific/components/Orders/ByDay/ExpandedRow/SummaryStandard';
+import { useOrderByMonthTableContext } from '@root/app/specific/components/Orders/ByMonth/context';
+import { ConsumerMonthReportTable } from '@root/app/specific/components/Orders/ByMonth/ExpandedRow/ConsumerMonthReportTable';
 
-const OrderDayExpandedRow = () => {
+const OrderMonthExpandedRow = () => {
 
     const {
-        row: { dayId, fetching },
-    } = useOrderByDayTableContext();
+        row: { monthData, fetching, deliveryMonth },
+    } = useOrderByMonthTableContext();
 
 
-    const Wrapper = dayId ? ExpandedRow : 'div';
+    const Wrapper = deliveryMonth ? ExpandedRow : 'div';
 
     return (<Wrapper>
-
-        {fetching ? <div className='flex justify-center items-center h-full p-10'><i className='fas fa-spinner fa-spin text-3xl' /></div> : (
-            <>
-                <SummaryStandard />
-                <Diet />
-            </>
+        {fetching ? <div
+            className='flex justify-center items-center h-full p-10'><i className='fas fa-spinner fa-spin text-3xl' /></div> : (
+            monthData && <ConsumerMonthReportTable />
         )}
-
-
     </Wrapper>
     );
 }
 
 
 
-export default OrderDayExpandedRow;
+export default OrderMonthExpandedRow;

@@ -92,12 +92,21 @@ export const orderedDatesValid = z.object({
     clientId: z.string(),
 });
 
-export const monthListValid = z.object({
-    clientId: z.string(),
+export const monthDataForClientValid = z.object({
+    clientId: z.string().optional(),
     limit: z.number().int().min(1).default(10),
     page: z.number().int().min(1).default(1),
     sortName: z.enum(ordersGroupedByMonthSortNames).optional(),
     sortDirection: z.enum(['asc', 'desc']).optional(),
+});
+
+export const monthCountForClientValid = z.object({
+    clientId: z.string().optional(),
+});
+
+export const monthForClientValid = z.object({
+    deliveryMonth: z.string(),
+    clientId: z.string().optional(),
 });
 
 

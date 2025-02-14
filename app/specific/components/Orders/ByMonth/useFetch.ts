@@ -2,27 +2,31 @@ import usePagination from '@root/app/hooks/usePagination';
 import placeholderData from '@root/app/lib/table/placeholderData';
 import { api } from '@root/app/trpc/react';
 import { type TableColumnType } from '@root/types';
-import { type OrderGroupedByDayCustomTable } from '@root/types/specific';
+import { type OrderGroupedByMonthCustomTable, type OrdersGroupedByMonthSortName } from '@root/types/specific';
 
-function useFetchOrdersByDay({
+function useFetchOrdersByMonth({
     columns,
     sortDirection,
+    sortName,
+    clientId
 }: {
     columns: TableColumnType[],
     sortDirection: 'asc' | 'desc',
+    sortName: OrdersGroupedByMonthSortName,
+    clientId?: string
 }) {
-    const { data: totalCount = 0, refetch: countRefetch, isFetching: countIsFetching }
-        = api.specific.order.groupedByDay.count.useQuery(undefined, {
-            enabled: true,
+    const { data: totalCount = 0, isFetching: countIsFetching }
+        = api.specific.order.groupedByMonth.countForClient.useQuery({ clientId }, {
+            enabled: !!clientId,
         });
 
     const { page, limit } = usePagination(totalCount);
 
-    const { data: fetchedRows = [], refetch: rowsRefetch, isFetching }
-        = api.specific.order.groupedByDay.table.useQuery({ page, limit, sortDirection },
+    const { data: fetchedRows = [], isFetching }
+        = api.specific.order.groupedByMonth.tableForClient.useQuery({ page, limit, sortDirection, sortName, clientId },
             {
-                enabled: true,
-                placeholderData: placeholderData<OrderGroupedByDayCustomTable>(limit, columns),
+                enabled: !!clientId,
+                placeholderData: placeholderData<OrderGroupedByMonthCustomTable>(limit, columns),
             },
         );
 
@@ -32,10 +36,6 @@ function useFetchOrdersByDay({
             fetchedRows,
             isFetching: countIsFetching || isFetching,
         },
-        refetch: {
-            countRefetch,
-            rowsRefetch,
-        },
         pagination: {
             page,
             limit,
@@ -43,4 +43,4 @@ function useFetchOrdersByDay({
     }
 }
 
-export default useFetchOrdersByDay;
+export default useFetchOrdersByMonth;

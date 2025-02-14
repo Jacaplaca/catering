@@ -69,7 +69,7 @@ export const ordersGroupedByDaySortNames = ['deliveryDay'] as const;
 
 export type OrdersGroupedByDaySortName = typeof ordersGroupedByDaySortNames[number];
 
-export const ordersGroupedByMonthSortNames = ['deliveryMonth'] as const;
+export const ordersGroupedByMonthSortNames = ['id', 'breakfastStandard', 'lunchStandard', 'dinnerStandard', 'breakfastDiet', 'lunchDiet', 'dinnerDiet'] as const;
 
 export type OrdersGroupedByMonthSortName = typeof ordersGroupedByMonthSortNames[number];
 
@@ -103,6 +103,19 @@ export type OrderGroupedByDayCustomTable = {
     dinnerDietCount: number;
     sentToCateringAt: { $date: Date };
 }
+
+export type OrderGroupedByMonthCustomTable = {
+    id: string,
+    breakfastStandard: number;
+    breakfastDiet: number;
+    lunchStandard: number;
+    lunchDiet: number;
+    dinnerStandard: number;
+    dinnerDiet: number;
+    sentToCateringAt: { $date: Date };
+}
+
+export type ConsumerMonthReport = Record<string, { name: string; breakfast: number; lunch: number; dinner: number; sum: number }>
 
 export type OrderForView = {
     id: string;

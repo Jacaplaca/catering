@@ -7,7 +7,6 @@ import TableFooter from '@root/app/_components/Table/Footer';
 import TableHeader from '@root/app/_components/Table/Header.tsx';
 import { type FunctionComponent } from "react";
 import TableWrapper from '@root/app/_components/Table/Wrapper';
-import TableActionConfirm from '@root/app/_components/Table/ActionConfirm';
 import { Table } from 'flowbite-react';
 import TableToast from '@root/app/_components/Table/Toast';
 import { useOrderByMonthTableContext } from '@root/app/specific/components/Orders/ByMonth/context';
@@ -24,11 +23,8 @@ const OrdersByMonthTable: FunctionComponent = () => {
         columns,
         isFetching,
         totalCount,
-        row: { dayId, onClick },
+        row: { deliveryMonth, onClick },
         sort: { sortName, sortDirection },
-        action: {
-            getConfirmationData,
-        },
         message
     } = useOrderByMonthTableContext();
 
@@ -37,10 +33,6 @@ const OrdersByMonthTable: FunctionComponent = () => {
 
     return (
         <div className='relative'>
-            <TableActionConfirm
-                dictionary={dictionary}
-                getData={getConfirmationData}
-            />
             <TableWrapper>
                 <TableHeader
                     // search={search}
@@ -56,8 +48,6 @@ const OrdersByMonthTable: FunctionComponent = () => {
                 >
                     <TableColumns
                         columns={columns}
-                        // check={checkAllOnPage}
-                        // isCheck={isAllChecked}
                         sortName={sortName}
                         sortDirection={sortDirection}
                         dictionary={dictionary}
@@ -67,7 +57,7 @@ const OrdersByMonthTable: FunctionComponent = () => {
                         className="divide-y"
                         key={isFetching ? 'skeleton' : 'table'}
                         onRowClick={clickable ? onClick : undefined}
-                        expandedRowId={dayId}
+                        expandedRowId={deliveryMonth}
                         ExpandedRow={OrderMonthExpandedRow}
                     />
                 </Table>
@@ -83,9 +73,6 @@ const OrdersByMonthTable: FunctionComponent = () => {
                 onClose={message?.resetMessage}
             />
         </div>
-
-
-
     );
 }
 
