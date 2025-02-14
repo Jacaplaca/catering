@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/Jacaplaca/catering/compare/v1.1.5...v1.2.0) (2025-02-14)
+
+
+### Features
+
+* Added aggregated report for month client orders ([a721644](https://github.com/Jacaplaca/catering/commit/a72164427648c4e10542248362dd4fefe47b296e))
+
+
+
 ## [1.1.5](https://github.com/Jacaplaca/catering/compare/v1.1.4...v1.1.5) (2025-02-11)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * consumers without diet code now showing in report ([9a7ff71](https://github.com/Jacaplaca/catering/commit/9a7ff7129a9c5ffb5aaf067e8df4da2eac3b5cbb))
-
-
-
-## [1.1.1](https://github.com/Jacaplaca/catering/compare/v1.1.0...v1.1.1) (2025-02-05)
-
-
-### Bug Fixes
-
-* added email column to client table ([3c0a043](https://github.com/Jacaplaca/catering/commit/3c0a0437370ea83e908f980b9e6d42067e56b3a9))
 
 
 
