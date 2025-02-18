@@ -1,3 +1,12 @@
+## [1.3.1](https://github.com/Jacaplaca/catering/compare/v1.3.0...v1.3.1) (2025-02-18)
+
+
+### Bug Fixes
+
+* add TZ to docker to change timezone of the server ([ae5c784](https://github.com/Jacaplaca/catering/commit/ae5c784ef58137d3e6f95af16ee6e5effa731aa9))
+
+
+
 # [1.3.0](https://github.com/Jacaplaca/catering/compare/v1.2.0...v1.3.0) (2025-02-18)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * current date in one place ([48c55a5](https://github.com/Jacaplaca/catering/commit/48c55a51298834715d181443aff25d70f81eee33))
-
-
-
-## [1.1.3](https://github.com/Jacaplaca/catering/compare/v1.1.2...v1.1.3) (2025-02-08)
-
-
-### Bug Fixes
-
-* making orders now are responsive ([5830f91](https://github.com/Jacaplaca/catering/commit/5830f915745c47d63a5e281adef1b81f9db46061))
 
 
 
