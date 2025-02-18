@@ -58,6 +58,7 @@ export type ConsumerCustomTable = {
     diet: Diet;
     notes?: string;
     dietician: Dietician;
+    deactivated?: boolean;
     createdAt: { $date: Date };
 };
 

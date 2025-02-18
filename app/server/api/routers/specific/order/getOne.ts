@@ -210,7 +210,7 @@ const last = createCateringProcedure([RoleType.client])
             return null;
         }
 
-        return getOrder({ orderId: lastOrder.id });
+        return getOrder({ orderId: lastOrder.id, onlyActiveConsumers: true });
     });
 
 const forTable = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])

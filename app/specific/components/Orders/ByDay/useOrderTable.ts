@@ -2,6 +2,7 @@ import useRows from '@root/app/hooks/table/useRows';
 import useTableSort from '@root/app/hooks/table/useTableSort';
 import useMessage from '@root/app/hooks/useMessage';
 import useSearch from '@root/app/hooks/useSearch';
+import useLabelsPdf from '@root/app/specific/components/Orders/ByDay/DayMealsCell/useLabelsPdf';
 import useMealPdf from '@root/app/specific/components/Orders/ByDay/DayMealsCell/useMealPdf';
 import useDay from '@root/app/specific/components/Orders/ByDay/ExpandedRow/useDay';
 import useOrderGroupedByDayColumns from '@root/app/specific/components/Orders/ByDay/useColumns';
@@ -29,7 +30,8 @@ const useOrderByDayTable = ({
     const { messageObj, resetMessage, updateMessage } = useMessage(dictionary);
     const { sort, sortDirection, sortName } = useTableSort<OrdersSortName>("deliveryDay", 'desc')
     const { searchValue, search } = useSearch({ lang, pageName });
-    const mealPdf = useMealPdf(lang);
+    const mealPdf = useMealPdf(lang, updateMessage);
+    const labelsPdf = useLabelsPdf(lang, updateMessage);
 
     const columns = useOrderGroupedByDayColumns({ sort });
 
@@ -96,7 +98,8 @@ const useOrderByDayTable = ({
         sort: { sortName, sortDirection },
         action,
         message: { messageObj, resetMessage, updateMessage },
-        mealPdf
+        mealPdf,
+        labelsPdf
     };
 }
 export default useOrderByDayTable;

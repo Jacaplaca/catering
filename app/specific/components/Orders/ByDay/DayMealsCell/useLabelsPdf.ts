@@ -4,13 +4,12 @@ import { api } from '@root/app/trpc/react';
 import { MealType } from '@root/types/specific';
 import { useEffect, useState } from 'react';
 
-const useMealPdf = (lang: LocaleApp, updateMessage: UpdateMessageType) => {
+const useLabelsPdf = (lang: LocaleApp, updateMessage: UpdateMessageType) => {
     const [dayId, setDayId] = useState<string | null>(null);
     const [mealType, setMealType] = useState<MealType | null>(null);
-
     const [isLoading, setIsLoading] = useState(false);
 
-    const { data: pdfData, error: pdfError } = api.specific.order.dayPdf.useQuery(
+    const { data: pdfData, error: pdfError } = api.specific.order.labelsPdf.useQuery(
         { dayId: dayId ?? '', mealType: mealType ?? MealType.Breakfast, lang },
         { enabled: Boolean(dayId) && Boolean(mealType) }
     );
@@ -48,4 +47,4 @@ const useMealPdf = (lang: LocaleApp, updateMessage: UpdateMessageType) => {
     };
 };
 
-export default useMealPdf;
+export default useLabelsPdf;

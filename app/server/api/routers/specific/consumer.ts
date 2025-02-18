@@ -6,7 +6,7 @@ import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { db } from '@root/app/server/db';
 import { consumerEditValidator, deleteConsumersValid, getConsumerValid, getConsumersCountValid, getConsumersValid, getDietaryAllForClientValid } from '@root/app/validators/specific/consumer';
 import { type ConsumerCustomTable, consumersSortNames } from '@root/types/specific';
-import { RoleType } from '@prisma/client';
+import { OrderStatus, RoleType } from '@prisma/client';
 
 const dietaryAll = createCateringProcedure([RoleType.client])
     .input(getDietaryAllForClientValid)
@@ -28,7 +28,7 @@ const dietaryAll = createCateringProcedure([RoleType.client])
                 ...getConsumerDbQuery({
                     withDiet: true,
                     showColumns: ['name', 'code']
-                    , catering, clientId, withNameOnly: true, isClient: true
+                    , catering, clientId, withNameOnly: true, isClient: true, onlyActiveConsumer: true
                 }),
                 ...getLowerCaseSort(orderBy),
             ],
@@ -185,6 +185,39 @@ const edit = createCateringProcedure([RoleType.dietician, RoleType.manager])
         // })
     });
 
+async function beenInOrder(ids: string[]): Promise<Record<string, boolean>> {
+    const result: Record<string, boolean> = {};
+
+    await Promise.all(
+        ids.map(async (consumerId) => {
+            const [
+                breakfastOrder,
+                lunchOrder,
+                dinnerOrder,
+                lunchBeforeDeadlineOrder,
+                dinnerBeforeDeadlineOrder,
+            ] = await Promise.all([
+                db.orderConsumerBreakfast.findFirst({ where: { consumerId } }),
+                db.orderConsumerLunch.findFirst({ where: { consumerId } }),
+                db.orderConsumerDinner.findFirst({ where: { consumerId } }),
+                db.orderConsumerLunchBeforeDeadline.findFirst({ where: { consumerId } }),
+                db.orderConsumerDinnerBeforeDeadline.findFirst({ where: { consumerId } }),
+            ]);
+
+            result[consumerId] = Boolean(
+                breakfastOrder ??
+                lunchOrder ??
+                dinnerOrder ??
+                lunchBeforeDeadlineOrder ??
+                dinnerBeforeDeadlineOrder
+            );
+        })
+    );
+
+    return result;
+}
+
+// Updated deleteOne procedure that checks deletion possibility for each consumer
 const deleteOne = createCateringProcedure([RoleType.dietician, RoleType.manager])
     .input(deleteConsumersValid)
     .mutation(async ({ input, ctx }) => {
@@ -192,10 +225,97 @@ const deleteOne = createCateringProcedure([RoleType.dietician, RoleType.manager]
         const { session: { catering } } = ctx;
         const cateringId = catering.id;
 
-        return db.consumer.deleteMany({
-            where: { id: { in: ids }, cateringId }
+        // Function that fetches order ids with 'draft' status which include consumers from the given list.
+        async function getDraftOrdersWithConsumers(consumerIds: string[], cateringId: string): Promise<string[]> {
+            const orders = await db.order.findMany({
+                where: {
+                    cateringId,
+                    status: OrderStatus.draft,
+                    OR: [
+                        { breakfastDiet: { some: { consumerId: { in: consumerIds } } } },
+                        { lunchDiet: { some: { consumerId: { in: consumerIds } } } },
+                        { dinnerDiet: { some: { consumerId: { in: consumerIds } } } },
+                        { lunchDietBeforeDeadline: { some: { consumerId: { in: consumerIds } } } },
+                        { dinnerDietBeforeDeadline: { some: { consumerId: { in: consumerIds } } } },
+                    ]
+                },
+                select: { id: true }
+            });
+            return orders.map(order => order.id);
+        }
+
+        const deactivateMap = await beenInOrder(ids);
+        const forDeactivate = Object.keys(deactivateMap).filter(id => deactivateMap[id]);
+        const forDelete = Object.keys(deactivateMap).filter(id => !deactivateMap[id]);
+
+        // Retrieve IDs of draft orders that include the consumers to be deactivated.
+        const draftOrderIds = await getDraftOrdersWithConsumers(forDeactivate, cateringId);
+
+        // Remove the consumers from the draft orders (delete join table records)
+        await Promise.all([
+            db.orderConsumerBreakfast.deleteMany({
+                where: {
+                    orderId: { in: draftOrderIds },
+                    consumerId: { in: forDeactivate }
+                }
+            }),
+            db.orderConsumerLunch.deleteMany({
+                where: {
+                    orderId: { in: draftOrderIds },
+                    consumerId: { in: forDeactivate }
+                }
+            }),
+            db.orderConsumerDinner.deleteMany({
+                where: {
+                    orderId: { in: draftOrderIds },
+                    consumerId: { in: forDeactivate }
+                }
+            }),
+            db.orderConsumerLunchBeforeDeadline.deleteMany({
+                where: {
+                    orderId: { in: draftOrderIds },
+                    consumerId: { in: forDeactivate }
+                }
+            }),
+            db.orderConsumerDinnerBeforeDeadline.deleteMany({
+                where: {
+                    orderId: { in: draftOrderIds },
+                    consumerId: { in: forDeactivate }
+                }
+            }),
+        ]);
+
+        // Update order counts after removing consumers from draft orders.
+        // For each order we count remaining join records and update the corresponding fields.
+        for (const orderId of draftOrderIds) {
+            const newBreakfastDietCount = await db.orderConsumerBreakfast.count({ where: { orderId } });
+            const newLunchDietCount = await db.orderConsumerLunch.count({ where: { orderId } });
+            const newDinnerDietCount = await db.orderConsumerDinner.count({ where: { orderId } });
+            const newLunchDietCountBeforeDeadline = await db.orderConsumerLunchBeforeDeadline.count({ where: { orderId } });
+            const newDinnerDietCountBeforeDeadline = await db.orderConsumerDinnerBeforeDeadline.count({ where: { orderId } });
+
+            await db.order.update({
+                where: { id: orderId },
+                data: {
+                    breakfastDietCount: newBreakfastDietCount,
+                    lunchDietCount: newLunchDietCount,
+                    dinnerDietCount: newDinnerDietCount,
+                    lunchDietCountBeforeDeadline: newLunchDietCountBeforeDeadline,
+                    dinnerDietCountBeforeDeadline: newDinnerDietCountBeforeDeadline,
+                },
+            });
+        }
+
+        await db.consumer.updateMany({
+            where: { id: { in: forDeactivate }, cateringId },
+            data: { deactivated: true }
         });
 
+        await db.consumer.deleteMany({
+            where: { id: { in: forDelete }, cateringId }
+        });
+
+        return { deactivateMap, draftOrderIds };
     });
 
 const consumerRouter = {

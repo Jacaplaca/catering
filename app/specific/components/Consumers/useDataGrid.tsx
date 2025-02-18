@@ -54,7 +54,7 @@ const useConsumersDataGrid = ({
         }
     })
 
-    const table = rows.map(({ id, name, code, client, diet, createdAt, dietician }, i) => {
+    const table = rows.map(({ id, name, code, client, diet, createdAt, dietician, deactivated }, i) => {
         const checkboxes = {
             component: <Checkbox
                 id="checkbox-table-search-1"
@@ -66,6 +66,8 @@ const useConsumersDataGrid = ({
         }
         return {
             key: id ?? `placeholderData-${i}`,
+            className: deactivated ? 'opacity-50 line-through italic' : '',
+            blockClick: deactivated,
             rows: [
                 ...(showCheckboxes ? [checkboxes] : []),
                 {

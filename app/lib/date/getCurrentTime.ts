@@ -1,5 +1,5 @@
 //in miliseconds
-// let timeOffset = - 1000 * 60 * 60 * 20; // -20 hours
+// let timeOffset = 1000 * 60 * 60 * 12; // 12 hours
 let timeOffset = 0; // -20 hours
 
 function setTimeOffset(offset: number) {

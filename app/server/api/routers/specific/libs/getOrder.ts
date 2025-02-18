@@ -1,7 +1,7 @@
 import { db } from '@root/app/server/db';
 import { type OrderForEdit } from '@root/types/specific';
 
-const getOrder = async ({ orderId, cateringId }: { orderId: string, cateringId?: string }) => {
+const getOrder = async ({ orderId, cateringId, onlyActiveConsumers }: { orderId: string, cateringId?: string, onlyActiveConsumers?: boolean }) => {
 
     type MatchObject = {
         cateringId?: string;
@@ -18,91 +18,92 @@ const getOrder = async ({ orderId, cateringId }: { orderId: string, cateringId?:
         match.cateringId = cateringId;
     }
 
-    const result = await db.order.aggregateRaw({
-        pipeline: [
-            { $match: match },
-            {
+    // Helper function to create lookup stage for order consumers.
+    const createLookupStage = (fromCollection: string, asName: string) => {
+        if (onlyActiveConsumers) {
+            return {
                 $lookup: {
-                    from: 'OrderConsumerBreakfast',
+                    from: fromCollection,
+                    let: { orderId: "$_id" },
+                    pipeline: [
+                        { $match: { $expr: { $eq: ["$orderId", "$$orderId"] } } },
+                        {
+                            $lookup: {
+                                from: 'Consumer',
+                                localField: 'consumerId',
+                                foreignField: '_id',
+                                as: 'consumer'
+                            }
+                        },
+                        { $unwind: "$consumer" },
+                        { $match: { "consumer.deactivated": { $ne: true } } },
+                        { $project: { consumerId: 1 } }
+                    ],
+                    as: asName
+                }
+            };
+        } else {
+            return {
+                $lookup: {
+                    from: fromCollection,
                     localField: '_id',
                     foreignField: 'orderId',
-                    as: 'breakfastDiet'
+                    as: asName
                 }
-            },
-            {
-                $lookup: {
-                    from: 'OrderConsumerLunch',
-                    localField: '_id',
-                    foreignField: 'orderId',
-                    as: 'lunchDiet'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'OrderConsumerDinner',
-                    localField: '_id',
-                    foreignField: 'orderId',
-                    as: 'dinnerDiet'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'OrderConsumerLunchBeforeDeadline',
-                    localField: '_id',
-                    foreignField: 'orderId',
-                    as: 'lunchDietBeforeDeadline'
-                }
-            },
-            {
-                $lookup: {
-                    from: 'OrderConsumerDinnerBeforeDeadline',
-                    localField: '_id',
-                    foreignField: 'orderId',
-                    as: 'dinnerDietBeforeDeadline'
-                }
-            },
-            {
-                $project: {
-                    id: '$_id',
-                    status: 1,
-                    standards: {
-                        breakfast: '$breakfastStandard',
-                        lunch: '$lunchStandard',
-                        dinner: '$dinnerStandard'
-                    },
-                    diet: {
-                        breakfast: '$breakfastDiet.consumerId',
-                        lunch: '$lunchDiet.consumerId',
-                        dinner: '$dinnerDiet.consumerId'
-                    },
-                    dietBeforeDeadline: {
-                        lunch: '$lunchDietBeforeDeadline.consumerId',
-                        dinner: '$dinnerDietBeforeDeadline.consumerId'
-                    },
-                    standardsBeforeDeadline: {
-                        lunch: '$lunchStandardBeforeDeadline',
-                        dinner: '$dinnerStandardBeforeDeadline'
-                    },
-                    day: '$deliveryDay',
-                }
-            },
-            {
-                $project: {
-                    id: 1,
-                    status: 1,
-                    standards: 1,
-                    diet: 1,
-                    dietBeforeDeadline: 1,
-                    standardsBeforeDeadline: 1,
-                    day: {
-                        year: '$day.year',
-                        month: '$day.month',
-                        day: '$day.day'
-                    }
+            };
+        }
+    };
+
+    const pipeline = [
+        { $match: match },
+        createLookupStage('OrderConsumerBreakfast', 'breakfastDiet'),
+        createLookupStage('OrderConsumerLunch', 'lunchDiet'),
+        createLookupStage('OrderConsumerDinner', 'dinnerDiet'),
+        createLookupStage('OrderConsumerLunchBeforeDeadline', 'lunchDietBeforeDeadline'),
+        createLookupStage('OrderConsumerDinnerBeforeDeadline', 'dinnerDietBeforeDeadline'),
+        {
+            $project: {
+                id: '$_id',
+                status: 1,
+                standards: {
+                    breakfast: '$breakfastStandard',
+                    lunch: '$lunchStandard',
+                    dinner: '$dinnerStandard'
+                },
+                diet: {
+                    breakfast: '$breakfastDiet.consumerId',
+                    lunch: '$lunchDiet.consumerId',
+                    dinner: '$dinnerDiet.consumerId'
+                },
+                dietBeforeDeadline: {
+                    lunch: '$lunchDietBeforeDeadline.consumerId',
+                    dinner: '$dinnerDietBeforeDeadline.consumerId'
+                },
+                standardsBeforeDeadline: {
+                    lunch: '$lunchStandardBeforeDeadline',
+                    dinner: '$dinnerStandardBeforeDeadline'
+                },
+                day: '$deliveryDay',
+            }
+        },
+        {
+            $project: {
+                id: 1,
+                status: 1,
+                standards: 1,
+                diet: 1,
+                dietBeforeDeadline: 1,
+                standardsBeforeDeadline: 1,
+                day: {
+                    year: '$day.year',
+                    month: '$day.month',
+                    day: '$day.day'
                 }
             }
-        ]
-    });
+        }
+    ];
+
+    const result = await db.order.aggregateRaw({ pipeline });
 
     if (!Array.isArray(result) || result.length === 0) {
         throw new Error('orders:order_not_found');
@@ -111,7 +112,6 @@ const getOrder = async ({ orderId, cateringId }: { orderId: string, cateringId?:
     const rawOrder = result[0] as unknown as OrderForEdit;
 
     return rawOrder;
-
 }
 
 export default getOrder;

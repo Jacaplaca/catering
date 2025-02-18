@@ -8,6 +8,7 @@ const TableContent: FunctionComponent<{
             component?: React.ReactNode;
             key?: string;
         }[];
+        blockClick?: boolean;
         className?: string;
         key: string;
     }[]
@@ -34,16 +35,16 @@ const TableContent: FunctionComponent<{
                 : () => { return }
         };
 
-        const dataToRender = tableData.reduce((acc, { rows, className, key }) => {
+        const dataToRender = tableData.reduce((acc, { rows, className, key, blockClick }) => {
             const isExpanded = ExpandedRow && key === expandedRowId;
             acc.push(<Table.Row
                 key={`row-${key}`}
                 className={`
                 ${className ? className : ''} 
                 ${isExpanded ? 'bg-neutral-50 dark:bg-neutral-800 ' : ''}
-                ${onRowClick ? 'cursor-pointer' : ''}
+                ${(onRowClick && !blockClick) ? 'cursor-pointer' : ''}
                 `}
-                onClick={() => onClick(key)}>
+                onClick={() => blockClick ? () => { return } : onClick(key)}>
                 {rows.filter(filter).map(({ className, component }, index) => {
                     const isLastCell = index === rows.length - 1;
                     return (

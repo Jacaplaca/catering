@@ -7,6 +7,7 @@ import init from '../init';
 import dropDb from '@root/scripts/dropDb';
 import { updateSetting } from '@root/app/server/cache/settings';
 import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+import cliProgress from 'cli-progress';
 
 const superAdminEmail = 'superadmin@example.com';
 const managerEmail = 'manager@example.com';
@@ -23,7 +24,7 @@ const NUM_MANAGERS = 1;
 const NUM_CLIENTS = 1;
 const NUM_DIETICIANS = 2;
 const NUM_KITCHEN = 3;
-const NUM_CONSUMERS = 30;
+const NUM_CONSUMERS = 10;
 const TAGS = 0;
 const CREATE_ORDERS = true;
 
@@ -43,7 +44,16 @@ async function main() {
 
     const passwordHash = await hash(fakePassword, 12);
 
-    // Create SuperAdmin
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const multibar = new cliProgress.MultiBar({
+        format: '{task} |{bar}| {value}/{total}',
+        clearOnComplete: false,
+        hideCursor: true,
+    }, cliProgress.Presets.shades_grey);
+
+    // === Create SuperAdmin ===
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const superAdminBar = multibar.create(NUM_SUPERADMIN, 0, { task: 'SuperAdmin' });
     for (let i = 0; i < NUM_SUPERADMIN; i++) {
         await prisma.user.create({
             data: {
@@ -57,11 +67,11 @@ async function main() {
                 }
             }
         });
-        // console.log('SuperAdmin created:', user);
+        superAdminBar.increment();
     }
+    superAdminBar.stop();
 
     const getUserData = (role: RoleType, email?: string, name?: string) => {
-
         return {
             name: name ? name : faker.person.fullName(),
             email: email ? email : faker.internet.email(),
@@ -70,7 +80,6 @@ async function main() {
             emailVerified: getCurrentTime()
         }
     }
-
 
     const getClientsData = (currentCodes: string[]) => {
         const usedCodes = new Set(currentCodes);
@@ -91,9 +100,9 @@ async function main() {
                     create: getUserData('client', i === 0 ? clientEmail : undefined, i === 0 ? "Client Eastwood" : undefined)
                 },
                 settings: {},
-                name: name,
+                name: i === 0 ? "Client Eastwood" : name,
                 info: {
-                    name: name,
+                    name: i === 0 ? "Client Eastwood" : name,
                     email: faker.datatype.boolean(0.5) ? faker.internet.email() : '',
                     phone: faker.datatype.boolean(0.45) ? faker.phone.number() : '',
                     address: faker.datatype.boolean(0.6) ? faker.location.streetAddress() : '',
@@ -108,10 +117,9 @@ async function main() {
         });
     }
 
-
-    // const currentCodes = currentClients.map(client => client.code);
-
-    // Create Catering and related entities
+    // === Create Catering and related entities ===
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const cateringBar = multibar.create(NUM_CATERINGS, 0, { task: 'Catering' });
     for (let i = 0; i < NUM_CATERINGS; i++) {
         const catering = await prisma.catering.create({
             data: {
@@ -127,12 +135,8 @@ async function main() {
                     create: Array.from({ length: NUM_MANAGERS }).map((_, i) => ({
                         user: {
                             create: getUserData('manager',
-                                i === 0
-                                    ? managerEmail
-                                    : undefined,
-                                i === 0
-                                    ? "Catering Manager"
-                                    : undefined)
+                                i === 0 ? managerEmail : undefined,
+                                i === 0 ? "Catering Manager" : undefined)
                         }
                     }))
                 },
@@ -144,12 +148,8 @@ async function main() {
                         name: faker.company.name(),
                         user: {
                             create: getUserData('dietician',
-                                i === 0
-                                    ? dieticianEmail
-                                    : undefined,
-                                i === 0
-                                    ? "Dietician"
-                                    : undefined)
+                                i === 0 ? dieticianEmail : undefined,
+                                i === 0 ? "Dietician" : undefined)
                         },
                     }))
                 },
@@ -158,12 +158,8 @@ async function main() {
                         name: faker.company.name(),
                         user: {
                             create: getUserData('kitchen',
-                                i === 0
-                                    ? kitchenEmail
-                                    : undefined,
-                                i === 0
-                                    ? "Kitchen"
-                                    : undefined)
+                                i === 0 ? kitchenEmail : undefined,
+                                i === 0 ? "Kitchen" : undefined)
                         },
                     }))
                 },
@@ -171,199 +167,163 @@ async function main() {
                     create: Array.from({ length: TAGS }).map(() => ({
                         name: faker.lorem.word(),
                         type: 'client'
-                    })
-                    )
+                    }))
                 }
             }
         });
+        cateringBar.increment();
 
         const { id: cateringId } = catering;
         const managersUsersId = (await prisma.manager.findMany({
-            where: {
-                cateringId
-            }
+            where: { cateringId }
         })).map(manager => manager.userId).filter(Boolean);
 
         const clientsUsersId = (await prisma.client.findMany({
-            where: {
-                cateringId
-            }
+            where: { cateringId }
         })).map(client => client.userId).filter(Boolean);
 
-        const dieticians = (await prisma.dietician.findMany({
-            where: {
-                cateringId
-            }
-        }));
-
+        const dieticians = await prisma.dietician.findMany({
+            where: { cateringId }
+        });
         const dieticiansUsersId = dieticians.map(dietician => dietician.userId)
             .filter(Boolean);
 
         const kitchensUsersId = (await prisma.kitchen.findMany({
-            where: {
-                cateringId
-            }
+            where: { cateringId }
         })).map(kitchen => kitchen.userId);
 
         const userIds = [...managersUsersId, ...clientsUsersId, ...dieticiansUsersId, ...kitchensUsersId].filter(Boolean);
 
         await prisma.user.updateMany({
-            where: {
-                id: {
-                    in: userIds
-                }
-            },
-            data: {
-                cateringId
-            }
+            where: { id: { in: userIds } },
+            data: { cateringId }
         });
 
+        // Pobierz klientów dla tego cateringu
         const cateringClients = await prisma.client.findMany({
-            where: {
-                cateringId
-            }
+            where: { cateringId }
         });
+
+        // --- Helper function: generate date range ---
+        function generateDateRange(): { year: number, month: number, day: number }[] {
+            const dates: { year: number, month: number, day: number }[] = [];
+            const today = getCurrentTime();
+            today.setHours(0, 0, 0, 0);
+            const past = new Date(today);
+            past.setMonth(today.getMonth() - 30);
+            const future = new Date(today);
+            future.setDate(today.getDate() + 2);
+
+            for (let date = new Date(past); date <= future; date.setDate(date.getDate() + 1)) {
+                if (date.getDay() !== 0 && date.getDay() !== 6) {
+                    dates.push({
+                        year: date.getFullYear(),
+                        month: date.getMonth(),
+                        day: date.getDate()
+                    });
+                }
+            }
+
+            return dates;
+        }
+        const orderDateRange = CREATE_ORDERS ? generateDateRange() : [];
+
+        // Utwórz jeden pasek postępu dla konsumentów i jeden dla zamówień w obrębie tego cateringu
+        const totalConsumers = cateringClients.length * NUM_CONSUMERS;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const consumerBar = multibar.create(totalConsumers, 0, { task: 'Consumers' });
+        const totalOrders = cateringClients.length * orderDateRange.length;
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const orderBar = multibar.create(totalOrders, 0, { task: 'Orders' });
 
         for (const client of cateringClients) {
             const { id: clientId } = client;
 
-            const dieticianIds = dieticians.map(dietician => dietician.id);
-
-            const getUniqueConsumerCode = async (name: string, cateringId: string) => {
+            // --- Helper function: get unique consumer code ---
+            async function getUniqueConsumerCode(name: string, cateringId: string): Promise<string> {
                 let code = makeCode(name);
                 let suffix = 1;
-                let isUnique = false;
-
-                while (!isUnique) {
+                while (true) {
                     const existingConsumer = await prisma.consumer.findFirst({
-                        where: {
-                            cateringId,
-                            code
-                        }
+                        where: { cateringId, code }
                     });
 
                     if (!existingConsumer) {
-                        isUnique = true;
+                        break;
                     } else {
-                        code = `${name.slice(0, 5).toUpperCase()}${suffix}`;
+                        code = `${code.slice(0, 5)}${suffix}`;
                         suffix++;
                     }
                 }
 
                 return code;
-            };
+            }
 
-            for (let i = 0; i < NUM_CONSUMERS; i++) {
-                // dietIterator++;
-                // const diet = faker.datatype.boolean(0.5) ? await prisma.diet.create({
-                //     data: {
-                //         code: dietIterator,
-                //         dieticianId: faker.helpers.arrayElement(dieticianIds),
-                //         cateringId,
-                //         notes: faker.lorem.sentence(),
-                //         description: faker.lorem.sentence()
-                //     }
-                // }) : null;
-
+            // --- Create Consumers for current client ---
+            for (let j = 0; j < NUM_CONSUMERS; j++) {
                 const consumerName = faker.person.fullName();
                 const consumerCode = await getUniqueConsumerCode(consumerName, cateringId);
-
                 const diet = {
                     code: Array.from({ length: faker.number.int({ min: 1, max: 5 }) }, () =>
                         faker.string.alpha({ length: faker.number.int({ min: 4, max: 10 }), casing: 'upper' })
                     ).join(' '),
                     description: faker.lorem.sentence()
-                }
+                };
 
                 await prisma.consumer.create({
                     data: {
                         clientId,
                         cateringId,
-                        dieticianId: faker.helpers.arrayElement(dieticianIds),
+                        dieticianId: faker.helpers.arrayElement(dieticians.map(d => d.id)),
                         name: consumerName,
                         notes: faker.lorem.sentence(),
                         code: consumerCode,
                         diet: faker.datatype.boolean(0.7) ? diet : null
                     }
                 });
-
-                // const { id: consumerId } = consumer;
-                // await prisma.consumer.update({
-                //     where: {
-                //         id: consumerId
-                //     },
-                //     data: {
-                //         dietId: diet?.id
-                //     }
-                // });
+                consumerBar.increment();
             }
 
+            // Pobierz konsumentów z dietą dla aktualnego klienta
             const consumersWithDiets = await prisma.consumer.findMany({
                 where: {
                     cateringId,
                     clientId,
-                    diet: {
-                        isNot: null
-                    }
+                    diet: { isNot: null }
                 }
             });
 
-            function generateDateRange(): { year: number, month: number, day: number }[] {
-                const dates: { year: number, month: number, day: number }[] = [];
-                const today = getCurrentTime();
-                today.setHours(0, 0, 0, 0);
-                const past = new Date(today);
-                past.setMonth(today.getMonth() - 30);
-                const future = new Date(today);
-                future.setDate(today.getDate() + 2);
-
-
-                for (let date = new Date(past); date <= future; date.setDate(date.getDate() + 1)) {
-                    if (date.getDay() !== 0 && date.getDay() !== 6) {
-                        dates.push({
-                            year: date.getFullYear(),
-                            month: date.getMonth(),
-                            day: date.getDate()
-                        });
-                    }
-                }
-
-                return dates;
-
-            }
-
-            const dateRange = CREATE_ORDERS ? generateDateRange() : [];
-
-            for (const deliveryDay of dateRange) {
+            // --- Create Orders for current client ---
+            for (const deliveryDay of orderDateRange) {
                 const deliveryDayDate = new Date(deliveryDay.year, deliveryDay.month, deliveryDay.day);
                 const isInFuture = deliveryDayDate > getCurrentTime();
                 const status = isInFuture
                     ? faker.helpers.arrayElement(['draft', 'in_progress'])
                     : faker.helpers.arrayElement(['draft', 'in_progress', 'completed']);
-
                 const isNotDraft = status !== 'draft';
-
                 const sentToCateringAt = isNotDraft
-                    ? faker.date.between({
-                        from: subDays(deliveryDayDate, 1),
-                        to: deliveryDayDate
-                    })
+                    ? faker.date.between({ from: subDays(deliveryDayDate, 1), to: deliveryDayDate })
                     : undefined;
 
-                const breakfastDiet = faker.helpers.arrayElements(consumersWithDiets.map(consumer => ({ consumerId: consumer.id })), { min: 1, max: consumersWithDiets.length });
+                const breakfastDiet = faker.helpers.arrayElements(
+                    consumersWithDiets.map(consumer => ({ consumerId: consumer.id })),
+                    { min: 1, max: consumersWithDiets.length }
+                );
+                const lunchDietWas = faker.helpers.arrayElements(
+                    consumersWithDiets.map(consumer => ({ consumerId: consumer.id })),
+                    { min: 1, max: consumersWithDiets.length }
+                );
+                const dinnerDietWas = faker.helpers.arrayElements(
+                    consumersWithDiets.map(consumer => ({ consumerId: consumer.id })),
+                    { min: 1, max: consumersWithDiets.length }
+                );
 
-                const lunchDietWas = faker.helpers.arrayElements(consumersWithDiets.map(consumer => ({ consumerId: consumer.id })), { min: 1, max: consumersWithDiets.length });
-                const dinnerDietWas = faker.helpers.arrayElements(consumersWithDiets.map(consumer => ({ consumerId: consumer.id })), { min: 1, max: consumersWithDiets.length });
-
-                const lunchDiet = faker.datatype.boolean(0.5) ? faker.helpers.arrayElements(
-                    lunchDietWas,
-                    { min: Math.ceil(lunchDietWas.length / 2), max: lunchDietWas.length }
-                ) : lunchDietWas;
-
-                const dinnerDiet = faker.datatype.boolean(0.5) ? faker.helpers.arrayElements(
-                    dinnerDietWas,
-                    { min: Math.ceil(dinnerDietWas.length / 2), max: dinnerDietWas.length }
-                ) : dinnerDietWas;
+                const lunchDiet = faker.datatype.boolean(0.5)
+                    ? faker.helpers.arrayElements(lunchDietWas, { min: Math.ceil(lunchDietWas.length / 2), max: lunchDietWas.length })
+                    : lunchDietWas;
+                const dinnerDiet = faker.datatype.boolean(0.5)
+                    ? faker.helpers.arrayElements(dinnerDietWas, { min: Math.ceil(dinnerDietWas.length / 2), max: dinnerDietWas.length })
+                    : dinnerDietWas;
 
                 const lunchStandard = faker.number.int({ min: 13, max: 25 });
                 const dinnerStandard = faker.number.int({ min: 13, max: 25 });
@@ -389,7 +349,6 @@ async function main() {
                         create: dinnerDiet
                     },
                     dinnerDietCount: dinnerDiet.length,
-                    // before deadline start
                     lunchStandardBeforeDeadline,
                     dinnerStandardBeforeDeadline,
                     lunchDietBeforeDeadline: {
@@ -400,41 +359,39 @@ async function main() {
                         create: dinnerDietWas
                     },
                     dinnerDietCountBeforeDeadline: dinnerDietWas.length,
-                    // before deadline end
                     sentToCateringAt,
                 };
                 await prisma.order.create({
                     data: orderToCreate
                 });
+                orderBar.increment();
             }
-
-
         }
+        consumerBar.stop();
+        orderBar.stop();
     }
+    cateringBar.stop();
 
+    // === Create Accounts for each user ===
     const users = await prisma.user.findMany();
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const accountBar = multibar.create(users.length, 0, { task: 'Accounts' });
     for (const user of users) {
-        const { id } = user;
         await prisma.account.create({
             data: {
-                userId: id,
+                userId: user.id,
                 provider: 'credentials',
                 type: 'credentials',
-                providerAccountId: id,
+                providerAccountId: user.id,
             }
         });
+        accountBar.increment();
     }
+    accountBar.stop();
+
+    multibar.stop();
 
     await updateSetting({ group: 'main', name: 'openRegistration', value: false });
-
-    // for (let i = 0; i < TAGS; i++) {
-    //     await prisma.tag.create({
-    //         data: {
-    //             name: faker.lorem.word(),
-    //             type: 'client'
-    //         }
-    //     });
-    // }
 }
 
 const populate = async () => {

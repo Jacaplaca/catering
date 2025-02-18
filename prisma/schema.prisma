@@ -277,6 +277,8 @@ model Consumer {
     lunchOrdersBeforeDeadline OrderConsumerLunchBeforeDeadline[]
     dinnerOrdersBeforeDeadline OrderConsumerDinnerBeforeDeadline[]
 
+    deactivated Boolean @default(false)
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

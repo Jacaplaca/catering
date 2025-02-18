@@ -16,6 +16,8 @@ import PDFDocument from 'pdfkit';
 import processMeals from '@root/app/server/api/routers/specific/libs/processMeals';
 import { db } from '@root/app/server/db';
 import { loadFonts } from '@root/app/lib/loadFonts';
+import dayIdParser from '@root/app/server/api/routers/specific/libs/dayIdParser';
+import returnPdfForFront from '@root/app/server/api/routers/specific/libs/pdf/returnPdfForFront';
 
 const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
     .input(getOrdersPdfValid)
@@ -23,7 +25,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
         const { session: { catering } } = ctx;
         const { dayId, mealType, lang } = input;
 
-        const [year, month, day] = dayId.split('-').map(Number) as [number, number, number];
+        const { year, month, day } = dayIdParser(dayId);
 
         const standardFields = {
             breakfast: "breakfastStandard",
@@ -157,8 +159,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
 
         const headDate = format(deliveryDayDate, "EEEE d MMM yyyy ", { locale: pl });
         const footerDate = format(deliveryDayDate, "d-MM-yyyy ", { locale: pl });
-
-
+        const fileNameDate = format(deliveryDayDate, "yyyy-MM-dd ", { locale: pl });
 
         try {
             const doc = new PDFDocument({
@@ -172,28 +173,13 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
             doc.on('data', (chunk: Buffer) => buffers.push(chunk));
 
             const pdfPromise = new Promise<Buffer>((resolve) => {
-                doc.on('end', () => {
-                    const pdfBuffer = Buffer.concat(buffers);
-                    resolve(pdfBuffer);
-                });
+                doc.on('end', () => resolve(Buffer.concat(buffers)));
             });
-
-            // const response = await axios.get(
-            //     'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf',
-            //     { responseType: 'arraybuffer' }
-            // );
-            // const fontBoldResponse = await axios.get(
-            //     'https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf',
-            //     { responseType: 'arraybuffer' }
-            // );
 
             const fonts = await loadFonts();
 
             doc.registerFont('Roboto', fonts.regular);
             doc.registerFont('Roboto-Bold', fonts.bold);
-
-            // doc.registerFont('Roboto', response.data);
-            // doc.registerFont('Roboto-Bold', fontBoldResponse.data);
 
             doc.font('Roboto-Bold')
                 .fontSize(20)
@@ -308,21 +294,10 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                 doc.y = currentY;
             }
 
-            // Kończymy dokument
             doc.end();
 
-            // Czekamy na kompletne wygenerowanie PDF
-            const pdfBuffer = await pdfPromise;
-
-
-            const base64Pdf = pdfBuffer.toString('base64');
-
-            // Zwracamy kompletny PDF
-            return {
-                base64Pdf,
-                contentType: 'application/pdf',
-                fileName: `${safeFileName(translations[mealType])}_${footerDate}.pdf`
-            };
+            const fileName = `${safeFileName(translations[mealType])}_${fileNameDate}.pdf`
+            return returnPdfForFront({ pdfPromise, fileName });
         } catch (error) {
             console.error('Błąd podczas generowania PDF:', error);
             throw error;

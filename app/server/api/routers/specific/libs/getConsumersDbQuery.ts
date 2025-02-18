@@ -9,7 +9,8 @@ const getConsumerDbQuery = ({
     clientId,
     withNameOnly,
     withDiet,
-    isClient
+    isClient,
+    onlyActiveConsumer
 }: {
     customerSearchValue?: string,
     dietSearchValue?: string,
@@ -19,7 +20,8 @@ const getConsumerDbQuery = ({
     clientId?: string,
     withNameOnly?: boolean,
     withDiet?: boolean,
-    isClient?: boolean
+    isClient?: boolean,
+    onlyActiveConsumer?: boolean
 }) => {
     const orConditions = showColumns?.map(column => ({
 
@@ -30,6 +32,7 @@ const getConsumerDbQuery = ({
         // cateringId?: string;
         "client.deactivated"?: boolean;
         id?: string;
+        deactivated?: { $ne: boolean };
         $or?: Record<string, {
             $regex?: string;
             $options?: string;
@@ -39,6 +42,10 @@ const getConsumerDbQuery = ({
     const query: MatchObject = {
         // cateringId: catering.id
         "client.deactivated": false
+    }
+
+    if (onlyActiveConsumer) {
+        query.deactivated = { $ne: true }
     }
 
     if (id) {
@@ -152,6 +159,7 @@ const getConsumerDbQuery = ({
         diet: 1,
         notes: 1,
         dietician: 1,
+        deactivated: 1,
         createdAt: 1,
     } as Record<string, unknown>;
 

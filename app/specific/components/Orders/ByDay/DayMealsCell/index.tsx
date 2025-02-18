@@ -1,3 +1,4 @@
+import LabelsPdf from '@root/app/specific/components/Orders/ByDay/DayMealsCell/LabelsPdf';
 import OrderPdf from '@root/app/specific/components/Orders/ByDay/DayMealsCell/Pdf';
 import { type MealType } from '@root/types/specific';
 import { type FC } from 'react';
@@ -19,7 +20,10 @@ const DayMealsCell: FC<{ standard: number, diet: number, meal: MealType, dayId: 
             <div className="text-gray-900 dark:text-white text-base font-bold">/</div>
             <MealCount count={diet} />
         </div>
-        <OrderPdf meal={meal} dayId={dayId} />
+        <div className="flex gap-2">
+            <OrderPdf meal={meal} dayId={dayId} />
+            <LabelsPdf meal={meal} dayId={dayId} />
+        </div>
     </div>
 }
 
