@@ -8,7 +8,9 @@ import { getDict } from '@root/app/server/cache/translations';
 export const translationRouter = {
   getLangGroup: publicProcedure
     .input(getTranslationsValidator)
-    .query(async ({ input }) => {
+    .query(async (a) => {
+      // console.log('getLangGroup', a);
+      const { input } = a;
       const { lang, keys, key } = input;
       if (!keys && !key) {
         return {};

@@ -1,3 +1,4 @@
+import Shoot from '@root/app/[lang]/testing/Shoot';
 import makeHref from '@root/app/lib/url/makeHref';
 import PageLayout from '@root/app/partials/PageLayout';
 import { type NextPage } from 'next';
@@ -22,6 +23,7 @@ const Testing: NextPage<{
       }}
       lang={lang}
     >
+      {/* <Shoot /> */}
       test
     </PageLayout>
   );

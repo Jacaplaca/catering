@@ -1,3 +1,4 @@
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 import dbBackup from '@root/app/server/lib/makeBackup/backup';
 import { publicProcedure } from "server/api/trpc";
 import { z } from 'zod';
@@ -14,13 +15,32 @@ export const devRouter = {
         const fileName = await dbBackup();
         return { backupFileName: fileName };
     }),
-    testWithInputs: publicProcedure
+    dbg: publicProcedure
         .input(z.object({
-            a: z.string(),
+            time: z.string(),
         }))
         .query(({ input }) => {
-            return `Hello World! ${input.a}`;
+            console.log(input);
+            const desiredTimeZone = 'Europe/Warsaw';
+            const dateTime = getCurrentTime();
+            return {
+                dateTime,
+                dateTimeString: dateTime.toLocaleString(),
+                dateTimeJson: dateTime.toJSON(),
+                desiredTimeZone,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                myTime: input.time,
+            }
         }),
+    // testWithInputs: publicProcedure
+    //     .input(z.object({
+    //         a: z.string(),
+    //     }))
+    //     .query((request) => {
+    //         const { input } = request;
+    //         console.log('request', request, input);
+    //         return `Hello World!`;
+    //     }),
     // activation: publicProcedure
     //     .mutation(async ({ ctx }) => {
 
