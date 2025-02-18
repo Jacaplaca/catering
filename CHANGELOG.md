@@ -1,3 +1,12 @@
+# [1.3.0](https://github.com/Jacaplaca/catering/compare/v1.2.0...v1.3.0) (2025-02-18)
+
+
+### Features
+
+* introduced pdf stickers generator and consumer deactivation ([e4c4fdc](https://github.com/Jacaplaca/catering/commit/e4c4fdc484d0d18d3b3b681f06dfa1021b5d3609))
+
+
+
 # [1.2.0](https://github.com/Jacaplaca/catering/compare/v1.1.5...v1.2.0) (2025-02-14)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * making orders now are responsive ([5830f91](https://github.com/Jacaplaca/catering/commit/5830f915745c47d63a5e281adef1b81f9db46061))
-
-
-
-## [1.1.2](https://github.com/Jacaplaca/catering/compare/v1.1.1...v1.1.2) (2025-02-06)
-
-
-### Bug Fixes
-
-* consumers without diet code now showing in report ([9a7ff71](https://github.com/Jacaplaca/catering/commit/9a7ff7129a9c5ffb5aaf067e8df4da2eac3b5cbb))
 
 
 
