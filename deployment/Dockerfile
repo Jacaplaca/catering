@@ -96,6 +96,5 @@ EXPOSE ${PORT}
 # CMD ["npm", "run", "dummy"]
 CMD ["npm", "start"]
 # ENTRYPOINT ["sh", "-c", "npm run backup && exec npm start"]
-
 # Update package list and install tzdata if not already installed
 # RUN apt-get update && apt-get install -y tzdata
