@@ -39,6 +39,10 @@ RUN npm run build
 FROM dziewan/t3-app-base:22-bullseye AS runner
 WORKDIR /app
 
+# Set timezone variable and update system time configuration
+ENV TZ=Europe/Warsaw
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV CONTAINER docker
 
@@ -92,3 +96,6 @@ EXPOSE ${PORT}
 # CMD ["npm", "run", "dummy"]
 CMD ["npm", "start"]
 # ENTRYPOINT ["sh", "-c", "npm run backup && exec npm start"]
+
+# Update package list and install tzdata if not already installed
+# RUN apt-get update && apt-get install -y tzdata
