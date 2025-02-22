@@ -1,3 +1,12 @@
+# [1.4.0](https://github.com/Jacaplaca/catering/compare/v1.3.1...v1.4.0) (2025-02-22)
+
+
+### Features
+
+* individual deadline for clients autoOrder label consumer code ([679c003](https://github.com/Jacaplaca/catering/commit/679c0036926e7c3a432344026a1d60a515d3d78d))
+
+
+
 ## [1.3.1](https://github.com/Jacaplaca/catering/compare/v1.3.0...v1.3.1) (2025-02-18)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * Unique constraint failed on the constraint in OrderConsumerBreakfast_orderId_consumerId_key footer ([2833533](https://github.com/Jacaplaca/catering/commit/283353312cbabf3bfed8467c77301d1f33bff9ab))
-
-
-
-## [1.1.4](https://github.com/Jacaplaca/catering/compare/v1.1.3...v1.1.4) (2025-02-10)
-
-
-### Bug Fixes
-
-* current date in one place ([48c55a5](https://github.com/Jacaplaca/catering/commit/48c55a51298834715d181443aff25d70f81eee33))
 
 
 
