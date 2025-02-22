@@ -1,9 +1,10 @@
 import { type UpdateMessageType } from '@root/app/hooks/useMessage';
 import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+import { getNextWorkingDay } from '@root/app/lib/date/getNextWorkingDay';
 import getDeadlinesStatus from '@root/app/specific/lib/getDeadlinesStatus';
+import isWorkingDay from '@root/app/specific/lib/isWorkingDay';
 import { api } from '@root/app/trpc/react';
 import { MealType, type OrderForEdit, type OrdersCustomTable } from '@root/types/specific';
-import { format } from 'date-fns-tz';
 import { type Session } from 'next-auth';
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 
@@ -19,7 +20,7 @@ const defaultDiet = {
     dinner: [],
 } as { breakfast: string[], lunch: string[], dinner: string[] };
 
-const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, clientId }: {
+const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, clientId, addOrderClose }: {
     orderForEdit?: OrderForEdit,
     newOrder: boolean,
     setRows: Dispatch<SetStateAction<OrdersCustomTable[]>>,
@@ -28,6 +29,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
     updateMessage: UpdateMessageType,
     resetMessage: () => void,
     clientId?: string,
+    addOrderClose: () => void,
 }) => {
     const isClient = session?.user.roleId === 'client';
     const utils = api.useUtils();
@@ -37,12 +39,20 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
 
     const [standards, setStandards] = useState(defaultStandards);
     const [diet, setDiet] = useState(defaultDiet);
+    const [hideNewOrder, setHideNewOrder] = useState(false);
+    const [note, setNote] = useState('');
+
+    const updateNote = (value: string) => {
+        setNote(value);
+        resetError();
+    }
 
     useEffect(() => {
         if (orderForEdit) {
             setStandards(orderForEdit.standards);
             setDiet(orderForEdit.diet);
             setDay(orderForEdit.day);
+            setNote(orderForEdit.note);
         }
     }, [orderForEdit]);
 
@@ -54,7 +64,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
     const resetOrder = () => {
         setStandards(orderForEdit?.standards ?? defaultStandards);
         setDiet(orderForEdit?.diet ?? defaultDiet);
-
+        setNote(orderForEdit?.note ?? '');
         // setDay(orderForEdit?.day ?? null);
         resetError();
     }
@@ -93,9 +103,24 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
         }
     }
 
-    const { data: cateringSettings } = api.specific.settings.get.useQuery();
+    const { data: cateringSettings } = api.specific.settings.deadlines.useQuery({ clientId: clientId ?? '' }, { enabled: isClient && !!clientId });
     const { data: orderedDates } = api.specific.order.orderedDates.useQuery({ clientId: clientId ?? '' }, { enabled: isClient && !!clientId });
     const { data: lastOrder } = api.specific.order.last.useQuery({ clientId: clientId ?? '' }, { enabled: newOrder && isClient && !!clientId });
+
+    const getNextDay = () => {
+        const today = getCurrentTime();
+        today.setHours(0, 0, 0, 0);
+        const currentDate = new Date(today);
+
+        if (!cateringSettings?.timeZone) return;
+
+        const nextWorkingDay = getNextWorkingDay(currentDate, cateringSettings?.timeZone);
+        return {
+            year: nextWorkingDay.getFullYear(),
+            month: nextWorkingDay.getMonth(),
+            day: nextWorkingDay.getDate()
+        }
+    }
 
     useEffect(() => {
         if (lastOrder && newOrder) {
@@ -105,40 +130,61 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
         }
     }, [lastOrder, newOrder]);
 
-    const getNextAvailableDate = () => {
-        const today = getCurrentTime();
-        today.setHours(0, 0, 0, 0);
-        const currentDate = new Date(today);
-
-        if (cateringSettings && orderedDates) {
-
-            while (true) {
-                const formattedDate = format(currentDate, 'yyyy-MM-dd');
-                if (!orderedDates.includes(formattedDate)) {
-                    const day = {
-                        year: currentDate.getFullYear(),
-                        month: currentDate.getMonth(),
-                        day: currentDate.getDate()
-                    }
-                    const { first: firstDeadline } = getDeadlinesStatus({
-                        settings: cateringSettings,
-                        day
-                    });
-
-                    if (firstDeadline.canOrder) {
-                        setDay(day);
-                        break;
-                    }
-                }
-                currentDate.setDate(currentDate.getDate() + 1);
+    useEffect(() => {
+        if (orderedDates && cateringSettings?.timeZone) {
+            const nextDay = getNextDay();
+            const currentTime = getCurrentTime();
+            const isNowWorkingDay = isWorkingDay(currentTime, cateringSettings?.timeZone);
+            console.log({ isNowWorkingDay });
+            if (!isNowWorkingDay) {
+                setHideNewOrder(true);
+            } else if (nextDay) {
+                const nextDayString = `${nextDay.year}-${String(nextDay.month + 1).padStart(2, '0')}-${String(nextDay.day).padStart(2, '0')}`;
+                // console.log({ nextDayString });
+                console.log({ nextDayString, orderedDates });
+                setHideNewOrder(orderedDates.includes(nextDayString));
+            } else {
+                setHideNewOrder(false);
             }
-        } else {
-            setDay({
-                year: currentDate.getFullYear(),
-                month: currentDate.getMonth(),
-                day: currentDate.getDate()
-            });
         }
+    }, [orderedDates, cateringSettings?.timeZone]);
+
+    const getNextAvailableDate = () => {
+        const nextDay = getNextDay();
+
+        if (!nextDay) { return }
+
+        setDay(nextDay);
+
+        // if (cateringSettings && orderedDates) {
+
+        //     while (true) {
+        //         const formattedDate = format(currentDate, 'yyyy-MM-dd');
+        //         if (!orderedDates.includes(formattedDate)) {
+        //             const day = {
+        //                 year: currentDate.getFullYear(),
+        //                 month: currentDate.getMonth(),
+        //                 day: currentDate.getDate()
+        //             }
+        //             const { first: firstDeadline } = getDeadlinesStatus({
+        //                 settings: cateringSettings,
+        //                 day
+        //             });
+
+        //             if (firstDeadline.canOrder) {
+        //                 setDay(day);
+        //                 break;
+        //             }
+        //         }
+        //         currentDate.setDate(currentDate.getDate() + 1);
+        //     }
+        // } else {
+        //     setDay({
+        //         year: currentDate.getFullYear(),
+        //         month: currentDate.getMonth(),
+        //         day: currentDate.getDate()
+        //     });
+        // }
     }
 
     const clearOrder = () => {
@@ -185,10 +231,12 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
             }
             updateMessage('saved');
             resetError();
+            addOrderClose();
         },
 
         onError: (error) => {
             setError(error.message);
+            addOrderClose();
         },
     });
 
@@ -229,6 +277,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
         onSubmitPlace,
         placing: place.isPending,
         error,
+        hideNewOrder,
         orderedDates,
         clearOrder,
         consumerPicker: {
@@ -237,6 +286,8 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
             close: () => setConsumersPickerOpen(null),
         },
         lastOrder,
+        note,
+        updateNote,
     }
 
 

@@ -59,9 +59,14 @@ const InputStandard = forwardRef<HTMLInputElement, InputStandardProps>((
 
     const { value: showPassword, toggle: handleShowPassword } = useBoolean(false)
 
+    // Ulepszony onFocus, który przy typie "number" zaznacza cały tekst
+    const onFocusHandler = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        if (type === "number") {
+            e.target.select();
+        }
+        if (focus) focus(true)
+    }
 
-    // dark:placeholder-gray-400  placeholder-gray-500
-    const onFocus = () => focus && focus(true)
     const onBlur = () => focus && focus(false)
     const onMouseLeave = () => mouseLeave && mouseLeave()
 
@@ -76,10 +81,9 @@ const InputStandard = forwardRef<HTMLInputElement, InputStandardProps>((
         name,
         id,
         ref,
-        // style: { animation: 'opacityDelay 0.5s forwards' },
         value,
         onChange,
-        onFocus,
+        onFocus: onFocusHandler,
         onBlur,
         onMouseLeave,
         className,
@@ -109,22 +113,13 @@ const InputStandard = forwardRef<HTMLInputElement, InputStandardProps>((
                     <div className="flex justify-between">
 
                         <InputStyleProvider>
-                            {/* <div className={`w-full ${isLoading ? 'animate-pulse' : ""}`}> */}
-                            {/* {label ? <div
-                        className='mb-1'
-                    ><Label label={label} forHtml={id} /></div> : <div />} */}
                             <InputWithStyle
                                 type={showPassword ? "text" : type}
                                 accept={accept}
                                 autoComplete={autoComplete}
                                 defaultValue={defaultValue}
                                 {...props}
-                            // autoComplete='off'
-                            // autoComplete="new-password"
-
-                            // ref={ref}
                             />
-                            {/* </div> */}
                         </InputStyleProvider>
                         <button
                             className="flex items-center justify-center h-10 w-10 rounded-md bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"

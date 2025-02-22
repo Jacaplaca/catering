@@ -90,6 +90,7 @@ const labelsPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                         status: 1,
                         diet: 1,
                         deliveryDay: 1,
+                        note: 1,
                         sentToCateringAt: 1,
                         createdAt: 1,
                         updatedAt: 1
@@ -129,12 +130,12 @@ const labelsPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
             const labelsData = dayData.flatMap(order =>
                 order.diet.map(item => {
                     const clientCode = order.client.info.code ?? '';
-                    const consumerName = item.consumer.name ?? '';
+                    const consumerCode = item.consumer.code ?? '';
                     const dietCode = item.consumer.diet?.code ?? '';
                     const dietDescription = item.consumer.diet?.description ?? '';
                     return {
                         clientCode,
-                        consumerName,
+                        consumerCode,
                         dietCode,
                         dietDescription
                     };
@@ -183,7 +184,7 @@ const labelsPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                 // label.consumerName = 'Melisa Wolska-Wojciechowskaasdfsadfasdfasdfsdf asdfasdfasdf';
                 // label.dietCode = 'WEGDFFSDF';
                 // label.dietDescription = 'al;skdjf asalsdkjf lksjdf;lksdl;fkasjdlfkasjdflaksdjflaskdjf asldkfjas; alsdkfjas dlfkasjdlfaksjdflaskdjfasldkfjasld asd;flkasjdflk alskdjfl;askdfjlasdf';
-                const firstLine = `${label.clientCode} - ${label.consumerName}`;
+                const firstLine = `${label.clientCode} - ${label.consumerCode}`;
                 const secondLine = `${label.dietCode}${label.dietCode && label.dietDescription.length ? ":" : ""} ${label.dietDescription}`;
 
                 // Zdefiniuj zmienne z rozmiarem czcionki

@@ -4,6 +4,7 @@ import { type z } from 'zod';
 import { type Context, createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import getDeadlinesStatus from '@root/app/specific/lib/getDeadlinesStatus';
 import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+import getClientSettings from '@root/app/server/api/routers/specific/libs/getUserSettings';
 
 const save = async ({ ctx, input, status }: {
     ctx: Context,
@@ -12,15 +13,21 @@ const save = async ({ ctx, input, status }: {
 }) => {
     const { db, session } = ctx;
 
-    const { catering } = session;
+    const { catering, user } = session;
     const { day, diet, standards, clientId } = input;
+
+    const settings = await getClientSettings({
+        clientId,
+        userId: user.id,
+        cateringSettings: catering.settings,
+    });
 
     const {
         first: firstDeadline,
         isBeforeFirst,
         isBetween,
         isAfterSecond,
-    } = getDeadlinesStatus({ settings: catering.settings, day });
+    } = getDeadlinesStatus({ settings, day });
 
     if (firstDeadline.isNonWorkingDay) {
         throw new Error("orders:non_working_day");

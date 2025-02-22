@@ -80,6 +80,24 @@ const useClientInputs = () => {
             isHorizontal: true
         },
         {
+            label: 'clients:info.firstOrderDeadline_column',
+            name: 'firstOrderDeadline',
+            placeholder: '--:--',
+            type: 'time',
+            message: form.formState.errors.firstOrderDeadline?.message,
+            isHorizontal: true,
+            // labelWidth
+        },
+        {
+            label: 'clients:info.secondOrderDeadline_column',
+            name: 'secondOrderDeadline',
+            placeholder: '--:--',
+            type: 'time',
+            message: form.formState.errors.secondOrderDeadline?.message,
+            isHorizontal: true,
+            // labelWidth
+        },
+        {
             // label: 'clients:info.notes_column',
             name: 'notes',
             placeholder: 'clients:info.notes_placeholder',

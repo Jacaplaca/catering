@@ -63,6 +63,14 @@ const useClientColumns = ({
             title: 'clients:info.country_column',
             sort: () => sort('info.country')
         },
+        {
+            key: "info.firstOrderDeadline",
+            title: 'clients:info.firstOrderDeadline_column',
+        },
+        {
+            key: "info.secondOrderDeadline",
+            title: 'clients:info.secondOrderDeadline_column',
+        },
         // {
         //     key: "settings.lastOrderTime",
         //     title: 'clients:settings.lastOrderTime_column',

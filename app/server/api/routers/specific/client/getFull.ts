@@ -5,11 +5,13 @@ import { getClientValidator } from '@root/app/validators/specific/client';
 
 const getFull = createCateringProcedure([RoleType.manager])
     .input(getClientValidator)
-    .query(({ input, ctx }) => {
-        const { session: { user: doer } } = ctx;
+    .query(async ({ input, ctx }) => {
+        const { session: { user: doer, catering } } = ctx;
+        const { settings } = catering;
+        const { firstOrderDeadline, secondOrderDeadline } = settings;
         const { id } = input;
 
-        return db.client.findUnique({
+        const client = await db.client.findUnique({
             where: { id, cateringId: doer.cateringId },
             include: {
                 tags: {
@@ -28,6 +30,18 @@ const getFull = createCateringProcedure([RoleType.manager])
                 }
             },
         });
+
+        if (client) {
+            client.info.firstOrderDeadline = client.info.firstOrderDeadline
+                ? client.info.firstOrderDeadline
+                : firstOrderDeadline;
+            client.info.secondOrderDeadline = client.info.secondOrderDeadline
+                ? client.info.secondOrderDeadline
+                : secondOrderDeadline;
+            return client;
+        }
+
+        return null;
     });
 
 export default getFull;

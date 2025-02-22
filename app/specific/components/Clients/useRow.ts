@@ -61,6 +61,8 @@ const useClientRow = ({
         contactPerson: '',
         notes: '',
         tags: [],
+        firstOrderDeadline: '',
+        secondOrderDeadline: '',
     };
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -83,6 +85,8 @@ const useClientRow = ({
                 contactPerson: clientData?.info.contactPerson ?? '',
                 notes: clientData?.info.notes ?? '',
                 tags: clientData?.tags.map((tag) => tag.tag.name) ?? [],
+                firstOrderDeadline: clientData?.info.firstOrderDeadline ?? '',
+                secondOrderDeadline: clientData?.info.secondOrderDeadline ?? '',
             };
             form.reset(client);
         }

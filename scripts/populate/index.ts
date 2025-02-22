@@ -21,10 +21,10 @@ const prisma = new PrismaClient();
 const NUM_SUPERADMIN = 1;
 const NUM_CATERINGS = 1;
 const NUM_MANAGERS = 1;
-const NUM_CLIENTS = 1;
+const NUM_CLIENTS = 20;
 const NUM_DIETICIANS = 2;
 const NUM_KITCHEN = 3;
-const NUM_CONSUMERS = 10;
+const NUM_CONSUMERS = 30;
 const TAGS = 0;
 const CREATE_ORDERS = true;
 
@@ -210,9 +210,9 @@ async function main() {
             const today = getCurrentTime();
             today.setHours(0, 0, 0, 0);
             const past = new Date(today);
-            past.setMonth(today.getMonth() - 30);
+            past.setMonth(today.getMonth() - 2);
             const future = new Date(today);
-            future.setDate(today.getDate() + 2);
+            future.setDate(today.getDate() + 10);
 
             for (let date = new Date(past); date <= future; date.setDate(date.getDate() + 1)) {
                 if (date.getDay() !== 0 && date.getDay() !== 6) {
@@ -299,7 +299,7 @@ async function main() {
                 const isInFuture = deliveryDayDate > getCurrentTime();
                 const status = isInFuture
                     ? faker.helpers.arrayElement(['draft', 'in_progress'])
-                    : faker.helpers.arrayElement(['draft', 'in_progress', 'completed']);
+                    : faker.helpers.arrayElement(['in_progress', 'draft']);
                 const isNotDraft = status !== 'draft';
                 const sentToCateringAt = isNotDraft
                     ? faker.date.between({ from: subDays(deliveryDayDate, 1), to: deliveryDayDate })
@@ -360,6 +360,7 @@ async function main() {
                     },
                     dinnerDietCountBeforeDeadline: dinnerDietWas.length,
                     sentToCateringAt,
+                    note: faker.lorem.sentence()
                 };
                 await prisma.order.create({
                     data: orderToCreate

@@ -38,6 +38,8 @@ export const clientEditValidator = z.object({
     contactPerson: z.string().optional(),
     notes: z.string().optional(),
     tags: z.array(z.string()),
+    firstOrderDeadline: z.string().optional(),
+    secondOrderDeadline: z.string().optional(),
 });
 
 export const getClientValidator = z.object({

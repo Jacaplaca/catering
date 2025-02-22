@@ -6,8 +6,9 @@ const edit = createCateringProcedure([RoleType.manager])
     .input(clientEditValidator)
     .mutation(async ({ ctx, input }) => {
         const { db, session } = ctx
-        const { id, name, email, address, city, contactPerson, country, notes, phone, zip, tags, code } = input;
+        const { id, name, email, address, city, contactPerson, country, notes, phone, zip, tags, code, firstOrderDeadline, secondOrderDeadline } = input;
         const { cateringId } = session.user;
+        const { settings } = session.catering
 
         if (!cateringId) {
             throw new Error("Catering ID is missing");
@@ -86,15 +87,34 @@ const edit = createCateringProcedure([RoleType.manager])
             }
         }
 
+        const info = {
+            name, email, address, city, contactPerson, country, notes, phone, zip,
+            code: code ? code.trim().toUpperCase() : undefined,
+            firstOrderDeadline: "",
+            secondOrderDeadline: ""
+        };
+
+        if (firstOrderDeadline && firstOrderDeadline !== settings.firstOrderDeadline) {
+            info.firstOrderDeadline = firstOrderDeadline;
+        }
+
+        if (firstOrderDeadline === settings.firstOrderDeadline) {
+            info.firstOrderDeadline = "";
+        }
+
+        if (secondOrderDeadline && secondOrderDeadline !== settings.secondOrderDeadline) {
+            info.secondOrderDeadline = secondOrderDeadline;
+        }
+
+        if (secondOrderDeadline === settings.secondOrderDeadline) {
+            info.secondOrderDeadline = "";
+        }
+
         return db.client.update({
             where: { id, cateringId },
             data: {
                 info: {
-                    update:
-                    {
-                        name, email, address, city, contactPerson, country, notes, phone, zip,
-                        code: code ? code.trim().toUpperCase() : undefined
-                    }
+                    update: info
                 }
             }
         });

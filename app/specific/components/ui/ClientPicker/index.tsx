@@ -2,6 +2,11 @@ import makeHref from '@root/app/lib/url/makeHref';
 import AddClientAndPick from '@root/app/specific/components/ui/ClientPicker/AddAndPick';
 import { api } from '@root/app/trpc/server';
 import { redirect } from 'next/navigation';
+// import dynamic from 'next/dynamic';
+import Clock from './Clock';
+
+// Dynamically import the Clock component as a client-side component
+// const Clock = dynamic(() => import('./Clock'), { ssr: false });
 
 const getManagerClientsProfiles = async () => {
     return await api.user.clients()
@@ -25,7 +30,7 @@ const ClientPickerWrapper = async ({ lang, searchParams, pageName, dictionary }:
         return null;
     }
 
-    return <div className='mb-4'>
+    return <div className='mb-4 flex gap-2 items-center justify-between'>
         <AddClientAndPick
             clients={clients}
             // updateSearchParams={updateSearchParams}
@@ -34,6 +39,10 @@ const ClientPickerWrapper = async ({ lang, searchParams, pageName, dictionary }:
             lang={lang}
             dictionary={dictionary}
         />
+        <div className='px-2'>
+
+            <Clock />
+        </div>
     </div>
 }
 

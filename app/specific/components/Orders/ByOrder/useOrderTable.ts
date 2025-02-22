@@ -89,6 +89,7 @@ const useOrderTable = ({
     }, [page, limit, searchValue]);
 
     const order = useOrder({
+        addOrderClose,
         orderForEdit: rowClick.orderForEdit,
         newOrder: isAddOrderOpen,
         setRows,

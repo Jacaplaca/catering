@@ -91,7 +91,7 @@ const AddClientAndPick: FunctionComponent<{
     }
 
     return (
-        <div className='flex flex-col sm:flex-row gap-2 sm:gap-3 z-50'>
+        <div className='flex flex-col sm:flex-row gap-2 sm:gap-3'>
             {clients.length > 1 && <RemoveButton />}
             {clients.length > 0 && (
                 <div className='w-full sm:w-72'>

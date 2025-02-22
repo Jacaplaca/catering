@@ -7,6 +7,7 @@ import { format } from 'date-fns-tz';
 import Deadline from '@root/app/specific/components/Orders/ByOrder/Order/Deadline';
 import getDeadlinesStatus from '@root/app/specific/lib/getDeadlinesStatus';
 import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+import { getNextWorkingDay } from '@root/app/lib/date/getNextWorkingDay';
 
 registerLocale('pl', pl);
 
@@ -38,7 +39,7 @@ const OrderDatePicker: FC = () => {
         }
     } = useOrderTableContext();
 
-    if (!day) return null;
+    if (!day || !cateringSettings?.timeZone) return null;
 
     const dayDate = day && new Date(day.year, day.month, day.day);
     const dayDateString = format(dayDate, 'yyyy-MM-dd');
@@ -52,8 +53,8 @@ const OrderDatePicker: FC = () => {
         }
     };
     const minDate = getCurrentTime();
-    const maxDate = getCurrentTime();
-    maxDate.setDate(maxDate.getDate() + 14);
+    const maxDate = getNextWorkingDay(new Date(), cateringSettings?.timeZone);
+    // maxDate.setDate(maxDate.getDate() + 14);
     const blockedDays = orderedDates ?? [];
 
 

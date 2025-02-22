@@ -170,6 +170,7 @@ export type OrderForEdit = {
         month: number;
         day: number;
     };
+    note: string;
 };
 
 export type ClientFilesCustomTable = {

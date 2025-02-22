@@ -15,7 +15,7 @@ const TableContent: FunctionComponent<{
     className?: string;
     show?: string[];
     onRowClick?: (key: string) => void;
-    ExpandedRow?: React.ComponentType;
+    ExpandedRow?: React.ComponentType | null;
     expandedRowId?: string | null;
 }> = ({
     tableData,

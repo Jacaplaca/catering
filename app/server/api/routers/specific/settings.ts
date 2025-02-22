@@ -1,6 +1,7 @@
 import { RoleType } from '@prisma/client';
+import getClientSettings from '@root/app/server/api/routers/specific/libs/getUserSettings';
 import checkIfHasFinishedSettings from '@root/app/server/api/routers/specific/libs/hasFinishedSettings';
-import { createCateringNotSettingsProcedure } from '@root/app/server/api/specific/trpc';
+import { createCateringNotSettingsProcedure, createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { createRoleProcedure, publicProcedure } from '@root/app/server/api/trpc';
 import { getSettingsGroup } from '@root/app/server/cache/settings';
 import { clientSettingsValidator, dieticianSettingsValidator, managerSettingsValidator, getClientSettingsValidator } from '@root/app/validators/specific/settings';
@@ -172,6 +173,24 @@ const getCateringSettings = publicProcedure
         return personalization;
     });
 
+const deadlines = createCateringProcedure([RoleType.client])
+    .input(getClientSettingsValidator)
+    .query(async ({ ctx, input }) => {
+        const { session } = ctx;
+        const { user, catering } = session;
+        const { clientId } = input;
+
+        if (!clientId) {
+            throw new Error('Client not found');
+        }
+
+        return getClientSettings({
+            clientId,
+            userId: user.id,
+            cateringSettings: catering.settings,
+        });
+    });
+
 const settingsRouter = {
     getForManager: managerSettings,
     getForClient: clientSettings,
@@ -181,6 +200,7 @@ const settingsRouter = {
     updateByDietician: updateDieticianSettings,
     hasFinished,
     get: getCateringSettings,
+    deadlines,
 };
 
 export default settingsRouter;

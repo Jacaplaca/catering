@@ -24,6 +24,7 @@ import TableToast from '@root/app/_components/Table/Toast';
 import OrderExpandedRow from '@root/app/specific/components/Orders/ByOrder/ExpandedRow';
 import useBreakpoint from '@root/app/hooks/useBreakpoint';
 import { useBoolean } from 'usehooks-ts';
+import OrderEditModal from '@root/app/specific/components/Orders/ByOrder/OrderEditModal/Modal';
 
 const OrdersTable: FunctionComponent = () => {
 
@@ -50,6 +51,9 @@ const OrdersTable: FunctionComponent = () => {
             status: { statusForFilter, chooseStatus },
             tags: { updateTagId },
         },
+        order: {
+            hideNewOrder
+        },
         message
     } = useOrderTableContext();
 
@@ -57,13 +61,15 @@ const OrdersTable: FunctionComponent = () => {
 
     const breakpoint = useBreakpoint();
 
+    // console.log({ orderedDates, lastOrder });
+
     useEffect(() => {
-        if ((breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') && isAddOrderOpen) {
+        if ((breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') && (isAddOrderOpen || expandedRowId)) {
             hideTable();
         } else {
             showTable();
         }
-    }, [breakpoint, isAddOrderOpen, hideTable, showTable]);
+    }, [breakpoint, isAddOrderOpen, expandedRowId, hideTable, showTable]);
 
     const clickable = true;
 
@@ -85,6 +91,10 @@ const OrdersTable: FunctionComponent = () => {
                 isOpen={isAddOrderOpen}
                 closeModal={addOrderClose}
             />}
+            {isClient && <OrderEditModal
+                isOpen={!!expandedRowId}
+                closeModal={() => onRowClick(null)}
+            />}
             <TableWrapper>
                 <TableHeader
                     // search={search}
@@ -97,6 +107,7 @@ const OrdersTable: FunctionComponent = () => {
                         icon='fa-solid fa-truck'
                         id={t(dictionary, 'orders:create_order')}
                         ariaLabel={t(dictionary, 'orders:create_order')}
+                        disabled={hideNewOrder}
                     // className='items-start sm:items-center'
                     >{t(dictionary, 'orders:create_order')}</MyButton> : null}
                 </TableHeader>
@@ -152,8 +163,8 @@ const OrdersTable: FunctionComponent = () => {
                         key={isFetching ? 'skeleton' : 'table'}
                         show={showColumns}
                         onRowClick={clickable ? onRowClick : undefined}
-                        expandedRowId={expandedRowId}
-                        ExpandedRow={OrderExpandedRow}
+                        expandedRowId={isManagerOrKitchen ? expandedRowId : null}
+                        ExpandedRow={isManagerOrKitchen ? OrderExpandedRow : null}
                     />
                 </Table>}
                 {isTableShown && <TableFooter

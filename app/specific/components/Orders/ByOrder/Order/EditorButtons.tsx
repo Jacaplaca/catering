@@ -21,8 +21,10 @@ const OrderEditorButtons: FC = () => {
         }
     } = useOrderTableContext();
 
-    const canSaveDraft = orderForEdit?.status !== OrderStatus.in_progress
-        && orderForEdit?.status !== OrderStatus.completed;
+    //  We agree that we no longer need to save draft
+    // const canSaveDraft = orderForEdit?.status !== OrderStatus.in_progress
+    //     && orderForEdit?.status !== OrderStatus.completed;
+    const canSaveDraft = false;
 
     const canEditInProgress = orderForEdit?.status === OrderStatus.in_progress;
     const canSaveOrder = orderForEdit?.status !== OrderStatus.completed && orderForEdit?.status !== OrderStatus.in_progress;
@@ -49,7 +51,7 @@ const OrderEditorButtons: FC = () => {
         </Tooltip> : <div />}
         {(canEditInProgress || canSaveOrder) ? <div className='w-full sm:w-auto'>
             <Buttons
-                submitLabel={translate(dictionary, canSaveOrder ? 'orders:send_button' : 'orders:edit_order_button_label')}
+                submitLabel={translate(dictionary, canSaveOrder ? 'orders:send_button' : 'orders:edit_order_button')}
                 onSubmit={onSubmitPlace}
                 submitLoading={placing}
                 cancelLabel={translate(dictionary, 'shared:reset')}

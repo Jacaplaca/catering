@@ -97,6 +97,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                         standard: 1,
                         diet: 1,
                         deliveryDay: 1,
+                        note: 1,
                         sentToCateringAt: 1,
                         createdAt: 1,
                         updatedAt: 1
@@ -109,6 +110,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
             status: OrderStatus;
             sentToCateringAt: { $date: Date };
             standard: number;
+            note: string;
             diet: (OrderConsumerBreakfast & OrderMealPopulated)[];
         }[]
 
@@ -116,6 +118,14 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
             acc += standard;
             return acc;
         }, 0);
+
+        const notes = dayData.reduce((acc, { note, client }) => {
+            const code = client?.info?.code;
+            if (code) {
+                acc[code] = note;
+            }
+            return acc;
+        }, {} as Record<string, string>);
 
         const standardObject = dayData.reduce((acc, { client, standard }) => {
             const code = client?.info?.code;
@@ -255,15 +265,17 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
                     align: 'center'
                 });
 
-            Object.entries(diet).filter(([_, orders]) => orders.length > 0).forEach(([clientCode, orders]) => {
+            Object.entries(diet).filter(([_, dietMeals]) => dietMeals.length > 0).forEach(([clientCode, dietMeals]) => {
                 doc.moveDown()
                     .fontSize(12)
                     .font('Roboto-Bold')
                     .text(clientCode, 50)
                     .font('Roboto');
 
-                orders.forEach(order => {
-                    doc.text(`${order.consumerCode}: ${order.diet.code}`, 50);
+                doc.text(notes[clientCode] ?? '', 50);
+
+                dietMeals.forEach(dietMeal => {
+                    doc.text(`${dietMeal.consumerCode}: ${dietMeal.diet.code}`, 50);
                 });
             });
 

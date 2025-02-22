@@ -129,6 +129,18 @@ const useClientDataGrid = ({
                         fragment={searchValue} />,
                     key: 'info.country'
                 },
+                {
+                    component: <HighlightText
+                        text={info?.firstOrderDeadline}
+                        fragment={searchValue} />,
+                    key: 'info.firstOrderDeadline'
+                },
+                {
+                    component: <HighlightText
+                        text={info?.secondOrderDeadline}
+                        fragment={searchValue} />,
+                    key: 'info.secondOrderDeadline'
+                },
                 // {
                 //     component: settings?.lastOrderTime
                 //         ? <div className='flex gap-2 items-center justify-start'>

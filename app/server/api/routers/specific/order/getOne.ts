@@ -176,7 +176,7 @@ const last = createCateringProcedure([RoleType.client])
             where: {
                 cateringId,
                 clientId,
-                status: OrderStatus.completed,
+                status: { not: OrderStatus.draft },
                 OR: [
                     { deliveryDay: { is: { year: { lt: currentYear } } } },
                     {
