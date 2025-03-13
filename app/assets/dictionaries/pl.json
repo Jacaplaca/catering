@@ -92,7 +92,8 @@
     "error_email_not_verified": "To konto nie zostało zweryfikowane. Proszę sprawdź swój email w celu znalezienia linku weryfikacyjnego.",
     "sign_in_button": "Zaloguj się",
     "verified_message": "Konto zostało zweryfikowane! Możesz się teraz zalogować.",
-    "token_not_valid": "Link jest nieprawidłowy lub wygasł!"
+    "token_not_valid": "Link jest nieprawidłowy lub wygasł!",
+    "generic_error": "Login lub hasło nie pasują lub użytkownik nie kliknął w link weryfikacyjny."
   },
   "sign-up": {
     "sign_up_with_google": "Zarejestruj się przez Google",

@@ -5,6 +5,7 @@ import SuperAdmin from '@root/app/_components/Dashboard/SuperAdmin';
 // import translate from '@root/app/lib/lang/translate';
 import ClientSettings from '@root/app/specific/components/Settings/Client';
 import DieticianSettings from '@root/app/specific/components/Settings/Dietician';
+import KitchenSettings from '@root/app/specific/components/Settings/Kitchen';
 import ManagerSettings from '@root/app/specific/components/Settings/Manager';
 import { type FunctionComponent } from 'react';
 
@@ -27,6 +28,8 @@ const renderSettingsComponent = ({
             return <ClientSettings dictionary={dictionary} clientId={clientId} />;
         case 'dietician':
             return <DieticianSettings dictionary={dictionary} />;
+        case 'kitchen':
+            return <KitchenSettings dictionary={dictionary} />;
         default:
             return null;
     }

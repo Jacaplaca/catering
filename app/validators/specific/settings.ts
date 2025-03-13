@@ -21,6 +21,10 @@ export const dieticianSettingsValidator = z.object({
     name: z.string().min(4, "4")
 });
 
+export const kitchenSettingsValidator = z.object({
+    name: z.string().min(4, "4")
+});
+
 export const getClientSettingsValidator = z.object({
     clientId: z.string().optional()
 });

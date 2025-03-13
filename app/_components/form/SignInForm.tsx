@@ -65,17 +65,18 @@ const SignInForm: FunctionComponent<{
     })
 
     if (singInData?.error) {
-      switch (singInData?.error) {
-        case 'CredentialsSignin':
-          setError({ message: translate(dictionary, "sign-in:error_credentials"), type: 'error' })
-          break;
-        case "emailNotVerified":
-          setError({ message: translate(dictionary, 'sign-in:error_email_not_verified'), type: "warning" })
-          break;
-        default:
-          setError({ message: translate(dictionary, singInData?.error), type: 'error' })
-          break;
-      }
+      // switch (singInData?.error) {
+      //   case 'CredentialsSignin':
+      //     setError({ message: translate(dictionary, "sign-in:error_credentials"), type: 'error' })
+      //     break;
+      //   case "emailNotVerified":
+      //     setError({ message: translate(dictionary, 'sign-in:error_email_not_verified'), type: "warning" })
+      //     break;
+      //   default:
+      //     setError({ message: translate(dictionary, singInData?.error), type: 'error' })
+      //     break;
+      // }
+      setError({ message: translate(dictionary, 'sign-in:generic_error'), type: 'error' })
       setIsLoading(false)
     } else {
       window.location.href = redirectUrl === "/" ? makeHref({ lang, page: 'dashboard' }, true) : redirectUrl

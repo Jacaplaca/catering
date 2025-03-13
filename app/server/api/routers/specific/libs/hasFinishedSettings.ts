@@ -32,6 +32,13 @@ const hasFinishedSettings = async ({
                 }
             });
             return Boolean(dietician?.name);
+        case 'kitchen':
+            const kitchen = await db.kitchen.findUnique({
+                where: {
+                    userId: userId,
+                }
+            });
+            return Boolean(kitchen?.name);
         default:
             return true;
     }

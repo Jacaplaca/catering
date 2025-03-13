@@ -4,7 +4,7 @@ import checkIfHasFinishedSettings from '@root/app/server/api/routers/specific/li
 import { createCateringNotSettingsProcedure, createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { createRoleProcedure, publicProcedure } from '@root/app/server/api/trpc';
 import { getSettingsGroup } from '@root/app/server/cache/settings';
-import { clientSettingsValidator, dieticianSettingsValidator, managerSettingsValidator, getClientSettingsValidator } from '@root/app/validators/specific/settings';
+import { clientSettingsValidator, dieticianSettingsValidator, managerSettingsValidator, getClientSettingsValidator, kitchenSettingsValidator } from '@root/app/validators/specific/settings';
 
 const managerSettings = createCateringNotSettingsProcedure([RoleType.manager])
     .query(({ ctx }) => {
@@ -49,6 +49,23 @@ const dieticianSettings = createCateringNotSettingsProcedure([RoleType.dietician
         }
         return {
             name: dietician.name,
+        }
+    });
+
+const kitchenSettings = createCateringNotSettingsProcedure([RoleType.kitchen])
+    .query(async ({ ctx }) => {
+        const { session, db } = ctx;
+        const { user } = session;
+        const kitchen = await db.kitchen.findUnique({
+            where: {
+                userId: user.id,
+            }
+        });
+        if (!kitchen) {
+            throw new Error('Kitchen not found');
+        }
+        return {
+            name: kitchen.name,
         }
     });
 
@@ -97,6 +114,21 @@ const updateDieticianSettings = createCateringNotSettingsProcedure([RoleType.die
         const { session, db } = ctx;
         const { user } = session;
         return db.dietician.update({
+            where: {
+                userId: user.id,
+            },
+            data: {
+                name: input.name,
+            }
+        });
+    });
+
+const updateKitchenSettings = createCateringNotSettingsProcedure([RoleType.kitchen])
+    .input(kitchenSettingsValidator)
+    .mutation(({ ctx, input }) => {
+        const { session, db } = ctx;
+        const { user } = session;
+        return db.kitchen.update({
             where: {
                 userId: user.id,
             },
@@ -195,9 +227,11 @@ const settingsRouter = {
     getForManager: managerSettings,
     getForClient: clientSettings,
     getForDietician: dieticianSettings,
+    getForKitchen: kitchenSettings,
     updateByManager: updateManagerSettings,
     updateByClient: updateClientSettings,
     updateByDietician: updateDieticianSettings,
+    updateByKitchen: updateKitchenSettings,
     hasFinished,
     get: getCateringSettings,
     deadlines,

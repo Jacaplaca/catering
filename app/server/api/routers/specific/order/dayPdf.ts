@@ -147,7 +147,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
         const standard = Object.entries(standardObject).map(([clientCode, value]) => ({
             clientCode,
             meals: value,
-        }));
+        })).filter(({ meals }) => meals);
 
         const diet = Object.entries(dietObject).reduce((acc, [clientCode, value]) => {
             acc[clientCode] = Object.entries(value).map(([consumerCode, diet]) => ({

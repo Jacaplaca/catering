@@ -26,6 +26,6 @@
         "id" : "kitchen",
         "inviteBy": ["manager"],
         "dashboardGroups": [],
-        "dashboardItems": ["orders"]
+        "dashboardItems": ["orders", "settings"]
     }
 ]
