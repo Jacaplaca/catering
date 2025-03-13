@@ -1,3 +1,12 @@
+## [1.4.1](https://github.com/Jacaplaca/catering/compare/v1.4.0...v1.4.1) (2025-03-13)
+
+
+### Bug Fixes
+
+* kitchen setting zero in meals better error in sign in ([d22153e](https://github.com/Jacaplaca/catering/commit/d22153e2ddb551aeb7d538a2f54f8ba9c022b9ee))
+
+
+
 # [1.4.0](https://github.com/Jacaplaca/catering/compare/v1.3.1...v1.4.0) (2025-02-22)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * Added aggregated report for month client orders ([a721644](https://github.com/Jacaplaca/catering/commit/a72164427648c4e10542248362dd4fefe47b296e))
-
-
-
-## [1.1.5](https://github.com/Jacaplaca/catering/compare/v1.1.4...v1.1.5) (2025-02-11)
-
-
-### Bug Fixes
-
-* Unique constraint failed on the constraint in OrderConsumerBreakfast_orderId_consumerId_key footer ([2833533](https://github.com/Jacaplaca/catering/commit/283353312cbabf3bfed8467c77301d1f33bff9ab))
 
 
 
