@@ -23,13 +23,13 @@ const save = async ({ ctx, input, status }: {
     });
 
     const {
-        first: firstDeadline,
+        isOrderDayWorking,
         isBeforeFirst,
         isBetween,
         isAfterSecond,
     } = getDeadlinesStatus({ settings, day });
 
-    if (firstDeadline.isNonWorkingDay) {
+    if (!isOrderDayWorking) {
         throw new Error("orders:non_working_day");
     }
 

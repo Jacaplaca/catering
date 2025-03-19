@@ -1,23 +1,63 @@
-import canPlaceOrder from '@root/app/specific/lib/canPlaceOrder';
+import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+import isWorkingDay from '@root/app/specific/lib/isWorkingDay';
 
 const getDeadlinesStatus = ({ settings, day }: {
     settings?: {
         firstOrderDeadline: string;
         secondOrderDeadline: string;
         timeZone: string;
+        allowWeekendOrder: boolean;
     }, day?: { year: number, month: number, day: number } | null
 }) => {
-    const deadlineFirst = { time: settings?.firstOrderDeadline, timeZone: settings?.timeZone }
-    const deadlineSecond = { time: settings?.secondOrderDeadline, timeZone: settings?.timeZone }
-    const deadlineFirstObj = canPlaceOrder({ orderDeadline: deadlineFirst, desiredDate: day, deadlineType: 'first' });
-    const deadlineSecondObj = canPlaceOrder({ orderDeadline: deadlineSecond, desiredDate: day, deadlineType: 'second' });
+
+    if (!settings || !day) {
+        return {
+            firstDeadline: new Date(),
+            firstDeadlineTime: '--:--',
+            secondDeadline: new Date(),
+            secondDeadlineTime: '--:--',
+            canChange: false,
+            isBeforeFirst: false,
+            isBetween: false,
+            isAfterSecond: false,
+        }
+    }
+    const { firstOrderDeadline, secondOrderDeadline, timeZone, allowWeekendOrder } = settings;
+    const desiredDate = day;
+
+    const currentDate = getCurrentTime();
+
+    const orderDate = new Date(desiredDate.year, desiredDate.month, desiredDate.day);
+    const isOrderDayWorking = isWorkingDay(orderDate, timeZone)
+
+    const [firstDeadlineHour, firstDeadlineMinute] = firstOrderDeadline.split(':').map(Number);
+    const [secondDeadlineHour, secondDeadlineMinute] = secondOrderDeadline.split(':').map(Number);
+
+    const firstDeadline = new Date(orderDate);
+    const secondDeadline = new Date(orderDate);
+    firstDeadline.setHours(firstDeadlineHour ?? 0, firstDeadlineMinute ?? 0, 0, 0);
+    firstDeadline.setDate(firstDeadline.getDate() - 1);
+    secondDeadline.setHours(secondDeadlineHour ?? 0, secondDeadlineMinute ?? 0, 0, 0);
+    if (!allowWeekendOrder) {
+        while (!isWorkingDay(firstDeadline, timeZone)) {
+            firstDeadline.setDate(firstDeadline.getDate() - 1); // Find the previous working day
+        }
+    };
+    const isBeforeFirst = currentDate < firstDeadline;
+    const isAfterFirst = !isBeforeFirst;
+    const isBeforeSecond = currentDate < secondDeadline;
+    const isBetween = isAfterFirst && isBeforeSecond;
+    const isAfterSecond = !isBeforeSecond;
     return {
-        first: deadlineFirstObj,
-        second: deadlineSecondObj,
-        isBeforeFirst: deadlineFirstObj.canOrder,
-        isBetween: !deadlineFirstObj.canOrder && deadlineSecondObj.canOrder,
-        isAfterSecond: !deadlineSecondObj.canOrder,
-        canChange: deadlineFirstObj.canOrder || deadlineSecondObj.canOrder,
+        firstDeadline,
+        firstDeadlineTime: firstOrderDeadline,
+        secondDeadline,
+        secondDeadlineTime: secondOrderDeadline,
+        isBeforeFirst,
+        isBetween,
+        isAfterSecond,
+        isOrderDayWorking,
+        canChange: isBeforeFirst || isBetween || isBeforeSecond
     }
 };
 

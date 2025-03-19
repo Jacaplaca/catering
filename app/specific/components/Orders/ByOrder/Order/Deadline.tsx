@@ -23,7 +23,7 @@ const Deadline: FC = () => {
         rowClick: {
             orderForEdit
         },
-        order: { deadlines: { first, second, isBeforeFirst, canChange } },
+        order: { deadlines: { firstDeadline, secondDeadline, firstDeadlineTime, secondDeadlineTime, isBeforeFirst, canChange } },
         dictionary
     } = useOrderTableContext();
 
@@ -42,8 +42,8 @@ const Deadline: FC = () => {
                     ? 'orders:deadline_first_info'
                     : 'orders:deadline_second_info')} </span>
                 <DateInfo
-                    time={isBeforeFirst ? first.time : second.time}
-                    lastDay={isBeforeFirst ? first.lastDay : second.lastDay}
+                    time={isBeforeFirst ? firstDeadlineTime : secondDeadlineTime}
+                    lastDay={isBeforeFirst ? firstDeadline : secondDeadline}
                 />
             </div> : <div>
                 <span className="font-bold">{translate(dictionary, 'orders:deadline_is_over')}</span>

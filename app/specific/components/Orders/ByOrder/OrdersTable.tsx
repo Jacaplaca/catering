@@ -79,6 +79,7 @@ const OrdersTable: FunctionComponent = () => {
     const isClient = role === RoleType.client;
     const isManager = role === RoleType.manager;
     const isKitchen = role === RoleType.kitchen;
+    const isDietician = role === RoleType.dietician;
     const isManagerOrKitchen = isManager || isKitchen;
 
     return (
@@ -121,7 +122,7 @@ const OrdersTable: FunctionComponent = () => {
                     <RowActions
                         label={t(dictionary, 'shared:actions')}
                         actions={actions}
-                        disabled={!showActions}
+                        disabled={!showActions || isDietician}
                         dictionary={dictionary}
                     />
 
@@ -151,7 +152,7 @@ const OrdersTable: FunctionComponent = () => {
                         columns={columns}
                         check={checkAllOnPage}
                         isCheck={isAllChecked}
-                        hideCheck={isClient}
+                        hideCheck={isClient || isDietician}
                         sortName={sortName}
                         sortDirection={sortDirection}
                         dictionary={dictionary}

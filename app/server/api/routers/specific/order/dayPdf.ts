@@ -19,7 +19,7 @@ import { loadFonts } from '@root/app/lib/loadFonts';
 import dayIdParser from '@root/app/server/api/routers/specific/libs/dayIdParser';
 import returnPdfForFront from '@root/app/server/api/routers/specific/libs/pdf/returnPdfForFront';
 
-const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager])
+const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, RoleType.dietician])
     .input(getOrdersPdfValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;

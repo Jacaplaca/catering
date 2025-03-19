@@ -22,7 +22,7 @@ const Orders: FunctionComponent<{
 
     const session = await auth();
     const { user } = session ?? {};
-    const showByDay = user?.roleId === RoleType.kitchen || user?.roleId === RoleType.manager;
+    const showByDay = user?.roleId === RoleType.kitchen || user?.roleId === RoleType.manager || user?.roleId === RoleType.dietician;
 
     return (
         <div>

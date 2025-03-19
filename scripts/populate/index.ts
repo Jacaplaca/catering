@@ -112,6 +112,7 @@ async function main() {
                     notes: faker.datatype.boolean(0.1) ? faker.lorem.sentence() : '',
                     country: faker.datatype.boolean(0.2) ? faker.location.country() : '',
                     code,
+                    allowWeekendOrder: faker.datatype.boolean(0.5),
                 },
             };
         });

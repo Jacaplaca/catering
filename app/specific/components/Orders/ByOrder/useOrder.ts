@@ -134,9 +134,8 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
         if (orderedDates && cateringSettings?.timeZone) {
             const nextDay = getNextDay();
             const currentTime = getCurrentTime();
-            const isNowWorkingDay = isWorkingDay(currentTime, cateringSettings?.timeZone);
-            console.log({ isNowWorkingDay });
-            if (!isNowWorkingDay) {
+            const isWeekend = !isWorkingDay(currentTime, cateringSettings?.timeZone);
+            if (isWeekend && !cateringSettings.allowWeekendOrder) {
                 setHideNewOrder(true);
             } else if (nextDay) {
                 const nextDayString = `${nextDay.year}-${String(nextDay.month + 1).padStart(2, '0')}-${String(nextDay.day).padStart(2, '0')}`;
@@ -155,36 +154,6 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
         if (!nextDay) { return }
 
         setDay(nextDay);
-
-        // if (cateringSettings && orderedDates) {
-
-        //     while (true) {
-        //         const formattedDate = format(currentDate, 'yyyy-MM-dd');
-        //         if (!orderedDates.includes(formattedDate)) {
-        //             const day = {
-        //                 year: currentDate.getFullYear(),
-        //                 month: currentDate.getMonth(),
-        //                 day: currentDate.getDate()
-        //             }
-        //             const { first: firstDeadline } = getDeadlinesStatus({
-        //                 settings: cateringSettings,
-        //                 day
-        //             });
-
-        //             if (firstDeadline.canOrder) {
-        //                 setDay(day);
-        //                 break;
-        //             }
-        //         }
-        //         currentDate.setDate(currentDate.getDate() + 1);
-        //     }
-        // } else {
-        //     setDay({
-        //         year: currentDate.getFullYear(),
-        //         month: currentDate.getMonth(),
-        //         day: currentDate.getDate()
-        //     });
-        // }
     }
 
     const clearOrder = () => {

@@ -1,5 +1,6 @@
 import HighlightText from '@root/app/_components/Table/HighlightText';
 import SkeletonCell from '@root/app/_components/Table/SkeletonCell';
+import YesNo from '@root/app/_components/Table/YesNo';
 import Checkbox from '@root/app/_components/ui/Inputs/Checkbox';
 import { type ClientCustomTable } from '@root/types/specific';
 
@@ -140,6 +141,10 @@ const useClientDataGrid = ({
                         text={info?.secondOrderDeadline}
                         fragment={searchValue} />,
                     key: 'info.secondOrderDeadline'
+                },
+                {
+                    component: <YesNo value={info?.allowWeekendOrder ?? false} />,
+                    key: 'info.allowWeekendOrder'
                 },
                 // {
                 //     component: settings?.lastOrderTime

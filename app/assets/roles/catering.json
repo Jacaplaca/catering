@@ -19,7 +19,7 @@
         "id" : "dietician",
         "inviteBy": ["manager"],
         "dashboardGroups": [],
-        "dashboardItems": ["settings", "consumers", "client-files"]
+        "dashboardItems": ["settings", "consumers", "client-files", "orders"]
     }
     ,
     {

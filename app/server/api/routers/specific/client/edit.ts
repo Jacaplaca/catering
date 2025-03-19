@@ -6,7 +6,7 @@ const edit = createCateringProcedure([RoleType.manager])
     .input(clientEditValidator)
     .mutation(async ({ ctx, input }) => {
         const { db, session } = ctx
-        const { id, name, email, address, city, contactPerson, country, notes, phone, zip, tags, code, firstOrderDeadline, secondOrderDeadline } = input;
+        const { id, name, email, address, city, contactPerson, country, notes, phone, zip, tags, code, firstOrderDeadline, secondOrderDeadline, allowWeekendOrder } = input;
         const { cateringId } = session.user;
         const { settings } = session.catering
 
@@ -91,7 +91,8 @@ const edit = createCateringProcedure([RoleType.manager])
             name, email, address, city, contactPerson, country, notes, phone, zip,
             code: code ? code.trim().toUpperCase() : undefined,
             firstOrderDeadline: "",
-            secondOrderDeadline: ""
+            secondOrderDeadline: "",
+            allowWeekendOrder: allowWeekendOrder ?? false
         };
 
         if (firstOrderDeadline && firstOrderDeadline !== settings.firstOrderDeadline) {

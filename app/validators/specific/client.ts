@@ -40,6 +40,7 @@ export const clientEditValidator = z.object({
     tags: z.array(z.string()),
     firstOrderDeadline: z.string().optional(),
     secondOrderDeadline: z.string().optional(),
+    allowWeekendOrder: z.boolean().optional(),
 });
 
 export const getClientValidator = z.object({

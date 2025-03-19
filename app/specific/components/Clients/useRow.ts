@@ -63,6 +63,7 @@ const useClientRow = ({
         tags: [],
         firstOrderDeadline: '',
         secondOrderDeadline: '',
+        allowWeekendOrder: false,
     };
 
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -87,6 +88,7 @@ const useClientRow = ({
                 tags: clientData?.tags.map((tag) => tag.tag.name) ?? [],
                 firstOrderDeadline: clientData?.info.firstOrderDeadline ?? '',
                 secondOrderDeadline: clientData?.info.secondOrderDeadline ?? '',
+                allowWeekendOrder: clientData?.info.allowWeekendOrder ?? false,
             };
             form.reset(client);
         }

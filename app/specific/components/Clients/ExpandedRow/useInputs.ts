@@ -98,6 +98,14 @@ const useClientInputs = () => {
             // labelWidth
         },
         {
+            label: 'clients:info.allowWeekendOrder_column',
+            name: 'allowWeekendOrder',
+            type: 'boolean',
+            message: form.formState.errors.allowWeekendOrder?.message,
+            isHorizontal: true,
+            // labelWidth
+        },
+        {
             // label: 'clients:info.notes_column',
             name: 'notes',
             placeholder: 'clients:info.notes_placeholder',

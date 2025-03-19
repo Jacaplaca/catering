@@ -7,7 +7,7 @@ import { createCateringProcedure } from '@root/app/server/api/specific/trpc';
 import { options } from '@root/app/server/api/specific/aggregate';
 import { RoleType, type Prisma } from '@prisma/client';
 
-const table = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])
+const table = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client, RoleType.dietician])
     .input(getOrdersValid)
     .query(({ input, ctx }) => {
         const { session: { catering, user } } = ctx;
@@ -75,7 +75,7 @@ const table = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleT
         }) as unknown as OrdersCustomTable[];
     });
 
-const count = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])
+const count = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client, RoleType.dietician])
     .input(getOrdersCountValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering, user } } = ctx;

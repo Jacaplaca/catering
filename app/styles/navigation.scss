@@ -121,3 +121,33 @@ input#nav-toggle:checked ~ #nav-menu {
     @apply rounded px-3 py-2 text-text hover:bg-theme-light dark:text-darkmode-text dark:hover:bg-darkmode-theme-light
   }
 }
+
+.custom-switch {
+  @apply inline-flex ;
+
+  label {
+    @apply relative inline-block h-4 w-6 cursor-pointer rounded-2xl lg:w-10 
+     bg-neutral-300 dark:bg-neutral-700;
+  }
+
+  input {
+    @apply absolute opacity-0;
+  }
+
+  // #switch-icon {
+  //   @apply text-white dark:text-neutral-100;
+  // }
+
+  span {
+    @apply absolute -top-1 left-0 flex h-6 w-6 items-center justify-center rounded-full 
+    shadow-darkmode-drawer-background
+    transition-all duration-300;
+  }
+  // bg-neutral-400 dark:bg-neutral-500 
+
+  input:checked + label {
+    span {
+      @apply lg:left-4;
+    }
+  }
+}

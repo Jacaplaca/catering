@@ -179,6 +179,7 @@ type ClientInfo {
     code String?
     firstOrderDeadline String?
     secondOrderDeadline String?
+    allowWeekendOrder Boolean?
 }
 
 model Client {

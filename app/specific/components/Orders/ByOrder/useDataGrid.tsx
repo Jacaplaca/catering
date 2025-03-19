@@ -68,7 +68,8 @@ const useOrderDataGrid = ({
         lunchStandard, dinnerStandard, breakfastDietCount, lunchDietCount, dinnerDietCount, sentToCateringAt }, i) => {
         const isDraft = status === OrderStatus.draft;
         const isClient = roleId === RoleType.client;
-        const disableMainCheckbox = !isDraft && isClient;
+        const isDietician = roleId === RoleType.dietician;
+        const disableMainCheckbox = !isDraft && (isClient || isDietician);
         const deliveryDayDate = new Date(deliveryDay?.year ?? 0,
             deliveryDay?.month ?? 0,
             deliveryDay?.day ?? 0);

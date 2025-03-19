@@ -91,6 +91,7 @@
         "info.country_placeholder": "Wpisz kraj",
         "info.firstOrderDeadline_column": "1. termin",
         "info.secondOrderDeadline_column": "2. termin",
+        "info.allowWeekendOrder_column": "Zamówienia w weekend?",
         "settings.lastOrderTime_column": "Zamówienie do",
         "settings.lastOrderTime_placeholder": "Edytuj czas ostatniego zamówienia",
         "user.email_column": "Email(użytkownik)",

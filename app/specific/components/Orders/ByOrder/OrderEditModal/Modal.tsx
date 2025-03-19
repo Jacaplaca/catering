@@ -41,7 +41,7 @@ const OrderEditModal: FC<OrderEditModalProps> = ({ isOpen, closeModal }) => {
         disallowBackdropClose
         isError={true}
         footer={
-            deadlines.second.canOrder && !consumersPickerOpen ? <OrderEditorButtons /> : null
+            deadlines.canChange && !consumersPickerOpen ? <OrderEditorButtons /> : null
         }
         footerColor={`border-t dark:border-darkmode-modal-separator border-modal-separator
         bg-neutral-200 dark:bg-neutral-700`}

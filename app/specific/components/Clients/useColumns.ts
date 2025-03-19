@@ -71,6 +71,10 @@ const useClientColumns = ({
             key: "info.secondOrderDeadline",
             title: 'clients:info.secondOrderDeadline_column',
         },
+        {
+            key: "info.allowWeekendOrder",
+            title: 'clients:info.allowWeekendOrder_column',
+        },
         // {
         //     key: "settings.lastOrderTime",
         //     title: 'clients:settings.lastOrderTime_column',

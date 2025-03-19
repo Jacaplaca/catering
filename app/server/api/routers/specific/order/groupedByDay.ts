@@ -6,7 +6,7 @@ import type { OrderGroupedByDayCustomTable, OrderMealPopulated } from '@root/typ
 import { RoleType, type Client, type OrderConsumerBreakfast, type OrderConsumerDinner, type OrderConsumerLunch, type OrderStatus } from '@prisma/client';
 import processMeals from '@root/app/server/api/routers/specific/libs/processMeals';
 
-const day = createCateringProcedure([RoleType.manager, RoleType.kitchen])
+const day = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.dietician])
     .input(getDayValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -193,7 +193,7 @@ const day = createCateringProcedure([RoleType.manager, RoleType.kitchen])
         return { dayData: dayDataCleaned, summary, standard, diet };
     });
 
-const table = createCateringProcedure([RoleType.manager, RoleType.kitchen])
+const table = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.dietician])
     .input(getOrdersGroupedByDayValid)
     .query(async ({ input, ctx }) => {
         const { session: { catering } } = ctx;
@@ -294,7 +294,7 @@ const table = createCateringProcedure([RoleType.manager, RoleType.kitchen])
         return groupedOrders as unknown as OrderGroupedByDayCustomTable[];
     });
 
-const count = createCateringProcedure([RoleType.manager, RoleType.kitchen])
+const count = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.dietician])
     .query(async ({ ctx }) => {
         const { session: { catering } } = ctx;
 

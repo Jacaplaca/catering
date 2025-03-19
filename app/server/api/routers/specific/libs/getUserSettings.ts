@@ -22,6 +22,7 @@ const getClientSettings = async ({ clientId, userId, cateringSettings }: {
     const settings = {
         firstOrderDeadline: client.info.firstOrderDeadline ? client.info.firstOrderDeadline : cateringSettings.firstOrderDeadline,
         secondOrderDeadline: client.info.secondOrderDeadline ? client.info.secondOrderDeadline : cateringSettings.secondOrderDeadline,
+        allowWeekendOrder: Boolean(client.info.allowWeekendOrder),
         timeZone: cateringSettings.timeZone,
     }
 
