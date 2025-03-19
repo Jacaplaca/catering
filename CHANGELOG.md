@@ -1,3 +1,12 @@
+# [1.5.0](https://github.com/Jacaplaca/catering/compare/v1.4.1...v1.5.0) (2025-03-19)
+
+
+### Features
+
+* allow weekend order and orders view for dietician ([9e1d9f6](https://github.com/Jacaplaca/catering/commit/9e1d9f65ffa95ffe139500c2e60ffcb12452180a))
+
+
+
 ## [1.4.1](https://github.com/Jacaplaca/catering/compare/v1.4.0...v1.4.1) (2025-03-13)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * introduced pdf stickers generator and consumer deactivation ([e4c4fdc](https://github.com/Jacaplaca/catering/commit/e4c4fdc484d0d18d3b3b681f06dfa1021b5d3609))
-
-
-
-# [1.2.0](https://github.com/Jacaplaca/catering/compare/v1.1.5...v1.2.0) (2025-02-14)
-
-
-### Features
-
-* Added aggregated report for month client orders ([a721644](https://github.com/Jacaplaca/catering/commit/a72164427648c4e10542248362dd4fefe47b296e))
 
 
 
