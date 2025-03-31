@@ -1,3 +1,12 @@
+## [1.5.1](https://github.com/Jacaplaca/catering/compare/v1.5.0...v1.5.1) (2025-03-31)
+
+
+### Bug Fixes
+
+* sort order notes ([42a8a0c](https://github.com/Jacaplaca/catering/commit/42a8a0cdedcc8f2e61ab5a9c3b957724669ceb66))
+
+
+
 # [1.5.0](https://github.com/Jacaplaca/catering/compare/v1.4.1...v1.5.0) (2025-03-19)
 
 
@@ -31,15 +40,6 @@
 ### Bug Fixes
 
 * add TZ to docker to change timezone of the server ([ae5c784](https://github.com/Jacaplaca/catering/commit/ae5c784ef58137d3e6f95af16ee6e5effa731aa9))
-
-
-
-# [1.3.0](https://github.com/Jacaplaca/catering/compare/v1.2.0...v1.3.0) (2025-02-18)
-
-
-### Features
-
-* introduced pdf stickers generator and consumer deactivation ([e4c4fdc](https://github.com/Jacaplaca/catering/commit/e4c4fdc484d0d18d3b3b681f06dfa1021b5d3609))
 
 
 
