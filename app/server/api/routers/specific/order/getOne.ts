@@ -72,7 +72,6 @@ const forView = createCateringProcedure([RoleType.manager, RoleType.kitchen])
                                     id: '$_id',
                                     _id: 0,
                                     name: 1,
-                                    notes: 1,
                                     code: 1,
                                     diet: {
                                         $cond: {
@@ -124,6 +123,7 @@ const forView = createCateringProcedure([RoleType.manager, RoleType.kitchen])
                             }
                         },
                         day: '$deliveryDay',
+                        notes: 1,
                     }
                 },
                 {
@@ -132,6 +132,7 @@ const forView = createCateringProcedure([RoleType.manager, RoleType.kitchen])
                         status: 1,
                         standards: 1,
                         diet: 1,
+                        notes: 1,
                         day: {
                             year: '$day.year',
                             month: '$day.month',

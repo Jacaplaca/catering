@@ -84,7 +84,7 @@ const getOrder = async ({ orderId, cateringId, onlyActiveConsumers }: { orderId:
                     dinner: '$dinnerStandardBeforeDeadline'
                 },
                 day: '$deliveryDay',
-                note: 1,
+                notes: 1,
             }
         },
         {
@@ -95,7 +95,7 @@ const getOrder = async ({ orderId, cateringId, onlyActiveConsumers }: { orderId:
                 diet: 1,
                 dietBeforeDeadline: 1,
                 standardsBeforeDeadline: 1,
-                note: 1,
+                notes: 1,
                 day: {
                     year: '$day.year',
                     month: '$day.month',

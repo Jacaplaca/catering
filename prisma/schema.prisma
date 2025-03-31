@@ -550,7 +550,7 @@ model Order {
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
-    note String?
+    notes String?
 
     @@index([deliveryDay.year])
     @@index([deliveryDay.month])

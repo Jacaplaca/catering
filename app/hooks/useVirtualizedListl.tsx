@@ -99,6 +99,7 @@ export function useVirtualizedList<T extends { id: string; name: string }>({
             limitChars={limitChars}
             isSelected={selectedItems?.includes(item?.id ?? '')}
         />;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [allItems, onResultClick, searchValue, limitChars]);
 
     return {

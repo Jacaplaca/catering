@@ -6,7 +6,7 @@ import { deleteElementsValid } from '@root/app/validators/deleteElements';
 const deleteOne = createCateringProcedure([RoleType.manager])
     .input(deleteElementsValid)
     .mutation(({ ctx, input }) => {
-        const { db, session } = ctx
+        const { session } = ctx
         const { ids } = input;
         const { cateringId } = session.user;
         return removeClients({ clientsIds: ids, cateringId, forceRemove: false });

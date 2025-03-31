@@ -97,7 +97,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, Role
                         standard: 1,
                         diet: 1,
                         deliveryDay: 1,
-                        note: 1,
+                        notes: 1,
                         sentToCateringAt: 1,
                         createdAt: 1,
                         updatedAt: 1
@@ -110,7 +110,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, Role
             status: OrderStatus;
             sentToCateringAt: { $date: Date };
             standard: number;
-            note: string;
+            notes: string;
             diet: (OrderConsumerBreakfast & OrderMealPopulated)[];
         }[]
 
@@ -119,10 +119,10 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, Role
             return acc;
         }, 0);
 
-        const notes = dayData.reduce((acc, { note, client }) => {
+        const notes = dayData.reduce((acc, { notes, client }) => {
             const code = client?.info?.code;
             if (code) {
-                acc[code] = note;
+                acc[code] = notes;
             }
             return acc;
         }, {} as Record<string, string>);

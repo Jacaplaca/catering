@@ -56,19 +56,31 @@ const OrderView = () => {
     const headerStyle = 'p-3 font-semibold text-neutral-800 dark:text-neutral-200';
     const standardStyle = 'p-3 font-bold text-base text-center text-neutral-800 dark:text-neutral-200';
     return (
-        <div className={`grid grid-cols-4 auto-rows-auto gap-4 p-5`}>
-            <div className={`p-3 text-center`}></div>
-            <div className={`${headerStyle} text-center`}>{translate(dictionary, 'orders:breakfast')}</div>
-            <div className={`${headerStyle} text-center`}>{translate(dictionary, 'orders:lunch')}</div>
-            <div className={`${headerStyle} text-center`}>{translate(dictionary, 'orders:dinner')}</div>
-            <div className={`${headerStyle} text-right`}>{translate(dictionary, 'orders:standard')}</div>
-            <div className={`${standardStyle}`}>{orderForView?.standards?.breakfast}</div>
-            <div className={`${standardStyle}`}>{orderForView?.standards?.lunch}</div>
-            <div className={`${standardStyle}`}>{orderForView?.standards?.dinner}</div>
-            <div className={`${headerStyle} text-right`}>{translate(dictionary, 'orders:diet')}</div>
-            <div className="overflow-auto "><DietConsumers consumers={orderForView?.diet.breakfast} /></div>
-            <div className="overflow-auto "><DietConsumers consumers={orderForView?.diet.lunch} /></div>
-            <div className="overflow-auto "><DietConsumers consumers={orderForView?.diet.dinner} /></div>
+        <div className="flex flex-col h-full">
+            <div className={`grid grid-cols-4 auto-rows-auto gap-4 p-5`}>
+                <div className={`p-3 text-center`}></div>
+                <div className={`${headerStyle} text-center`}>{translate(dictionary, 'orders:breakfast')}</div>
+                <div className={`${headerStyle} text-center`}>{translate(dictionary, 'orders:lunch')}</div>
+                <div className={`${headerStyle} text-center`}>{translate(dictionary, 'orders:dinner')}</div>
+                <div className={`${headerStyle} text-right`}>{translate(dictionary, 'orders:standard')}</div>
+                <div className={`${standardStyle}`}>{orderForView?.standards?.breakfast}</div>
+                <div className={`${standardStyle}`}>{orderForView?.standards?.lunch}</div>
+                <div className={`${standardStyle}`}>{orderForView?.standards?.dinner}</div>
+                <div className={`${headerStyle} text-right`}>{translate(dictionary, 'orders:diet')}</div>
+                <div className="overflow-auto "><DietConsumers consumers={orderForView?.diet.breakfast} /></div>
+                <div className="overflow-auto "><DietConsumers consumers={orderForView?.diet.lunch} /></div>
+                <div className="overflow-auto "><DietConsumers consumers={orderForView?.diet.dinner} /></div>
+            </div>
+            {orderForView.notes && (
+                <div className="p-5 mt-4 border-t border-neutral-200 dark:border-neutral-700">
+                    <h4 className="font-semibold mb-2 text-neutral-800 dark:text-neutral-200">
+                        {translate(dictionary, 'orders:notes')}
+                    </h4>
+                    <p className="text-sm text-neutral-700 dark:text-neutral-300 whitespace-pre-wrap">
+                        {orderForView.notes}
+                    </p>
+                </div>
+            )}
         </div>
     );
 };

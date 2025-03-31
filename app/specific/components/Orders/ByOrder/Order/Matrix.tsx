@@ -146,6 +146,8 @@ const OrderMatrix: FC = () => {
         />
     }
 
+    const mealLabelClass = 'p-2 flex text-xs sm:text-sm items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200';
+
     return (
         <div className="flex flex-col items-center justify-center">
 
@@ -157,7 +159,7 @@ const OrderMatrix: FC = () => {
                 <div className="p-2 flex items-center justify-center font-semibold text-neutral-800 dark:text-neutral-200">
                     {translate(dictionary, "orders:diet")}
                 </div>
-                <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
+                <div className={mealLabelClass}>
                     {translate(dictionary, "orders:breakfast")}
                 </div>
                 <MealCell
@@ -170,7 +172,7 @@ const OrderMatrix: FC = () => {
                     onClick={setConsumersPickerOpen}
                 />
 
-                <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
+                <div className={mealLabelClass}>
                     {translate(dictionary, "orders:lunch")}
                 </div>
 
@@ -184,7 +186,7 @@ const OrderMatrix: FC = () => {
                     onClick={setConsumersPickerOpen}
                 />
 
-                <div className="p-2 flex items-center justify-end font-semibold text-neutral-800 dark:text-neutral-200">
+                <div className={mealLabelClass}>
                     {translate(dictionary, "orders:dinner")}
                 </div>
                 <MealCell

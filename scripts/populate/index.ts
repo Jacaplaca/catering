@@ -361,7 +361,7 @@ async function main() {
                     },
                     dinnerDietCountBeforeDeadline: dinnerDietWas.length,
                     sentToCateringAt,
-                    note: faker.lorem.sentence()
+                    notes: faker.lorem.sentence()
                 };
                 await prisma.order.create({
                     data: orderToCreate

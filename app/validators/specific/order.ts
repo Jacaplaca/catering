@@ -20,7 +20,8 @@ export const orderValidator = z.object({
         year: z.number().min(0),
         month: z.number().min(0).max(12),
         day: z.number().min(0).max(31),
-    })
+    }),
+    notes: z.string().optional(),
 });
 
 export const orderForEditValid = orderValidator.extend({

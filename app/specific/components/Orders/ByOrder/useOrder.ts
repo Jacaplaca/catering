@@ -40,10 +40,10 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
     const [standards, setStandards] = useState(defaultStandards);
     const [diet, setDiet] = useState(defaultDiet);
     const [hideNewOrder, setHideNewOrder] = useState(false);
-    const [note, setNote] = useState('');
+    const [notes, setNotes] = useState('');
 
     const updateNote = (value: string) => {
-        setNote(value);
+        setNotes(value);
         resetError();
     }
 
@@ -52,7 +52,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
             setStandards(orderForEdit.standards);
             setDiet(orderForEdit.diet);
             setDay(orderForEdit.day);
-            setNote(orderForEdit.note);
+            setNotes(orderForEdit.notes ?? '');
         }
     }, [orderForEdit]);
 
@@ -64,7 +64,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
     const resetOrder = () => {
         setStandards(orderForEdit?.standards ?? defaultStandards);
         setDiet(orderForEdit?.diet ?? defaultDiet);
-        setNote(orderForEdit?.note ?? '');
+        setNotes(orderForEdit?.notes ?? '');
         // setDay(orderForEdit?.day ?? null);
         resetError();
     }
@@ -215,6 +215,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
         day: day ?? { year: 0, month: 0, day: 0 },
         id: orderForEdit?.id,
         clientId: clientId ?? '',
+        notes,
     }
 
 
@@ -255,7 +256,7 @@ const useOrder = ({ orderForEdit, setRows, session, updateMessage, newOrder, cli
             close: () => setConsumersPickerOpen(null),
         },
         lastOrder,
-        note,
+        notes,
         updateNote,
     }
 

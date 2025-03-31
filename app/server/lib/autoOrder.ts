@@ -226,6 +226,7 @@ async function autoOrder() {
                 // Add breakfast data only if breakfast is a non-empty array
                 if (Array.isArray(breakfast) && breakfast.length > 0) {
                     const newBreakfastPromise = db.orderConsumerBreakfast.createMany({
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         data: breakfast.map(({ id, ...rest }) => ({
                             ...rest,
                             orderId: newOrder.id,
@@ -237,6 +238,7 @@ async function autoOrder() {
                 // Add lunch data only if lunch is a non-empty array
                 if (Array.isArray(lunch) && lunch.length > 0) {
                     const newLunchPromise = db.orderConsumerLunch.createMany({
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         data: lunch.map(({ id, ...rest }) => ({
                             ...rest,
                             orderId: newOrder.id,
@@ -245,6 +247,7 @@ async function autoOrder() {
                     promises.push(newLunchPromise);
 
                     const newLunchBeforeDeadlinePromise = db.orderConsumerLunchBeforeDeadline.createMany({
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         data: lunch.map(({ id, ...rest }) => ({
                             ...rest,
                             orderId: newOrder.id,
@@ -256,6 +259,7 @@ async function autoOrder() {
                 // Add dinner data only if dinner is a non-empty array
                 if (Array.isArray(dinner) && dinner.length > 0) {
                     const newDinnerPromise = db.orderConsumerDinner.createMany({
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         data: dinner.map(({ id, ...rest }) => ({
                             ...rest,
                             orderId: newOrder.id,
@@ -264,6 +268,7 @@ async function autoOrder() {
                     promises.push(newDinnerPromise);
 
                     const newDinnerBeforeDeadlinePromise = db.orderConsumerDinnerBeforeDeadline.createMany({
+                        // eslint-disable-next-line @typescript-eslint/no-unused-vars
                         data: dinner.map(({ id, ...rest }) => ({
                             ...rest,
                             orderId: newOrder.id,

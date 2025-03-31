@@ -136,6 +136,7 @@ export type OrderForView = {
         month: number;
         day: number;
     };
+    notes: string;
 };
 
 export type TableType = typeof TableTypeValues[number];
@@ -170,7 +171,7 @@ export type OrderForEdit = {
         month: number;
         day: number;
     };
-    note: string;
+    notes: string;
 };
 
 export type ClientFilesCustomTable = {

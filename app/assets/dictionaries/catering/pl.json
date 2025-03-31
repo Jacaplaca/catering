@@ -212,7 +212,10 @@
         "no_save_warning": "Wychodzisz z formularza bez zapisywania zmian",
         "back_to_order_button": "Powrót do zamówienia",
         "edit_order_button": "Edytuj zamówienie",
-        "order_input_note": "Notatka"
+        "order_input_note": "Uwagi",
+        "show_notes_editor": "Pokaż edytor notatek",
+        "hide_notes_editor": "Ukryj edytor notatek",
+        "notes": "Uwagi klienta"
     },
     "client-files":{
         "file_type_menu": "Menu",

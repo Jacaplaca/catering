@@ -33,7 +33,7 @@ const table = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleT
                         sortDate: {
                             $dateFromParts: {
                                 year: "$deliveryDay.year",
-                                month: "$deliveryDay.month",
+                                month: { $add: ["$deliveryDay.month", 1] },
                                 day: "$deliveryDay.day"
                             }
                         }

@@ -14,7 +14,7 @@ const save = async ({ ctx, input, status }: {
     const { db, session } = ctx;
 
     const { catering, user } = session;
-    const { day, diet, standards, clientId } = input;
+    const { day, diet, standards, clientId, notes } = input;
 
     const settings = await getClientSettings({
         clientId,
@@ -58,6 +58,7 @@ const save = async ({ ctx, input, status }: {
         cateringId: catering.id,
         clientId,
         deliveryDay: day,
+        notes,
     }
 
     const breakfastDiets = diet.breakfast.map(consumerId => ({ consumerId }))
@@ -82,6 +83,7 @@ const save = async ({ ctx, input, status }: {
         },
         dinnerDietCount: dinnerDiets.length,
         sentToCateringAt: status === OrderStatus.in_progress ? getCurrentTime() : undefined,
+        notes,
     }
 
     const beforeFirstDeadlineUpdateData = {
@@ -147,6 +149,7 @@ const save = async ({ ctx, input, status }: {
 
             }
             const forUpdate = { ...orderUpdateData, ...betweenDeadlineUpdateData }
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { breakfastDiet, breakfastDietCount, ...rest } = forUpdate;
             data = { ...rest }
         } else {

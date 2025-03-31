@@ -62,21 +62,19 @@ const OrdersTable: FunctionComponent = () => {
     const breakpoint = useBreakpoint();
 
     // console.log({ orderedDates, lastOrder });
+    const clickable = true;
+    const { data: session } = useSession();
+    const role = session?.user.roleId;
+    const isClient = role === RoleType.client;
 
     useEffect(() => {
-        if ((breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') && (isAddOrderOpen || expandedRowId)) {
+        if (isClient && (breakpoint === 'xs' || breakpoint === 'sm' || breakpoint === 'md') && (isAddOrderOpen || expandedRowId)) {
             hideTable();
         } else {
             showTable();
         }
-    }, [breakpoint, isAddOrderOpen, expandedRowId, hideTable, showTable]);
+    }, [breakpoint, isAddOrderOpen, expandedRowId, hideTable, showTable, isClient]);
 
-    const clickable = true;
-
-    const { data: session } = useSession();
-
-    const role = session?.user.roleId;
-    const isClient = role === RoleType.client;
     const isManager = role === RoleType.manager;
     const isKitchen = role === RoleType.kitchen;
     const isDietician = role === RoleType.dietician;

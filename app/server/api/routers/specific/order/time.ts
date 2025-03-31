@@ -3,16 +3,10 @@ import { RoleType } from '@prisma/client';
 import getCurrentTime from '@root/app/lib/date/getCurrentTime';
 
 const time = createCateringProcedure([RoleType.manager, RoleType.kitchen, RoleType.client])
-    .query(({ input, ctx }) => {
-        const { session: { catering } } = ctx;
-        const { timeZone } = catering.settings;
-
+    .query(() => {
         const dateTime = getCurrentTime();
-        console.log(dateTime);
-
         return dateTime;
 
     });
-
 
 export default time;

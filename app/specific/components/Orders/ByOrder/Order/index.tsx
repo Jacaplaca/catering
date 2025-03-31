@@ -5,9 +5,10 @@ import Deadline from '@root/app/specific/components/Orders/ByOrder/Order/Deadlin
 import LastOrderInfo from '@root/app/specific/components/Orders/ByOrder/Order/LastOrderInfo';
 import OrderMatrix from '@root/app/specific/components/Orders/ByOrder/Order/Matrix';
 import OrderDatePicker from '@root/app/specific/components/Orders/ByOrder/Order/OrderDatePicker';
-import { useEffect, type FC } from 'react';
+import { useEffect, useState, type FC } from 'react';
 
 const Order: FC = () => {
+    const [showNoteInput, setShowNoteInput] = useState(false);
 
     const {
         dictionary,
@@ -20,7 +21,7 @@ const Order: FC = () => {
                 setOpen: setConsumersPickerOpen,
             },
             lastOrder,
-            note,
+            notes,
             updateNote
         },
     } = useOrderTableContext();
@@ -32,19 +33,30 @@ const Order: FC = () => {
     return <div className="flex flex-col gap-2 sm:gap-4 py-2 sm:py-4">
         {orderForEdit ? <Deadline /> : <OrderDatePicker />}
         <OrderMatrix />
-        <InputStandard
-            id={`order-note`}
-            type="text"
-            isTextArea
-            placeholder={translate(dictionary, 'orders:order_input_note')}
-            maxLength={1000}
-            onChange={(e) => {
-                updateNote(e.target.value);
-            }}
-            className={`w-full dark:bg-transparent
-                    `}
-            value={note}
-        />
+        <button
+            type="button"
+            onClick={() => setShowNoteInput(!showNoteInput)}
+            className="self-start underline cursor-pointer text-sm sm:text-base"
+        >
+            {showNoteInput
+                ? translate(dictionary, 'orders:hide_notes_editor')
+                : translate(dictionary, 'orders:show_notes_editor')}
+        </button>
+        {showNoteInput && (
+            <InputStandard
+                id={`order-note`}
+                type="text"
+                isTextArea
+                placeholder={translate(dictionary, 'orders:order_input_note')}
+                maxLength={1000}
+                onChange={(e) => {
+                    updateNote(e.target.value);
+                }}
+                className={`w-full dark:bg-transparent
+                        `}
+                value={notes}
+            />
+        )}
         {expandedRowId ? null : lastOrder ? <LastOrderInfo day={lastOrder.day} dictionary={dictionary} /> : null}
     </div>
 }
