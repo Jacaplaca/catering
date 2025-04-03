@@ -1,8 +1,10 @@
 // import { OrderStatus } from '@prisma/client';
 import getCurrentTime from '@root/app/lib/date/getCurrentTime';
+import { db } from '@root/app/server/db';
 // import { getNextWorkingDay } from '@root/app/lib/date/getNextWorkingDay';
 // import { db } from '@root/app/server/db';
 import autoOrder from '@root/app/server/lib/autoOrder';
+import autoReceiveEmail from '@root/app/server/lib/autoReceiveEmail';
 import dbBackup from '@root/app/server/lib/makeBackup/backup';
 import { publicProcedure } from "server/api/trpc";
 import { z } from 'zod';
@@ -23,14 +25,18 @@ export const devRouter = {
         await autoOrder();
         return { autoOrder: 'success' };
     }),
+    receiver: publicProcedure.query(async () => {
+        await autoReceiveEmail();
+        return { received: 'success' };
+    }),
     //TODO: remove this
-    // removeOrder: publicProcedure.input(z.object({
-    //     orderId: z.string(),
-    // })).query(async ({ input }) => {
-    //     await db.order.delete({
-    //         where: { id: input.orderId },
-    //     });
-    // }),
+    removeOrder: publicProcedure.input(z.object({
+        orderId: z.string(),
+    })).query(async ({ input }) => {
+        await db.order.delete({
+            where: { id: input.orderId },
+        });
+    }),
     // findForbiddenOrders: publicProcedure.query(async () => {
     //     const nextWorkingDay = getNextWorkingDay(new Date(), 'Europe/Warsaw');
     //     const year = nextWorkingDay.getFullYear();
