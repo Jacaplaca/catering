@@ -1,3 +1,12 @@
+# [1.6.0](https://github.com/Jacaplaca/catering/compare/v1.5.1...v1.6.0) (2025-04-05)
+
+
+### Features
+
+* mont report for manager pdf fix some ui ([d106eb8](https://github.com/Jacaplaca/catering/commit/d106eb85f3eba7a2d0ceb39703ca3ff47dc2e6d2))
+
+
+
 ## [1.5.1](https://github.com/Jacaplaca/catering/compare/v1.5.0...v1.5.1) (2025-03-31)
 
 
@@ -31,15 +40,6 @@
 ### Features
 
 * individual deadline for clients autoOrder label consumer code ([679c003](https://github.com/Jacaplaca/catering/commit/679c0036926e7c3a432344026a1d60a515d3d78d))
-
-
-
-## [1.3.1](https://github.com/Jacaplaca/catering/compare/v1.3.0...v1.3.1) (2025-02-18)
-
-
-### Bug Fixes
-
-* add TZ to docker to change timezone of the server ([ae5c784](https://github.com/Jacaplaca/catering/commit/ae5c784ef58137d3e6f95af16ee6e5effa731aa9))
 
 
 
