@@ -113,6 +113,7 @@ const getOrderDbQuery = ({
         fieldsToAdd.$addFields.client = {
             id: '$client._id',
             name: '$client.info.name',
+            code: '$client.info.code',
         }
     }
 

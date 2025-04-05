@@ -27,6 +27,12 @@ const useOrderColumns = ({
             align: 'center'
         },
         {
+            key: "client.code",
+            title: 'orders:client_code_column',
+            sort: () => sort('client.code'),
+            align: 'center'
+        },
+        {
             key: "breakfastStandard",
             title: 'orders:breakfastStandard_column',
             align: 'center'

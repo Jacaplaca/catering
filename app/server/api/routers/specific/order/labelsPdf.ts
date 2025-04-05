@@ -184,7 +184,8 @@ const labelsPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, R
                 // label.consumerName = 'Melisa Wolska-Wojciechowskaasdfsadfasdfasdfsdf asdfasdfasdf';
                 // label.dietCode = 'WEGDFFSDF';
                 // label.dietDescription = 'al;skdjf asalsdkjf lksjdf;lksdl;fkasjdlfkasjdflaksdjflaskdjf asldkfjas; alsdkfjas dlfkasjdlfaksjdflaskdjfasldkfjasld asd;flkasjdflk alskdjfl;askdfjlasdf';
-                const firstLine = `${label.consumerCode}`;
+                const [clientCode, consumerCodeOnly] = label.consumerCode.split(/ (.*)/, 2);
+                const firstLine = `${clientCode} ${consumerCodeOnly}`;
                 const secondLine = `${label.dietCode}${label.dietCode && label.dietDescription.length ? ":" : ""} ${label.dietDescription}`;
 
                 // Zdefiniuj zmienne z rozmiarem czcionki
@@ -200,11 +201,31 @@ const labelsPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, R
                 const secondLimitedText = limitTextToMaxLines(doc, secondLine, 3, cellWidth - 2 * padding);
 
                 // Renderowanie pierwszej linii tekstu z wykorzystaniem firstLineFontSize
-                doc.font('Roboto').fontSize(firstLineFontSize);
                 const firstLineArray = firstLimitedText.split('\n');
                 let currentY = y + padding;
                 firstLineArray.forEach((line) => {
-                    doc.text(line, x + padding, currentY, { lineBreak: false });
+                    // Podziel linię na pierwszą część przed spacją i resztę
+                    const spaceIndex = line.indexOf(' ');
+                    const clientCodePart = spaceIndex === -1 ? line : line.substring(0, spaceIndex);
+                    const consumerCodePart = spaceIndex === -1 ? '' : line.substring(spaceIndex + 1);
+
+                    // Oblicz dostępną szerokość
+                    const availableWidth = cellWidth - 2 * padding;
+
+                    // Renderuj kod klienta do lewej
+                    doc.font('Roboto-Bold')
+                        .text(clientCodePart, x + padding, currentY, { lineBreak: false });
+
+                    // Jeśli istnieje kod konsumenta, renderuj do prawej
+                    if (consumerCodePart) {
+                        const consumerWidth = doc.font('Roboto')
+                            .widthOfString(consumerCodePart, { lineBreak: false });
+                        const consumerX = x + padding + availableWidth - consumerWidth;
+
+                        doc.font('Roboto')
+                            .text(consumerCodePart, consumerX, currentY, { lineBreak: false });
+                    }
+
                     currentY += doc.heightOfString(line, { lineBreak: false });
                 });
 

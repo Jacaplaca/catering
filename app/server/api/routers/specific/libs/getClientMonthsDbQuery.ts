@@ -2,7 +2,7 @@ import { type Prisma } from '@prisma/client';
 
 const getClientMonthsDbQuery = (clientId: string, filterMonth?: { year: number, month: number }): Prisma.InputJsonValue[] => {
     // Build initial match stage with clientId and only consider orders with status "completed"
-    const match: { clientId: string, "deliveryDay.year"?: number, "deliveryDay.month"?: number, status: string } = { clientId, status: "completed" };
+    const match: { clientId: string, "deliveryDay.year"?: number, "deliveryDay.month"?: number, status: { $ne: string } } = { clientId, status: { $ne: 'draft' } };
     if (filterMonth) {
         if (
             Number.isInteger(filterMonth.year) &&
@@ -49,7 +49,7 @@ const getClientMonthsDbQuery = (clientId: string, filterMonth?: { year: number, 
 
     // If fetching detailed data for a specific month, add lookups for consumers
     if (filterMonth) {
-        // Lookup for breakfastDiet
+        // // Lookup for breakfastDiet
         pipeline.push({
             $lookup: {
                 from: 'OrderConsumerBreakfast',
@@ -132,7 +132,7 @@ const getClientMonthsDbQuery = (clientId: string, filterMonth?: { year: number, 
     // Add the group stage to pipeline
     pipeline.push({ $group: groupStage });
 
-    // If fetching detailed data, restrict fields for each order
+    // // If fetching detailed data, restrict fields for each order
     if (filterMonth) {
         pipeline.push({
             $project: {

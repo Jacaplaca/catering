@@ -62,17 +62,17 @@ export type ConsumerCustomTable = {
     createdAt: { $date: Date };
 };
 
-export const ordersSortNames = ['deliveryDay', 'status', 'client.name'] as const;
-
+export const ordersSortNames = ['deliveryDay', 'status', 'client.name', 'client.code'] as const;
 export type OrdersSortName = typeof ordersSortNames[number];
 
 export const ordersGroupedByDaySortNames = ['deliveryDay'] as const;
-
 export type OrdersGroupedByDaySortName = typeof ordersGroupedByDaySortNames[number];
 
 export const ordersGroupedByMonthSortNames = ['id', 'breakfastStandard', 'lunchStandard', 'dinnerStandard', 'breakfastDiet', 'lunchDiet', 'dinnerDiet'] as const;
-
 export type OrdersGroupedByMonthSortName = typeof ordersGroupedByMonthSortNames[number];
+
+export const ordersGroupedByClientAndMonthSortNames = ['id', 'client.info.name', 'client.info.code', 'breakfastStandard', 'lunchStandard', 'dinnerStandard', 'breakfastDietCount', 'lunchDietCount', 'dinnerDietCount'] as const;
+export type OrdersGroupedByClientAndMonthSortName = typeof ordersGroupedByClientAndMonthSortNames[number];
 
 export type OrdersCustomTable = {
     id: string;
@@ -107,6 +107,18 @@ export type OrderGroupedByDayCustomTable = {
 
 export type OrderGroupedByMonthCustomTable = {
     id: string,
+    breakfastStandard: number;
+    breakfastDiet: number;
+    lunchStandard: number;
+    lunchDiet: number;
+    dinnerStandard: number;
+    dinnerDiet: number;
+    sentToCateringAt: { $date: Date };
+}
+
+export type OrderGroupedByClientAndMonthCustomTable = {
+    id: string,
+    client: Client;
     breakfastStandard: number;
     breakfastDiet: number;
     lunchStandard: number;

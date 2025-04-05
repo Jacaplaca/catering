@@ -72,3 +72,54 @@
   @apply bg-transparent dark:bg-transparent
   text-neutral-500 dark:text-neutral-400;
 }
+
+/* Styl dla tekstu miesiąca po najechaniu myszką w trybie ciemnym */
+.dark .react-datepicker__month .react-datepicker__month-text:hover,
+.dark .react-datepicker__month .react-datepicker__quarter-text:hover { /* Reagujemy na hover dla nazw miesięcy */
+    @apply bg-neutral-600 /* Ustawiamy ciemniejsze tło dla hover */
+           text-white /* Ustawiamy biały tekst dla hover */
+           rounded; /* Dodajemy lekkie zaokrąglenie dla spójności */
+}
+
+/* Styl dla wybranego miesiąca w trybie jasnym */
+.react-datepicker__month-text--selected,
+.react-datepicker__quarter-text--selected {
+    @apply bg-secondary /* Używamy tła 'secondary' z motywu */
+           text-neutral-800 /* Ciemniejszy tekst dla kontrastu na jasnym tle */
+           rounded;
+}
+
+/* Styl dla wybranego miesiąca w trybie jasnym po najechaniu myszką */
+/* Zwiększona specyficzność przez połączenie klas */
+.react-datepicker__month-text.react-datepicker__month-text--selected:hover,
+.react-datepicker__quarter-text.react-datepicker__quarter-text--selected:hover {
+    @apply bg-secondary /* Upewniamy się, że tło to 'secondary' */
+           text-neutral-800; /* Zachowujemy ciemny tekst */
+}
+
+/* Styl dla wybranego miesiąca w trybie ciemnym */
+.dark .react-datepicker__month-text--selected,
+.dark .react-datepicker__quarter-text--selected {
+    @apply bg-darkmode-secondary-accent /* Używamy tła 'darkmode-secondary-accent' */
+           text-white /* Biały tekst dla kontrastu na ciemnym tle */
+           rounded;
+}
+
+/* Styl dla wybranego miesiąca w trybie ciemnym po najechaniu myszką */
+/* Zwiększona specyficzność przez połączenie klas */
+.dark .react-datepicker__month-text.react-datepicker__month-text--selected:hover,
+.dark .react-datepicker__quarter-text.react-datepicker__quarter-text--selected:hover {
+    @apply bg-darkmode-secondary /* Używamy tła 'darkmode-secondary' dla hover */
+           text-white; /* Zachowujemy biały tekst */
+}
+
+/* Style dla miesiąca wybranego za pomocą klawiatury - dostosowanie */
+.react-datepicker__month-text--keyboard-selected,
+.react-datepicker__quarter-text--keyboard-selected {
+     @apply bg-neutral-200 rounded; /* Jasny tryb - podobnie jak dla dnia */
+}
+
+.dark .react-datepicker__month-text--keyboard-selected,
+.dark .react-datepicker__quarter-text--keyboard-selected {
+     @apply bg-neutral-600 text-white rounded; /* Ciemny tryb - podobnie jak dla dnia */
+}

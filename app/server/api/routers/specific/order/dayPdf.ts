@@ -19,6 +19,31 @@ import { loadFonts } from '@root/app/lib/loadFonts';
 import dayIdParser from '@root/app/server/api/routers/specific/libs/dayIdParser';
 import returnPdfForFront from '@root/app/server/api/routers/specific/libs/pdf/returnPdfForFront';
 
+// // --- POCZĄTEK ZMIAN: Funkcja pomocnicza do lorem ipsum ---
+// /**
+//  * Generates a random "lorem ipsum"-like string.
+//  * @param minLength Minimum length of the generated string.
+//  * @param maxLength Maximum length of the generated string.
+//  * @returns A random string.
+//  */
+// const generateRandomLorem = (minLength: number, maxLength: number): string => {
+//     const loremWords = ["lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing", "elit", "curabitur", "vel", "hendrerit", "libero", "eleifend", "blandit", "nunc", "ornare", "odio", "ut", "orci", "gravida", "imperdiet", "nullam", "purus", "lacinia", "a", "pretium", "quis", "congue", "praesent", "sagittis", "laoreet", "auctor", "mauris", "non", "velit", "eros", "dictum", "proin", "accumsan", "sapien", "nec", "massa", "volutpat", "venenatis", "sed", "eu", "molestie."];
+//     const length = Math.floor(Math.random() * (maxLength - minLength + 1)) + minLength;
+//     let result = '';
+//     while (result.length < length) {
+//         const word = loremWords[Math.floor(Math.random() * loremWords.length)];
+//         result += (result.length > 0 ? ' ' : '') + word;
+//     }
+//     // Capitalize first letter and add a period if needed
+//     result = result.charAt(0).toUpperCase() + result.slice(1);
+//     if (!result.endsWith('.')) {
+//         result = result.slice(0, length).trimEnd() + '.'; // Trim to approx length and add period
+//     }
+//     return result.slice(0, maxLength); // Ensure max length
+// };
+// // --- KONIEC ZMIAN: Funkcja pomocnicza do lorem ipsum ---
+
+
 const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, RoleType.dietician])
     .input(getOrdersPdfValid)
     .query(async ({ input, ctx }) => {
@@ -110,7 +135,7 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, Role
             status: OrderStatus;
             sentToCateringAt: { $date: Date };
             standard: number;
-            notes: string;
+            notes: string; // Ta wartość zostanie nadpisana przez logikę debugową poniżej
             diet: (OrderConsumerBreakfast & OrderMealPopulated)[];
         }[]
 
@@ -119,10 +144,12 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, Role
             return acc;
         }, 0);
 
+        // Przetwarzamy notatki, mapując je do kodów klienta
         const notes = dayData.reduce((acc, { notes, client }) => {
             const code = client?.info?.code;
-            if (code) {
+            if (code && notes) { // Dodajemy notatkę tylko jeśli istnieje - zachowano logikę debugową
                 acc[code] = notes;
+                // --- KONIEC ZMIAN: Użycie funkcji losowego lorem ipsum ---
             }
             return acc;
         }, {} as Record<string, string>);
@@ -205,106 +232,140 @@ const dayPdf = createCateringProcedure([RoleType.kitchen, RoleType.manager, Role
                 .text(`${translate(dictionary, 'orders:standard')}: ${summaryStandard}`, { align: 'center' });
 
             const startY = doc.y + 20;
-            const pageWidth = doc.page.width - 100;
-            const columnWidth = pageWidth / 2;
+            const pageWidth = doc.page.width - 100; // margin left 50 + margin right 50
+            const noteFontSize = 9;
+            const lineHeight = 15; // Podstawowa wysokość linii dla klienta/ilości
+            const verticalGap = 5; // Odstęp między wpisami
+            // --- Usunięto ratio, szerokość będzie obliczana dynamicznie ---
+            // const clientCodeWidthRatio = 0.7;
+            // const mealsWidthRatio = 0.3;
 
-            // Split standard array into two columns
-            const leftColumn = standard.slice(0, Math.ceil(standard.length / 2));
-            const rightColumn = standard.slice(Math.ceil(standard.length / 2));
-
-            // Left column
             let yPosition = startY;
-            leftColumn.forEach(item => {
-                // Client code in regular font
+
+            standard.forEach(item => {
+                const noteText = notes[item.clientCode];
+                let itemHeight = lineHeight; // Minimalna wysokość to linia kodu/ilości
+                let noteHeight = 0;
+
+                if (noteText) {
+                    noteHeight = doc.heightOfString(noteText, {
+                        width: pageWidth - 10,
+                    });
+                    itemHeight += noteHeight;
+                }
+                itemHeight += verticalGap;
+
+                if (yPosition + itemHeight > doc.page.height - doc.page.margins.bottom - 30) {
+                    doc.addPage();
+                    yPosition = doc.page.margins.top;
+                }
+
+                // --- POCZĄTEK ZMIAN: Dostosowanie odstępu clientCode - meals ---
+                const clientX = 50;
+                const mealsText = item.meals.toString();
+                const clientCodeText = item.clientCode;
+
+                // Rysuj kod klienta, bez określonej szerokości, aby zajął tyle ile potrzebuje
                 doc.font('Roboto')
-                    .text(item.clientCode, 50, yPosition, {
-                        width: columnWidth / 2,
-                        align: 'left'
+                    .fontSize(12)
+                    .fillColor('black')
+                    .text(clientCodeText, clientX, yPosition, {
+                        lineBreak: false, // Zapobiega łamaniu
+                        continued: true // Pozwala dodać tekst zaraz obok
                     });
 
-                // Meals count in bold
+                // Zmierz szerokość kodu klienta
+                const clientWidth = doc.widthOfString(clientCodeText);
+                const mealsX = clientX + clientWidth + 5; // 5 punktów odstępu
+
+                // Rysuj ilość posiłków zaraz obok
                 doc.font('Roboto-Bold')
-                    .text(item.meals.toString(), 50 + columnWidth / 3, yPosition, {
-                        width: columnWidth / 2,
-                        align: 'left'
+                    .fontSize(12)
+                    .text(mealsText, mealsX, yPosition, { // Użyj tej samej pozycji Y
+                        // nie podajemy width, niech zajmie ile trzeba
+                        lineBreak: false, // Kończymy linię po ilości
+                        continued: false // Zakończ linię tutaj
                     });
+                // --- KONIEC ZMIAN: Dostosowanie odstępu clientCode - meals ---
 
-                yPosition += 20;
+                yPosition += lineHeight; // Przesuń Y o wysokość linii klienta/ilości
+
+                // Add notes if they exist
+                if (noteText) {
+                    // --- POCZĄTEK ZMIAN: Ciemniejszy kolor notatek ---
+                    doc.font('Roboto')
+                        .fontSize(noteFontSize)
+                        .fillColor('dimgray') // Ciemniejszy szary
+                        .text(noteText, clientX, yPosition, { // Notatka pod kodem klienta
+                            width: pageWidth - 10 // Notatka na prawie całą szerokość strony
+                        });
+                    // --- KONIEC ZMIAN: Ciemniejszy kolor notatek ---
+                    yPosition += noteHeight; // Przesuń Y o wysokość notatki
+                }
+
+                yPosition += verticalGap; // Dodaj stały odstęp przed kolejnym wpisem
             });
 
-            // Right column
-            yPosition = startY;
-            rightColumn.forEach(item => {
-                // Client code in regular font
-                doc.font('Roboto')
-                    .text(item.clientCode, 50 + columnWidth, yPosition, {
-                        width: columnWidth / 2,
-                        align: 'left'
-                    });
+            doc.y = yPosition; // Ustaw pozycję Y dla sekcji diet
 
-                // Meals count in bold
-                doc.font('Roboto-Bold')
-                    .text(item.meals.toString(), 50 + columnWidth + columnWidth / 3, yPosition, {
-                        width: columnWidth / 2,
-                        align: 'left'
-                    });
-
-                yPosition += 20;
-            });
-
-            // Update vertical position for next section
-            doc.y = Math.max(yPosition, doc.y);
-
-            // Resetujemy pozycję x przed wycentrowaniem tekstu
             doc.x = 50;
             doc.moveDown(4)
                 .fontSize(14)
                 .font('Roboto-Bold')
+                .fillColor('black')
                 .text(translate(dictionary, 'orders:diet'), {
                     width: pageWidth,
                     align: 'center'
                 });
 
             Object.entries(diet).filter(([_, dietMeals]) => dietMeals.length > 0).forEach(([clientCode, dietMeals]) => {
+                if (doc.y + 30 > doc.page.height - doc.page.margins.bottom - 30) {
+                    doc.addPage();
+                    doc.y = doc.page.margins.top;
+                }
+
                 doc.moveDown()
                     .fontSize(12)
                     .font('Roboto-Bold')
                     .text(clientCode, 50)
                     .font('Roboto');
 
-                doc.text(notes[clientCode] ?? '', 50);
 
                 dietMeals.forEach(dietMeal => {
-                    doc.text(`${dietMeal.consumerCode}: ${dietMeal.diet.code}`, 50);
+                    if (doc.y + 15 > doc.page.height - doc.page.margins.bottom - 30) {
+                        doc.addPage();
+                        doc.y = doc.page.margins.top;
+                    }
+                    doc.fontSize(11).text(`${dietMeal.consumerCode}: ${dietMeal.diet.code}`, 70);
                 });
             });
 
             const range = doc.bufferedPageRange();
-            for (let i = range.start; i < range.start + range.count; i++) {
+            for (let i = range.start; i <= range.start + range.count - 1; i++) {
                 doc.switchToPage(i);
 
                 const currentY = doc.y;
-                const originalMargins = doc.page.margins;
+                const originalMargins = { ...doc.page.margins };
 
                 doc.page.margins = { top: 0, bottom: 0, left: 0, right: 0 };
 
                 doc.fontSize(10)
                     .font('Roboto')
+                    .fillColor('black')
                     .text(
                         `${footerDate}     ${i + 1}/${range.count}     ${translations[mealType]}`,
                         0,
-                        doc.page.height - 40,
+                        doc.page.height - 30,
                         {
                             align: 'center',
                             width: doc.page.width,
-                            continued: false
                         }
                     );
 
-                // Przywracamy oryginalne marginesy i pozycję Y
                 doc.page.margins = originalMargins;
                 doc.y = currentY;
             }
+
 
             doc.end();
 

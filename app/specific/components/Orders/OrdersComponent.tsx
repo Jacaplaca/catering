@@ -12,6 +12,9 @@ import { OrderTableContextProvider } from '@root/app/specific/components/Orders/
 import useOrderTable from '@root/app/specific/components/Orders/ByOrder/useOrderTable';
 import { OrderByDayTableContextProvider } from '@root/app/specific/components/Orders/ByDay/context';
 import useOrderByDayTable from '@root/app/specific/components/Orders/ByDay/useOrderTable';
+import useByClientAndMonthTable from '@root/app/specific/components/Orders/ByClientAndMonth/useByClientAndMonthTable';
+import { ByClientAndMonthTableContextProvider } from '@root/app/specific/components/Orders/ByClientAndMonth/context';
+import ByClientAndMonthTable from '@root/app/specific/components/Orders/ByClientAndMonth/ByClientAndMonthTable';
 
 const OrdersComponent: FunctionComponent<{
     lang: LocaleApp
@@ -35,6 +38,11 @@ const OrdersComponent: FunctionComponent<{
                     <OrderTableContextProvider store={useOrderTable(props)} >
                         <OrdersTable />
                     </OrderTableContextProvider>
+                </FlowbiteTabs.Item>
+                <FlowbiteTabs.Item title={translate(props.dictionary, 'orders:orders_by_client_and_month')}>
+                    <ByClientAndMonthTableContextProvider store={useByClientAndMonthTable(props)} >
+                        <ByClientAndMonthTable />
+                    </ByClientAndMonthTableContextProvider>
                 </FlowbiteTabs.Item>
             </Tabs>
         </SessionProvider>

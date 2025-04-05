@@ -8,6 +8,7 @@ import groupedByDay from '@root/app/server/api/routers/specific/order/groupedByD
 import dayPdf from '@root/app/server/api/routers/specific/order/dayPdf';
 import groupedByMonth from '@root/app/server/api/routers/specific/order/groupedByMonth';
 import labelsPdf from '@root/app/server/api/routers/specific/order/labelsPdf';
+import monthByClient from '@root/app/server/api/routers/specific/order/month';
 
 const orderRouter = {
     ...save,
@@ -19,7 +20,8 @@ const orderRouter = {
     groupedByDay,
     dayPdf,
     groupedByMonth,
-    labelsPdf
+    labelsPdf,
+    monthByClient,
 }
 
 

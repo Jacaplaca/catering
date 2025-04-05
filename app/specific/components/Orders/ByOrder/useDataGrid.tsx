@@ -106,6 +106,13 @@ const useOrderDataGrid = ({
                     key: 'client.name'
                 },
                 {
+                    component: <HighlightText
+                        className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
+                        text={client?.code ?? ""}
+                        fragment={searchValue} />,
+                    key: 'client.code'
+                },
+                {
                     component: <MealCount count={breakfastStandard} />,
                     key: 'breakfastStandard'
                 },

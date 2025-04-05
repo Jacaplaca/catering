@@ -62,7 +62,7 @@ const MainModal: React.FC<Props> = ({ children, header, closeModal, footer, foot
             : <i className="fas fa-check-circle mr-2 text-green-500" />}
           {message}</div>}
         <div className={`pt-1 sm:pt-3  ${!header && "rounded-t-lg"} ${!footer && "rounded-b-lg py-1 sm:py-3"}`} >
-          <div className="px-3 pb-3">{children}</div>
+          <div className="px-3 pb-3 max-h-[calc(100vh-5rem)] overflow-y-auto">{children}</div>
         </div>
 
         {footer && <div className={`${footerColoring} w-full rounded-b-lg p-1 sm:p-3`}>

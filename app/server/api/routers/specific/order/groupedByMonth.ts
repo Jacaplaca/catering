@@ -9,6 +9,7 @@ import { ordersGroupedByMonthSortNames } from '@root/types/specific';
 import { options } from '@root/app/server/api/specific/aggregate';
 import getClientMonthsDbQuery from '@root/app/server/api/routers/specific/libs/getClientMonthsDbQuery';
 import getConsumersMonthReport from '@root/app/server/api/routers/specific/libs/getConsumersMonthReport';
+import validateDeliveryMonth from '@root/app/server/lib/validateDeliveryMonth';
 
 
 const getClientId = async ({ doerId, doerRole, clientId, cateringId }: { doerId: string, doerRole: RoleType, clientId?: string, cateringId: string }) => {
@@ -121,30 +122,9 @@ const tableForClient = createCateringProcedure([RoleType.client])
         }) as unknown as OrderGroupedByMonthCustomTable[];
     })
 
-/**
- * Validates the deliveryMonth string and returns a tuple [year, month].
- *
- * @param deliveryMonth - the input month string in format "YYYY-MM"
- * @returns [year, month]
- * @throws Error if the format is invalid
- */
-function validateDeliveryMonth(deliveryMonth: string): [number, number] {
-    const parts = deliveryMonth.split('-');
-    if (parts.length !== 2) {
-        throw new Error('Invalid deliveryMonth format: expected format "YYYY-MM"');
-    }
-    const year = Number(parts[0]);
-    const month = Number(parts[1]);
-    if (!Number.isInteger(year) || !Number.isInteger(month)) {
-        throw new Error('Invalid deliveryMonth: year and month must be valid integer numbers');
-    }
-    if (month < 1 || month > 12) {
-        throw new Error('Invalid deliveryMonth: month must be between 1 and 12');
-    }
-    return [year, month];
-}
 
-const monthForClient = createCateringProcedure([RoleType.client])
+
+const monthForClient = createCateringProcedure([RoleType.client, RoleType.manager])
     .input(monthForClientValid)
     .query(async ({ ctx, input }) => {
         const { session: { catering } } = ctx;
@@ -175,11 +155,7 @@ const monthForClient = createCateringProcedure([RoleType.client])
             }[]
         })[];
 
-        if (!result[0]) {
-            throw new Error("Brak danych");
-        }
-
-        const report = getConsumersMonthReport(result[0].orders);
+        const report = result[0]?.orders ? getConsumersMonthReport(result[0].orders) : {};
 
         return report;
 
